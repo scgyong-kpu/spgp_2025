@@ -118,6 +118,10 @@ Smart Phone Game Programming, GE, TUKorea, 2025
   * Bezier Curve (Cubic) 적용
 * Tiled MapEditor
   * DragonFlight rework
+* TuDefence
+  * Tile based Tower Defence Game
+* TapTU
+  * Rhythem Action Game
 
 ## Schedule
 * 1차 발표 : 5주차
