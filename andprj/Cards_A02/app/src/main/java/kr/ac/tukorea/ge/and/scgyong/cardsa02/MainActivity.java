@@ -1,6 +1,8 @@
 package kr.ac.tukorea.ge.and.scgyong.cardsa02;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,5 +18,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ui = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(ui.getRoot());
+    }
+
+    public void onBtnCard(View view) {
+        Log.d("MainActivity", "Btn ID=" + view.getId());
     }
 }
