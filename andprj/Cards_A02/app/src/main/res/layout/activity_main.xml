@@ -14,18 +14,12 @@
         >
         <ImageButton
             android:id="@+id/card_00"
-            android:src="@mipmap/card_blue_back"
-            android:onClick="onBtnCard"
             style="@style/cardButtonStyle" />
         <ImageButton
             android:id="@+id/card_01"
-            android:src="@mipmap/card_blue_back"
-            android:onClick="onBtnCard"
             style="@style/cardButtonStyle" />
         <ImageButton
             android:id="@+id/card_02"
-            android:src="@mipmap/card_blue_back"
-            android:onClick="onBtnCard"
             style="@style/cardButtonStyle" />
     </LinearLayout>
 
