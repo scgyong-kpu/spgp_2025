@@ -13,12 +13,14 @@
         android:layout_height="match_parent"
         >
         <ImageButton
+            android:id="@+id/card_00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/card_blue_back"
             android:onClick="onBtnCard"
             />
         <ImageButton
+            android:id="@+id/card_01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/card_blue_back"
