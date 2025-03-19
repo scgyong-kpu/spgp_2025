@@ -14,6 +14,7 @@ import kr.ac.tukorea.ge.and.scgyong.cardsa02.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private @NonNull ActivityMainBinding ui;
+    private ImageButton previousCardButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,12 @@ public class MainActivity extends AppCompatActivity {
     public void onBtnCard(View view) {
         Log.d("MainActivity", "Btn ID=" + view.getId());
         //Toast.makeText(this, "Btn ID=" + view.getId(), Toast.LENGTH_SHORT).show();
+
+        previousCardButton.setImageResource(R.mipmap.card_blue_back);
+
         ImageButton btn = (ImageButton) view;
         btn.setImageResource(R.mipmap.card_as);
+
+        previousCardButton = btn;
     }
 }
