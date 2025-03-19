@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "Btn ID=" + view.getId());
         //Toast.makeText(this, "Btn ID=" + view.getId(), Toast.LENGTH_SHORT).show();
 
-        previousCardButton.setImageResource(R.mipmap.card_blue_back);
+        if (previousCardButton != null) {
+            previousCardButton.setImageResource(R.mipmap.card_blue_back);
+        }
 
         ImageButton btn = (ImageButton) view;
         btn.setImageResource(R.mipmap.card_as);
