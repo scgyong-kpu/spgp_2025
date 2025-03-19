@@ -3,6 +3,7 @@ package kr.ac.tukorea.ge.and.scgyong.cardsa02;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,5 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onBtnCard(View view) {
         Log.d("MainActivity", "Btn ID=" + view.getId());
+        Toast.makeText(this, "Btn ID=" + view.getId(), Toast.LENGTH_SHORT).show();
     }
 }
