@@ -23,6 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onBtnCard(View view) {
         Log.d("MainActivity", "Btn ID=" + view.getId());
-        Toast.makeText(this, "Btn ID=" + view.getId(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Btn ID=" + view.getId(), Toast.LENGTH_SHORT).show();
     }
 }
