@@ -40,47 +40,22 @@ public class MyView extends View {
         paint.setColor(Color.BLUE);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(10);
-
-        //calculateRect();
     }
 
-    // Lazy Initialization
     public Paint paint;
     private Rect rect;
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawRect(rect, paint);
-    }
+        int l = getPaddingLeft(), r = getPaddingRight();
+        int t = getPaddingTop(), b = getPaddingBottom();
+        int w = getWidth(), h = getHeight();
+        int contentWidth = (w - l - r);
+        int contentHeight = (h - t - b);
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        Log.d(TAG, "(" + w + "," + h + ") <= (" + oldw + "," + oldh + ")");
-
-        calculateRect();
-    }
-
-    private void calculateRect() {
-        // TODO: consider storing these as member variables to reduce
-        // allocations per draw cycle.
-        int paddingLeft = getPaddingLeft();
-        int paddingTop = getPaddingTop();
-        int paddingRight = getPaddingRight();
-        int paddingBottom = getPaddingBottom();
-
-        int contentWidth = getWidth() - paddingLeft - paddingRight;
-        int contentHeight = getHeight() - paddingTop - paddingBottom;
-
-        int w4 = contentWidth / 4;
-        int h4 = contentHeight / 4;
-        int x1 = paddingLeft + w4;
-        int x2 = paddingLeft + contentWidth - w4;
-        int y1 = paddingTop + h4;
-        int y2 = paddingTop + contentHeight - h4;
-
-        rect = new Rect(x1, y1, x2, y2);
-        Log.d(TAG, "rect=" + rect + " w=" + getWidth() + " h=" + getHeight());
+        int cx = l + contentWidth / 2, cy = t + contentHeight / 2;
+        int radius = Math.min(contentWidth, contentHeight) / 2;
+        canvas.drawCircle(cx, cy, radius, paint);
     }
 }
