@@ -8,6 +8,8 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Random;
+
 import kr.ac.tukorea.ge.and.scgyong.cardsa01.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
                 ui.card20, ui.card21, ui.card22, ui.card23,
                 ui.card30, ui.card31, ui.card32, ui.card33,
         };
+
+        // Fisher-Yates Algorithm
+        Random rand = new Random();
+        for (int i = 0; i < cardResIds.length; i++) {
+            int r = rand.nextInt(cardResIds.length);
+            int resId = cardResIds[i];
+            cardResIds[i] = cardResIds[r];
+            cardResIds[r] = resId;
+        }
 
         for (int i = 0; i < cardResIds.length; i++) {
             ImageButton btn = cardButtons[i];
