@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 ui.card30, ui.card31, ui.card32, ui.card33,
         };
 
+        startGame();
+    }
+
+    private void startGame() {
         //shuffleCards();
 
         for (int i = 0; i < cardResIds.length; i++) {
@@ -85,5 +89,9 @@ public class MainActivity extends AppCompatActivity {
             String text = String.format("Flips: %d", flips);
             ui.scoreTextView.setText(text);
         }
+    }
+
+    public void onBtnRestart(View view) {
+        startGame();
     }
 }
