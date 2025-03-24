@@ -75,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
     public void setFlips(int flips) {
         this.flips = flips;
         Resources res = getResources();
-        String fmt = res.getString(R.string.score_fmt);
-        String text = String.format(fmt, flips);
+        String text = res.getString(R.string.score_fmt, flips);
         ui.scoreTextView.setText(text);
     }
 
