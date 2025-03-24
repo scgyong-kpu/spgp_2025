@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,8 @@ public class MyView extends View {
         paint.setColor(Color.BLUE);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(10);
+
+        calculateRect();
     }
 
     // Lazy Initialization
@@ -48,7 +51,6 @@ public class MyView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        calculateRect();
         canvas.drawRect(rect, paint);
     }
 
@@ -71,5 +73,6 @@ public class MyView extends View {
         int y2 = paddingTop + contentHeight - h4;
 
         rect = new Rect(x1, y1, x2, y2);
+        Log.d("CanvasTest", "rect=" + rect + " w=" + getWidth() + " h=" + getHeight());
     }
 }
