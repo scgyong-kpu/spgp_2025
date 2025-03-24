@@ -41,7 +41,7 @@ public class MyView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(10);
 
-        calculateRect();
+        //calculateRect();
     }
 
     // Lazy Initialization
@@ -52,6 +52,14 @@ public class MyView extends View {
         super.onDraw(canvas);
 
         canvas.drawRect(rect, paint);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Log.d(TAG, "(" + w + "," + h + ") <= (" + oldw + "," + oldh + ")");
+
+        calculateRect();
     }
 
     private void calculateRect() {
