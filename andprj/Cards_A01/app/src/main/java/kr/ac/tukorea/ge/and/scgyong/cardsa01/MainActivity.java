@@ -53,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
             Integer resourceIdInteger = resId;
             btn.setTag(resourceIdInteger);
         }
+
+        previousCardButton = null;
+
+        flips = 0;
+        String text = String.format("Flips: %d", flips);
+        ui.scoreTextView.setText(text);
     }
 
     private void shuffleCards() {
