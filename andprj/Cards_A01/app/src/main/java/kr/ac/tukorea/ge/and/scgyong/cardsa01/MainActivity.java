@@ -47,13 +47,22 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "Button Clicked: ID=" + view.getId());
         //Toast.makeText(this, "BTN ID=" + view.getId(), Toast.LENGTH_SHORT).show();
 
+        int previousCardResourceId = 0;
         if (previousCardButton != null) {
             previousCardButton.setImageResource(R.mipmap.card_blue_back);
+            previousCardResourceId = (Integer)previousCardButton.getTag();
         }
 
         ImageButton btn = (ImageButton) view;
         int resId = (Integer) btn.getTag();
-        btn.setImageResource(resId);
+
+        if (resId == previousCardResourceId) {
+            btn.setVisibility(View.GONE);
+            previousCardButton.setVisibility(View.GONE);
+        } else {
+            btn.setImageResource(resId);
+        }
+
 
         previousCardButton = btn;
     }
