@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         startGame();
     }
 
+    public void setFlips(int flips) {
+        this.flips = flips;
+        String text = String.format("Flips: %d", this.flips);
+        ui.scoreTextView.setText(text);
+    }
+
     private void startGame() {
         //shuffleCards();
 
@@ -55,10 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         previousCardButton = null;
-
-        flips = 0;
-        String text = String.format("Flips: %d", flips);
-        ui.scoreTextView.setText(text);
+        setFlips(0);
     }
 
     private void shuffleCards() {
@@ -93,9 +96,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setImageResource(resId);
             previousCardButton = btn;
 
-            flips += 1;
-            String text = String.format("Flips: %d", flips);
-            ui.scoreTextView.setText(text);
+            setFlips(flips + 1);
         }
     }
 
