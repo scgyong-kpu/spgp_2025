@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
  * TODO: document your custom view class.
  */
 public class MyView extends View {
-
+    private static final String TAG = MyView.class.getSimpleName();
     public MyView(Context context) {
         super(context);
         init(null, 0);
@@ -73,6 +73,6 @@ public class MyView extends View {
         int y2 = paddingTop + contentHeight - h4;
 
         rect = new Rect(x1, y1, x2, y2);
-        Log.d("CanvasTest", "rect=" + rect + " w=" + getWidth() + " h=" + getHeight());
+        Log.d(TAG, "rect=" + rect + " w=" + getWidth() + " h=" + getHeight());
     }
 }
