@@ -8,6 +8,9 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Collections;
+import java.util.Random;
+
 import kr.ac.tukorea.ge.and.scgyong.cardsa02.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,12 +19,13 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton previousCardButton;
     private ImageButton[] cardImageButtons;
 
-    private static final int[] RES_IDS = new int[] {
+    private int[] RES_IDS = new int[] {
             R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
             R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
             R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
             R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
     };
+    private int flips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,16 @@ public class MainActivity extends AppCompatActivity {
                 ui.card20, ui.card21, ui.card22, ui.card23,
                 ui.card30, ui.card31, ui.card32, ui.card33,
         };
+
+        // Fisher-Yates Algorithm
+        Random rand = new Random();
+        for (int i = 0; i < RES_IDS.length; i++) {
+            int r = rand.nextInt(RES_IDS.length);
+            int resId = RES_IDS[i];
+            RES_IDS[i] = RES_IDS[r];
+            RES_IDS[r] = resId;
+        }
+
         for (int i = 0; i < RES_IDS.length; i++) {
             Integer resId = RES_IDS[i];
             cardImageButtons[i].setTag(resId);
@@ -54,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btn = (ImageButton) view;
         int resId = (Integer) btn.getTag();
         btn.setImageResource(resId);
+
+        flips += 1;
+        String text = String.format("Flips: %d", flips);
+        ui.scoreTextView.setText(text);
 
         if (previousResourceId == resId) {
             previousCardButton.setVisibility(View.INVISIBLE);
