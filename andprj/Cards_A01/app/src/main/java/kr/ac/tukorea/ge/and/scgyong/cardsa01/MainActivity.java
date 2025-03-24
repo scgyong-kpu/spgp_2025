@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < cardResIds.length; i++) {
             ImageButton btn = cardButtons[i];
+            btn.setImageResource(R.mipmap.card_blue_back);
+            btn.setVisibility(View.VISIBLE);
             int resId = cardResIds[i];
             Integer resourceIdInteger = resId;
             btn.setTag(resourceIdInteger);
