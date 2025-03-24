@@ -35,9 +35,8 @@ public class MainActivity extends AppCompatActivity {
                 R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
         };
         for (int i = 0; i < RES_IDS.length; i++) {
-            int resId = RES_IDS[i];
-            Integer tag = resId;
-            buttons[i].setTag(tag);
+            Integer resId = RES_IDS[i];
+            buttons[i].setTag(resId);
         }
     }
 
@@ -50,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ImageButton btn = (ImageButton) view;
-        Integer tag = (Integer) btn.getTag();
-        int resId = tag;
+        int resId = (Integer) btn.getTag();
         btn.setImageResource(resId);
 
         previousCardButton = btn;
