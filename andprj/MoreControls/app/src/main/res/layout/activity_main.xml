@@ -52,10 +52,11 @@
         />
     <TextView
         android:labelFor="@id/nameEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/nameEditText"
         android:layout_alignBaseline="@id/nameEditText"
+        android:gravity="end"
         android:textSize="16sp"
         android:text="@string/your_name"
         android:background="#F26224"
