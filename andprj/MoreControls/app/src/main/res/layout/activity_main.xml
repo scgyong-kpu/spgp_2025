@@ -94,5 +94,8 @@
         android:layout_below="@id/seekbarGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:exampleString="Hello"
+        app:exampleColor="@color/light_blue_600"
+        app:exampleDimension="50dp"
         />
 </RelativeLayout>
