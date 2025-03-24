@@ -25,17 +25,17 @@ public class MainActivity extends AppCompatActivity {
     private final TextWatcher nameEditTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            String name = ui.nameEditText.getText().toString().trim();
+            String text = getString(R.string.name_length_msg, name.length());
+            ui.pageTitleTextView.setText(text);
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-
         }
     };
 
