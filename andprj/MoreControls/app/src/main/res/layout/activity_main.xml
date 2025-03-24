@@ -33,6 +33,7 @@
         android:onClick="onBtnDoIt"
         />
     <Switch
+        android:id="@+id/immediateSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -41,5 +42,22 @@
         android:padding="20dp"
         android:background="#7f7"
         android:text="@string/apply_immediately"
+        />
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/immediateSwitch"
+        android:layout_alignStart="@id/immediateSwitch"
+        />
+    <TextView
+        android:labelFor="@id/nameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/nameEditText"
+        android:layout_alignBaseline="@id/nameEditText"
+        android:textSize="16sp"
+        android:text="@string/your_name"
+        android:background="#F26224"
         />
 </RelativeLayout>
