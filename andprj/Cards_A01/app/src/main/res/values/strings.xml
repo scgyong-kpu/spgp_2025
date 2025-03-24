@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">CardsA01</string>
     <string name="score_fmt">Flips: %d</string>
+    <string name="restart_dlg_title">Restart</string>
+    <string name="restart_dlg_message">Are you sure to restart this game?</string>
+    <string name="restart_dlg_yes">Yes</string>
+    <string name="restart_dlg_no">No</string>
 </resources>
