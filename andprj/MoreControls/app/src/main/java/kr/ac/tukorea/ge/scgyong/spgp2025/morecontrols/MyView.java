@@ -54,8 +54,12 @@ public class MyView extends View {
         int contentWidth = (w - l - r);
         int contentHeight = (h - t - b);
 
-        int cx = l + contentWidth / 2, cy = t + contentHeight / 2;
-        int radius = Math.min(contentWidth, contentHeight) / 2;
+        drawSmiley(canvas, l, t, contentWidth,contentHeight);
+    }
+
+    private void drawSmiley(Canvas canvas, int left, int top, int width, int height) {
+        int cx = left + width / 2, cy = top + height / 2;
+        int radius = Math.min(width, height) / 2;
         canvas.drawCircle(cx, cy, radius, paint);
 
         int leftEyeX = cx - radius / 3, rightEyeX = cx + radius / 3;
