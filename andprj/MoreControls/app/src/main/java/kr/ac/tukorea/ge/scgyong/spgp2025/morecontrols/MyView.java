@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -63,11 +64,11 @@ public class MyView extends View {
         int y1 = paddingTop + h4;
         int y2 = paddingTop + contentHeight - h4;
 
-        Path path = new Path();
-        path.moveTo(x1, y1);
-        path.lineTo(x2, y1);
-        path.lineTo(x1, y2);
-        path.lineTo(x2, y2);
-        canvas.drawPath(path, paint);
+        Rect rect = new Rect(x1, y1, x2, y2);
+        // Avoid object allocations during draw/layout operations (preallocate and reuse instead)
+        // Inspection info:You should avoid allocating objects during a drawing or layout operation.
+        // These are called frequently, so a smooth UI can be interrupted by garbage collection pauses
+        // caused by the object allocations.
+        canvas.drawRect(rect, paint);
     }
 }
