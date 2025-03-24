@@ -6,4 +6,5 @@
     <string name="restart_dlg_yes">Yes</string>
     <string name="restart_dlg_no">No</string>
     <string name="toast_same_card">You pressed the same card</string>
+    <string name="btn_restart">Restart</string>
 </resources>
