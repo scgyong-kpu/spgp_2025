@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,5 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ui = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(ui.getRoot());
+    }
+
+    public void onBtnDoIt(View view) {
+        ui.pageTitleTextView.setText("Something happened !!");
     }
 }

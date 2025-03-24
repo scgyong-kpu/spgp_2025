@@ -29,5 +29,6 @@
         android:text="@string/do_it"
         android:layout_below="@id/goodProgrammerCheckbox"
         android:layout_margin="20dp"
+        android:onClick="onBtnDoIt"
         />
 </RelativeLayout>
