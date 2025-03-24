@@ -48,15 +48,11 @@ public class MyView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        calculateRect(canvas);
-        // Avoid object allocations during draw/layout operations (preallocate and reuse instead)
-        // Inspection info:You should avoid allocating objects during a drawing or layout operation.
-        // These are called frequently, so a smooth UI can be interrupted by garbage collection pauses
-        // caused by the object allocations.
+        calculateRect();
         canvas.drawRect(rect, paint);
     }
 
-    private void calculateRect(Canvas canvas) {
+    private void calculateRect() {
         // TODO: consider storing these as member variables to reduce
         // allocations per draw cycle.
         int paddingLeft = getPaddingLeft();
@@ -66,8 +62,6 @@ public class MyView extends View {
 
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
-
-        canvas.drawOval(paddingLeft, paddingTop, paddingLeft + contentWidth, paddingTop + contentHeight, paint);
 
         int w4 = contentWidth / 4;
         int h4 = contentHeight / 4;
