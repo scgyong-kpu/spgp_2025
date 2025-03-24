@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            if (ui.immediateSwitch.isChecked()) {
+                doIt();
+                return;
+            }
             String name = ui.nameEditText.getText().toString().trim();
             String text = getString(R.string.name_length_msg, name.length());
             ui.pageTitleTextView.setText(text);
