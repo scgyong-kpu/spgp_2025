@@ -31,17 +31,13 @@ public class MyView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
+        paint = new Paint();
+        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.STROKE);
     }
 
     // Lazy Initialization
     private Paint paint;
-    private Paint getPaint() {
-        if (paint == null) {
-            paint = new Paint();
-            paint.setColor(Color.BLUE);
-        }
-        return paint;
-    }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -56,6 +52,6 @@ public class MyView extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
-        canvas.drawOval(paddingLeft, paddingTop, paddingLeft + contentWidth, paddingTop + contentHeight, getPaint());
+        canvas.drawOval(paddingLeft, paddingTop, paddingLeft + contentWidth, paddingTop + contentHeight, paint);
     }
 }
