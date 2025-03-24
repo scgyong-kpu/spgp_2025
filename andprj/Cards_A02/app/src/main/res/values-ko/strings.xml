@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">카드껨(A02)</string>
+    <string name="score_fmt">뒤집은수: %d</string>
+    <string name="restart_dlg_title">재시작</string>
+    <string name="restart_dlg_message">진짜루 재시작할껴?</string>
+    <string name="restart_dlg_yes">그랴</string>
+</resources>
