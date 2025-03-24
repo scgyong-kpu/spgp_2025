@@ -55,6 +55,22 @@ public class MyView extends View {
         int contentHeight = (h - t - b);
 
         drawSmiley(canvas, l, t, contentWidth,contentHeight);
+
+
+        // Calculate the center, radius, and eye position of the first smiley
+        int cx = l + contentWidth / 2;
+        int cy = t + contentHeight / 2;
+        int radius = Math.min(contentWidth, contentHeight) / 2;
+        int eyeRadius = radius / 4;
+        int leftEyeX = cx - radius / 3;
+        int eyeY = cy - radius / 4;
+
+        // Calculate parameters for the second smiley based on the left eye of the first smiley
+        int secondSmileyLeft = leftEyeX - eyeRadius;
+        int secondSmileyTop = eyeY - eyeRadius;
+        int secondSmileySize = eyeRadius * 2; // The diameter of the eye is the size for the second smiley
+
+        drawSmiley(canvas, secondSmileyLeft, secondSmileyTop, secondSmileySize, secondSmileySize);
     }
 
     private void drawSmiley(Canvas canvas, int left, int top, int width, int height) {
