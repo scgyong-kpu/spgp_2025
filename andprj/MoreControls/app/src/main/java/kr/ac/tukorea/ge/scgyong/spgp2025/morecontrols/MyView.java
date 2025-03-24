@@ -64,5 +64,9 @@ public class MyView extends View {
 
         canvas.drawCircle(leftEyeX, eyeY, eyeRadius, paint);
         canvas.drawCircle(rightEyeX, eyeY, eyeRadius, paint);
+
+        int mouthX1 = cx - radius / 2, mouthX2 = cx + radius / 2;
+        int mouthY = cy + radius / 2;
+        canvas.drawArc(mouthX1, eyeY, mouthX2, mouthY, 15, 150, false, paint);
     }
 }
