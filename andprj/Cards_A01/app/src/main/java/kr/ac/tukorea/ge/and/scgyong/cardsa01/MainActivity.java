@@ -39,6 +39,17 @@ public class MainActivity extends AppCompatActivity {
                 ui.card30, ui.card31, ui.card32, ui.card33,
         };
 
+        shuffleCards();
+
+        for (int i = 0; i < cardResIds.length; i++) {
+            ImageButton btn = cardButtons[i];
+            int resId = cardResIds[i];
+            Integer resourceIdInteger = resId;
+            btn.setTag(resourceIdInteger);
+        }
+    }
+
+    private void shuffleCards() {
         // Fisher-Yates Algorithm
         Random rand = new Random();
         for (int i = 0; i < cardResIds.length; i++) {
@@ -46,13 +57,6 @@ public class MainActivity extends AppCompatActivity {
             int resId = cardResIds[i];
             cardResIds[i] = cardResIds[r];
             cardResIds[r] = resId;
-        }
-
-        for (int i = 0; i < cardResIds.length; i++) {
-            ImageButton btn = cardButtons[i];
-            int resId = cardResIds[i];
-            Integer resourceIdInteger = resId;
-            btn.setTag(resourceIdInteger);
         }
     }
 
