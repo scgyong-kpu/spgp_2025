@@ -34,6 +34,7 @@ public class MyView extends View {
         paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(10);
     }
 
     // Lazy Initialization
