@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton btn = (ImageButton) view;
         if (btn == previousCardButton) {
+            Toast.makeText(this, R.string.toast_same_card, Toast.LENGTH_SHORT).show();
             return;
         }
         int previousResourceId = 0;
