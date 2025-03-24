@@ -103,17 +103,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnRestart(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Restart");
-        builder.setMessage("Are you sure to restart this game?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startGame();
-            }
-        });
-        builder.setNegativeButton("No", null);
-        AlertDialog dlg = builder.create();
+        AlertDialog dlg = new AlertDialog.Builder(this)
+                .setTitle("Restart")
+                .setMessage("Are you sure to restart this game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startGame();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .create();
         dlg.show();
     }
 }
