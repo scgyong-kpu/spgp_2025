@@ -20,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnDoIt(View view) {
-        ui.pageTitleTextView.setText("Something happened !!");
+        ui.pageTitleTextView.setText(R.string.you_get_one_grand);
     }
 }
