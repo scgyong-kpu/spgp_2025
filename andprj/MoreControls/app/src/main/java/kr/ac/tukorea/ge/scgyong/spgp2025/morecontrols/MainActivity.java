@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols.databinding.ActivityMainBi
 public class MainActivity extends AppCompatActivity {
 
     private @NonNull ActivityMainBinding ui;
+    private int money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(ui.getRoot());
 
         ui.nameEditText.addTextChangedListener(nameEditTextWatcher);
+        ui.moneySeekBar.setOnSeekBarChangeListener(moneySeekbarChangeListener);
+        setMoney(1000);
     }
     private final TextWatcher nameEditTextWatcher = new TextWatcher() {
         @Override
@@ -43,13 +47,39 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private final SeekBar.OnSeekBarChangeListener moneySeekbarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            setMoney(seekBar.getProgress());
+            if (ui.immediateSwitch.isChecked()) {
+                doIt();
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+        }
+    };
+
+    private void setMoney(int money) {
+        this.money = money;
+        ui.moneyValueTextView.setText(String.valueOf(money));
+    }
     public void onBtnDoIt(View view) {
         doIt();
     }
     private void doIt() {
         boolean isGood = ui.goodProgrammerCheckbox.isChecked();
-        int strId = isGood ? R.string.you_get_one_grand : R.string.you_have_nothing; // Alt+Enter here
-        String msg = getString(strId);
+        String msg;
+        if (isGood) {
+            msg = getString(R.string.you_get_money_fmt, money);
+        } else {
+            msg = getString(R.string.you_have_nothing);
+        }
         String name = ui.nameEditText.getText().toString().trim();
         if (name.isEmpty()) {
             name = getString(R.string.noname);

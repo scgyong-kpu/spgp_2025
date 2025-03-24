@@ -62,4 +62,31 @@
         android:text="@string/your_name"
         android:background="#F26224"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nameEditText"
+        android:padding="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Money"
+            />
+        <SeekBar
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/moneySeekBar"
+            android:min="10"
+            android:max="10000"
+            android:progress="1000"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/moneyValueTextView"
+            android:text="$100"
+            />
+    </LinearLayout>
 </RelativeLayout>
