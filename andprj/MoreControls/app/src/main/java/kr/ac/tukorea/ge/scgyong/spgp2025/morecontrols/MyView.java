@@ -30,7 +30,10 @@ public class MyView extends View {
         init(attrs, defStyle);
     }
 
+    private Paint paint;
     private void init(AttributeSet attrs, int defStyle) {
+        paint = new Paint();
+        paint.setColor(Color.BLUE);
     }
 
     @Override
@@ -47,8 +50,6 @@ public class MyView extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
-        Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
         canvas.drawOval(paddingLeft, paddingTop, paddingLeft + contentWidth, paddingTop + contentHeight, paint);
     }
 }
