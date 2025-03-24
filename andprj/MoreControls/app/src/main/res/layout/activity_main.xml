@@ -22,4 +22,12 @@
         android:text="@string/good_programmer_checkbox_text"
         android:layout_below="@id/pageTitleTextView"
         />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/doItButton"
+        android:text="@string/do_it"
+        android:layout_below="@id/goodProgrammerCheckbox"
+        android:layout_margin="20dp"
+        />
 </RelativeLayout>
