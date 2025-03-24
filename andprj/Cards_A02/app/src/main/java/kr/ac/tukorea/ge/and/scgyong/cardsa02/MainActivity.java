@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 ui.card30, ui.card31, ui.card32, ui.card33,
         };
 
-        shuffleCards();
+        //shuffleCards();
 
         for (int i = 0; i < cardResIds.length; i++) {
             Integer resId = cardResIds[i];
