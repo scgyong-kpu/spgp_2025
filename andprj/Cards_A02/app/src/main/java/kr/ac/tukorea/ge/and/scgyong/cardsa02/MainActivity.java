@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
     };
     private int flips;
+    private int openCardCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         setFlips(0);
         previousCardButton = null;
+        openCardCount = cardResIds.length;
     }
 
     private void shuffleCards() {
@@ -95,12 +97,21 @@ public class MainActivity extends AppCompatActivity {
             previousCardButton.setVisibility(View.INVISIBLE);
             btn.setVisibility(View.INVISIBLE);
             previousCardButton = null;
+
+            openCardCount -= 2;
+            if (openCardCount == 0) {
+                askRestart();
+            }
         } else {
             previousCardButton = btn;
         }
     }
 
     public void onBtnRestart(View view) {
+        askRestart();
+    }
+
+    private void askRestart() {
         new AlertDialog.Builder(this)
                 .setTitle("Restart")
                 .setMessage("Are you sure to restart the game?")
