@@ -9,4 +9,5 @@
     <string name="bad_news">Sorry for you...</string>
     <string name="apply_immediately">Apply Immediately</string>
     <string name="your_name">Your Name:</string>
+    <string name="main_msg_fmt">Hello %s, %s</string>
 </resources>
