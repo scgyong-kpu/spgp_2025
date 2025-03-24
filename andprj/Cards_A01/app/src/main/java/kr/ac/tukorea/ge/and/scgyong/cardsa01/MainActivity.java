@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnRestart(View view) {
-        AlertDialog dlg = new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
                 .setTitle("Restart")
                 .setMessage("Are you sure to restart this game?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .setNegativeButton("No", null)
-                .create();
-        dlg.show();
+                .create()
+                .show();
     }
 }
