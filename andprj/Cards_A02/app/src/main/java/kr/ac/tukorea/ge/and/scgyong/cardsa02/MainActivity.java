@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Collections;
 import java.util.Random;
 
 import kr.ac.tukorea.ge.and.scgyong.cardsa02.databinding.ActivityMainBinding;
@@ -19,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton previousCardButton;
     private ImageButton[] cardImageButtons;
 
-    private int[] RES_IDS = new int[] {
+    private int[] cardResIds = new int[] {
             R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
             R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
             R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
@@ -42,15 +41,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Fisher-Yates Algorithm
         Random rand = new Random();
-        for (int i = 0; i < RES_IDS.length; i++) {
-            int r = rand.nextInt(RES_IDS.length);
-            int resId = RES_IDS[i];
-            RES_IDS[i] = RES_IDS[r];
-            RES_IDS[r] = resId;
+        for (int i = 0; i < cardResIds.length; i++) {
+            int r = rand.nextInt(cardResIds.length);
+            int resId = cardResIds[i];
+            cardResIds[i] = cardResIds[r];
+            cardResIds[r] = resId;
         }
 
-        for (int i = 0; i < RES_IDS.length; i++) {
-            Integer resId = RES_IDS[i];
+        for (int i = 0; i < cardResIds.length; i++) {
+            Integer resId = cardResIds[i];
             cardImageButtons[i].setTag(resId);
         }
     }
