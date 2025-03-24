@@ -1,5 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -92,5 +93,47 @@ public class MainActivity extends AppCompatActivity {
         boolean isGood = ui.goodProgrammerCheckbox.isChecked();
         int strId = isGood ? R.string.good_news : R.string.bad_news;
         ui.pageTitleTextView.setText(strId);
+    }
+
+    public void onRadioWidth(View view) {
+        float width;
+        int radioId = view.getId();
+        if (radioId == R.id.radioWidthThin) {
+            width = 5;
+        } else if (radioId == R.id.radioWidthMedium) {
+            width = 20;
+        } else {
+            width = 50;
+        }
+        ui.myView.paint.setStrokeWidth(width);
+        ui.myView.invalidate();
+    }
+
+    public void onRadioCap(View view) {
+        Paint.Cap cap;
+        int radioId = view.getId();
+        if (radioId == R.id.radioCapButt) {
+            cap = Paint.Cap.BUTT;
+        } else if (radioId == R.id.radioCapSquare) {
+            cap = Paint.Cap.SQUARE;
+        } else {
+            cap = Paint.Cap.ROUND;
+        }
+        ui.myView.paint.setStrokeCap(cap);
+        ui.myView.invalidate();
+    }
+
+    public void onRadioJoin(View view) {
+        Paint.Join join;
+        int radioId = view.getId();
+        if (radioId == R.id.radioJoinBevel) {
+            join = Paint.Join.BEVEL;
+        } else if (radioId == R.id.radioJoinMiter) {
+            join = Paint.Join.MITER;
+        } else {
+            join = Paint.Join.ROUND;
+        }
+        ui.myView.paint.setStrokeJoin(join);
+        ui.myView.invalidate();
     }
 }

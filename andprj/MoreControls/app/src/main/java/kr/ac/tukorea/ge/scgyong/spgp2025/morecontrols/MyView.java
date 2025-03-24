@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -38,7 +39,7 @@ public class MyView extends View {
     }
 
     // Lazy Initialization
-    private Paint paint;
+    public Paint paint;
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -54,5 +55,19 @@ public class MyView extends View {
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
         canvas.drawOval(paddingLeft, paddingTop, paddingLeft + contentWidth, paddingTop + contentHeight, paint);
+
+        int w4 = contentWidth / 4;
+        int h4 = contentHeight / 4;
+        int x1 = paddingLeft + w4;
+        int x2 = paddingLeft + contentWidth - w4;
+        int y1 = paddingTop + h4;
+        int y2 = paddingTop + contentHeight - h4;
+
+        Path path = new Path();
+        path.moveTo(x1, y1);
+        path.lineTo(x2, y1);
+        path.lineTo(x1, y2);
+        path.lineTo(x2, y2);
+        canvas.drawPath(path, paint);
     }
 }

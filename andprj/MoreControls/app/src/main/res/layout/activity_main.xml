@@ -117,18 +117,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thin"
+                    android:onClick="onRadioWidth"
                     />
                 <RadioButton
                     android:id="@+id/radioWidthMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Medium"
+                    android:onClick="onRadioWidth"
                     />
                 <RadioButton
                     android:id="@+id/radioWidthThick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thick"
+                    android:onClick="onRadioWidth"
                     />
             </RadioGroup>
         </LinearLayout>
@@ -153,18 +156,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Butt"
+                    android:onClick="onRadioCap"
                     />
                 <RadioButton
                     android:id="@+id/radioCapRound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Round"
+                    android:onClick="onRadioCap"
                     />
                 <RadioButton
                     android:id="@+id/radioCapSquare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Square"
+                    android:onClick="onRadioCap"
                     />
             </RadioGroup>
         </LinearLayout>
@@ -188,24 +194,28 @@
                     android:id="@+id/radioJoinBevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thin"
+                    android:text="Bevel"
+                    android:onClick="onRadioJoin"
                     />
                 <RadioButton
                     android:id="@+id/radioJoinMiter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Medium"
+                    android:text="Miter"
+                    android:onClick="onRadioJoin"
                     />
                 <RadioButton
                     android:id="@+id/radioJoinRound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thick"
+                    android:text="Round"
+                    android:onClick="onRadioJoin"
                     />
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>
     <kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols.MyView
+        android:id="@+id/myView"
         android:layout_below="@id/paintControlGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
