@@ -6,4 +6,6 @@
     <string name="restart_dlg_message">정말 재시작할껴?</string>
     <string name="restart_dlg_yes">그래라</string>
     <string name="restart_dlg_no">아니다</string>
+    <string name="toast_same_card">같은카드자나</string>
+    <string name="btn_restart">리겜</string>
 </resources>
