@@ -12,6 +12,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 /**
  * TODO: document your custom view class.
  */
@@ -41,10 +43,20 @@ public class MyView extends View {
 
     // Lazy Initialization
     public Paint paint;
+    private Rect rect;
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        calculateRect(canvas);
+        // Avoid object allocations during draw/layout operations (preallocate and reuse instead)
+        // Inspection info:You should avoid allocating objects during a drawing or layout operation.
+        // These are called frequently, so a smooth UI can be interrupted by garbage collection pauses
+        // caused by the object allocations.
+        canvas.drawRect(rect, paint);
+    }
+
+    private void calculateRect(Canvas canvas) {
         // TODO: consider storing these as member variables to reduce
         // allocations per draw cycle.
         int paddingLeft = getPaddingLeft();
@@ -64,11 +76,6 @@ public class MyView extends View {
         int y1 = paddingTop + h4;
         int y2 = paddingTop + contentHeight - h4;
 
-        Rect rect = new Rect(x1, y1, x2, y2);
-        // Avoid object allocations during draw/layout operations (preallocate and reuse instead)
-        // Inspection info:You should avoid allocating objects during a drawing or layout operation.
-        // These are called frequently, so a smooth UI can be interrupted by garbage collection pauses
-        // caused by the object allocations.
-        canvas.drawRect(rect, paint);
+        rect = new Rect(x1, y1, x2, y2);
     }
 }
