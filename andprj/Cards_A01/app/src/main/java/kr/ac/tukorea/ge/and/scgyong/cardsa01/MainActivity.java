@@ -48,9 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void setFlips(int flips) {
         Resources res = getResources();
-        String fmt = res.getString(R.string.score_fmt);
         this.flips = flips;
-        String text = String.format(fmt, this.flips);
+        String text = res.getString(R.string.score_fmt, this.flips);
         ui.scoreTextView.setText(text);
     }
 
