@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnDoIt(View view) {
+        doIt();
+    }
+    private void doIt() {
         boolean isGood = ui.goodProgrammerCheckbox.isChecked();
         int strId = isGood ? R.string.you_get_one_grand : R.string.you_have_nothing; // Alt+Enter here
         ui.pageTitleTextView.setText(strId);
