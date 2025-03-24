@@ -85,11 +85,15 @@ public class MyView extends View {
         int eyeY = cy - radius / 4;
         int eyeRadius = radius / 4;
 
-        drawSmiley(canvas, leftEyeX - eyeRadius, eyeY - eyeRadius, 2 * eyeRadius, 2 * eyeRadius);
-        drawSmiley(canvas, rightEyeX - eyeRadius, eyeY - eyeRadius, 2 * eyeRadius, 2 * eyeRadius);
-//        canvas.drawCircle(leftEyeX, eyeY, eyeRadius, paint);
-//        canvas.drawCircle(rightEyeX, eyeY, eyeRadius, paint);
-
+        Log.d(TAG, "Radius=" + radius);
+        if (radius > 100) {
+            drawSmiley(canvas, leftEyeX - eyeRadius, eyeY - eyeRadius, 2 * eyeRadius, 2 * eyeRadius);
+            drawSmiley(canvas, rightEyeX - eyeRadius, eyeY - eyeRadius, 2 * eyeRadius, 2 * eyeRadius);
+        } else {
+            canvas.drawCircle(leftEyeX, eyeY, eyeRadius, paint);
+            canvas.drawCircle(rightEyeX, eyeY, eyeRadius, paint);
+        }
+        
         int mouthX1 = cx - radius / 2, mouthX2 = cx + radius / 2;
         int mouthY = cy + radius / 2;
         canvas.drawArc(mouthX1, eyeY, mouthX2, mouthY, 15, 150, false, paint);
