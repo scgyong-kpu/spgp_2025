@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private @NonNull ActivityMainBinding ui;
     private ImageButton previousCardButton;
+    private ImageButton[] cardImageButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         ui = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(ui.getRoot());
 
-        ImageButton[] buttons = new ImageButton[]{
+        cardImageButtons = new ImageButton[]{
                 ui.card00, ui.card01, ui.card02, ui.card03,
                 ui.card10, ui.card11, ui.card12, ui.card13,
                 ui.card20, ui.card21, ui.card22, ui.card23,
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         };
         for (int i = 0; i < RES_IDS.length; i++) {
             Integer resId = RES_IDS[i];
-            buttons[i].setTag(resId);
+            cardImageButtons[i].setTag(resId);
         }
     }
 
