@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
             R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
     };
     private ImageButton[] cardButtons;
+    private int flips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             btn.setImageResource(resId);
             previousCardButton = btn;
+
+            flips += 1;
+            String text = String.format("Flips: %d", flips);
+            ui.scoreTextView.setText(text);
         }
     }
 }
