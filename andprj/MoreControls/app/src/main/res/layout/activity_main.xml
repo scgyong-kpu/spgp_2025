@@ -38,6 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/doItButton"
         android:layout_alignBaseline="@id/doItButton"
+        android:padding="20dp"
         android:background="#7f7"
         android:text="@string/apply_immediately"
         />
