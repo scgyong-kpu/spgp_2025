@@ -39,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
                 ui.card30, ui.card31, ui.card32, ui.card33,
         };
 
-        //shuffleCards();
+        startGame();
+    }
+
+    private void startGame() {
+        shuffleCards();
 
         for (int i = 0; i < cardResIds.length; i++) {
             Integer resId = cardResIds[i];
@@ -83,5 +87,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             previousCardButton = btn;
         }
+    }
+
+    public void onBtnRestart(View view) {
+        startGame();
     }
 }
