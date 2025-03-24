@@ -1,11 +1,13 @@
 package kr.ac.tukorea.ge.and.scgyong.cardsa01;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
@@ -101,6 +103,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnRestart(View view) {
-        startGame();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Restart");
+        builder.setMessage("Are you sure to restart this game?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startGame();
+            }
+        });
+        builder.setNegativeButton("No", null);
+        AlertDialog dlg = builder.create();
+        dlg.show();
     }
 }
