@@ -26,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
         boolean isGood = ui.goodProgrammerCheckbox.isChecked();
         int strId = isGood ? R.string.you_get_one_grand : R.string.you_have_nothing; // Alt+Enter here
         String msg = getString(strId);
-        String name = ui.nameEditText.getText().toString();
+        String name = ui.nameEditText.getText().toString().trim();
+        if (name.isEmpty()) {
+            name = getString(R.string.noname);
+        }
         String text = getString(R.string.main_msg_fmt, name, msg);
         ui.pageTitleTextView.setText(text);
     }
