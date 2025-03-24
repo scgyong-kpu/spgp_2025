@@ -32,4 +32,13 @@
         android:layout_margin="20dp"
         android:onClick="onBtnDoIt"
         />
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/doItButton"
+        android:layout_alignBaseline="@id/doItButton"
+        android:background="#7f7"
+        android:text="@string/apply_immediately"
+        />
 </RelativeLayout>
