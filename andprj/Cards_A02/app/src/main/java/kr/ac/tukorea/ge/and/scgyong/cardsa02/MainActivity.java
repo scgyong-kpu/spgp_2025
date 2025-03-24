@@ -16,6 +16,13 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton previousCardButton;
     private ImageButton[] cardImageButtons;
 
+    private static final int[] RES_IDS = new int[] {
+            R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
+            R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
+            R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
+            R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 ui.card10, ui.card11, ui.card12, ui.card13,
                 ui.card20, ui.card21, ui.card22, ui.card23,
                 ui.card30, ui.card31, ui.card32, ui.card33,
-        };
-        int[] RES_IDS = new int[] {
-                R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
-                R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
-                R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
-                R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
         };
         for (int i = 0; i < RES_IDS.length; i++) {
             Integer resId = RES_IDS[i];
