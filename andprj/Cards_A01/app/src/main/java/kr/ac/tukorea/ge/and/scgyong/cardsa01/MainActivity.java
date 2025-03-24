@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.and.scgyong.cardsa01;
 
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFlips(int flips) {
+        Resources res = getResources();
+        String fmt = res.getString(R.string.score_fmt);
         this.flips = flips;
-        String text = String.format("Flips: %d", this.flips);
+        String text = String.format(fmt, this.flips);
         ui.scoreTextView.setText(text);
     }
 
