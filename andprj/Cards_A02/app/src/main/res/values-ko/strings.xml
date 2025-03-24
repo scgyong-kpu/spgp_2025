@@ -5,4 +5,5 @@
     <string name="restart_dlg_title">재시작</string>
     <string name="restart_dlg_message">진짜루 재시작할껴?</string>
     <string name="restart_dlg_yes">그랴</string>
+    <string name="restart_dlg_no">아니여</string>
 </resources>
