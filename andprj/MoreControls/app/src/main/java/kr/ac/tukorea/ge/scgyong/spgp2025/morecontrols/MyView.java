@@ -71,6 +71,9 @@ public class MyView extends View {
         int secondSmileySize = eyeRadius * 2; // The diameter of the eye is the size for the second smiley
 
         drawSmiley(canvas, secondSmileyLeft, secondSmileyTop, secondSmileySize, secondSmileySize);
+
+        int rightSmileyLeft = cx + radius / 3 - eyeRadius;
+        drawSmiley(canvas, rightSmileyLeft, secondSmileyTop, secondSmileySize, secondSmileySize);
     }
 
     private void drawSmiley(Canvas canvas, int left, int top, int width, int height) {
