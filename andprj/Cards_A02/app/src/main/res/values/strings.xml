@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CardsA02</string>
+    <string name="score_fmt">Flips: %d</string>
 </resources>
