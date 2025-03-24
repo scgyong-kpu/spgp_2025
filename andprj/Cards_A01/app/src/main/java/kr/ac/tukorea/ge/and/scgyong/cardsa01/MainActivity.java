@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         int resId = (Integer) btn.getTag();
 
         if (resId == previousCardResourceId) {
-            btn.setVisibility(View.GONE);
-            previousCardButton.setVisibility(View.GONE);
+            btn.setVisibility(View.INVISIBLE);
+            previousCardButton.setVisibility(View.INVISIBLE);
         } else {
             btn.setImageResource(resId);
         }
