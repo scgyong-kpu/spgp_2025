@@ -52,10 +52,8 @@ public class MainActivity extends AppCompatActivity {
             cardImageButtons[i].setTag(resId);
         }
 
-        flips = 0;
-        ui.scoreTextView.setText("Flips: 0");
+        setFlips(0);
         previousCardButton = null;
-
     }
 
     private void shuffleCards() {
@@ -67,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
             cardResIds[i] = cardResIds[r];
             cardResIds[r] = resId;
         }
+    }
+
+    public void setFlips(int flips) {
+        this.flips = flips;
+        String text = String.format("Flips: %d", flips);
+        ui.scoreTextView.setText(text);
     }
 
     public void onBtnCard(View view) {
@@ -83,9 +87,7 @@ public class MainActivity extends AppCompatActivity {
         int resId = (Integer) btn.getTag();
         btn.setImageResource(resId);
 
-        flips += 1;
-        String text = String.format("Flips: %d", flips);
-        ui.scoreTextView.setText(text);
+        setFlips(flips + 1);
 
         if (previousResourceId == resId) {
             previousCardButton.setVisibility(View.INVISIBLE);
