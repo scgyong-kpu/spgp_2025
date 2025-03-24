@@ -63,6 +63,7 @@
         android:background="#F26224"
         />
     <LinearLayout
+        android:id="@+id/seekbarGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/nameEditText"
@@ -89,4 +90,9 @@
             android:text="$100"
             />
     </LinearLayout>
+    <kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols.MyView
+        android:layout_below="@id/seekbarGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </RelativeLayout>
