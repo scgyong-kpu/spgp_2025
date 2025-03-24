@@ -24,4 +24,10 @@ public class MainActivity extends AppCompatActivity {
         int strId = isGood ? R.string.you_get_one_grand : R.string.you_have_nothing; // Alt+Enter here
         ui.pageTitleTextView.setText(strId);
     }
+
+    public void onCheckGoodProgrammer(View view) {
+        boolean isGood = ui.goodProgrammerCheckbox.isChecked();
+        int strId = isGood ? R.string.good_news : R.string.bad_news;
+        ui.pageTitleTextView.setText(strId);
+    }
 }
