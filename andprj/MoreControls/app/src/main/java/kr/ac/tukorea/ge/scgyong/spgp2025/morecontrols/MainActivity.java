@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnDoIt(View view) {
-        ui.pageTitleTextView.setText(R.string.you_get_one_grand);
+        boolean isGood = ui.goodProgrammerCheckbox.isChecked();
+        int strId = isGood ? R.string.you_get_one_grand : R.string.you_have_nothing; // Alt+Enter here
+        ui.pageTitleTextView.setText(strId);
     }
 }
