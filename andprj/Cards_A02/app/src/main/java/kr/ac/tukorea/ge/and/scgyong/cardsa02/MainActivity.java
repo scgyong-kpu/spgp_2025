@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGame() {
-        shuffleCards();
+        //shuffleCards();
 
         for (int i = 0; i < cardResIds.length; i++) {
             Integer resId = cardResIds[i];
@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
             cardImageButtons[i].setImageResource(R.mipmap.card_blue_back);
             cardImageButtons[i].setTag(resId);
         }
+
+        flips = 0;
+        ui.scoreTextView.setText("Flips: 0");
+        previousCardButton = null;
+
     }
 
     private void shuffleCards() {
