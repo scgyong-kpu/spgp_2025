@@ -21,6 +21,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ui = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(ui.getRoot());
+
+        ImageButton[] buttons = new ImageButton[]{
+                ui.card00, ui.card01, ui.card02, ui.card03,
+                ui.card10, ui.card11, ui.card12, ui.card13,
+                ui.card20, ui.card21, ui.card22, ui.card23,
+                ui.card30, ui.card31, ui.card32, ui.card33,
+        };
+        int[] RES_IDS = new int[] {
+                R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
+                R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
+                R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
+                R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
+        };
+        for (int i = 0; i < RES_IDS.length; i++) {
+            int resId = RES_IDS[i];
+            Integer tag = resId;
+            buttons[i].setTag(tag);
+        }
     }
 
     public void onBtnCard(View view) {
@@ -32,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ImageButton btn = (ImageButton) view;
-        btn.setImageResource(R.mipmap.card_as);
+        Integer tag = (Integer) btn.getTag();
+        int resId = tag;
+        btn.setImageResource(resId);
 
         previousCardButton = btn;
     }
