@@ -37,15 +37,18 @@ public class MyView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-//        // TODO: consider storing these as member variables to reduce
-//        // allocations per draw cycle.
-//        int paddingLeft = getPaddingLeft();
-//        int paddingTop = getPaddingTop();
-//        int paddingRight = getPaddingRight();
-//        int paddingBottom = getPaddingBottom();
-//
-//        int contentWidth = getWidth() - paddingLeft - paddingRight;
-//        int contentHeight = getHeight() - paddingTop - paddingBottom;
+        // TODO: consider storing these as member variables to reduce
+        // allocations per draw cycle.
+        int paddingLeft = getPaddingLeft();
+        int paddingTop = getPaddingTop();
+        int paddingRight = getPaddingRight();
+        int paddingBottom = getPaddingBottom();
 
+        int contentWidth = getWidth() - paddingLeft - paddingRight;
+        int contentHeight = getHeight() - paddingTop - paddingBottom;
+
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        canvas.drawOval(paddingLeft, paddingTop, paddingLeft + contentWidth, paddingTop + contentHeight, paint);
     }
 }
