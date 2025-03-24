@@ -59,11 +59,10 @@ public class MainActivity extends AppCompatActivity {
         if (resId == previousCardResourceId) {
             btn.setVisibility(View.INVISIBLE);
             previousCardButton.setVisibility(View.INVISIBLE);
+            previousCardButton = null;
         } else {
             btn.setImageResource(resId);
+            previousCardButton = btn;
         }
-
-
-        previousCardButton = btn;
     }
 }
