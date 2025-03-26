@@ -23,10 +23,17 @@ public class MainActivity extends AppCompatActivity {
         ui = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(ui.getRoot());
 
+        // 1번째 : this, [2번째] : 멤버 변수에게, 3번째 : 즉석에서 만들기 <- OnCreate가 비대해진다
         ui.nameEditText.addTextChangedListener(nameEditTextWatcher);
+        //  SeekBar의 값이 변경될 때 실행할 콜백 리스너를 등록하는 함수
         ui.moneySeekBar.setOnSeekBarChangeListener(moneySeekbarChangeListener);
         setMoney(1000);
     }
+
+
+    // nameEditText의 입력이 바뀔 때마다 불린다.  onTextChanged
+    // 멤버 변수 선언하자마자 만든다는 느낌
+    // TextWatcher라는 순수가상클래스를 만들었기에 -> 정의를 해줘야한다 -> 객체를 만들 수 있도록
     private final TextWatcher nameEditTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // Switch가 켜져있는지 확인 -> Apply Immediately
             if (ui.immediateSwitch.isChecked()) {
                 doIt();
                 return;
@@ -48,9 +56,13 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    // SeekBar에도 함수 호출되는거 만들어줬다
+    // 리스너(Listener)는 이벤트를 감지하고, 특정 객체에 의해 호출되는 콜백 함수를 포함하는 객체야.
+    //즉, 콜백을 호출해주는 역할을 하는 객체
     private final SeekBar.OnSeekBarChangeListener moneySeekbarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            // 값이 바뀌면 값을 설정한다.
             setMoney(seekBar.getProgress());
             if (ui.immediateSwitch.isChecked()) {
                 doIt();
@@ -68,11 +80,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void setMoney(int money) {
         this.money = money;
+        // int를 string으로 바꿔서
         ui.moneyValueTextView.setText(String.valueOf(money));
     }
+
+    // Button 눌릴 때 호출되는 함수
     public void onBtnDoIt(View view) {
         doIt();
     }
+
+    // Button 눌릴 때 호출되는 함수
     private void doIt() {
         boolean isGood = ui.goodProgrammerCheckbox.isChecked();
         String msg;
@@ -81,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             msg = getString(R.string.you_have_nothing);
         }
+
+        // 사용자가 타이밍한 메시지를 얻기
+        // trim -> 엔터, 공백 같은거 없애주는 함수
         String name = ui.nameEditText.getText().toString().trim();
         if (name.isEmpty()) {
             name = getString(R.string.noname);
@@ -89,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         ui.pageTitleTextView.setText(text);
     }
 
+    // CheckBox 누르면 불리는 함수
     public void onCheckGoodProgrammer(View view) {
         boolean isGood = ui.goodProgrammerCheckbox.isChecked();
         int strId = isGood ? R.string.good_news : R.string.bad_news;

@@ -40,7 +40,7 @@
         android:layout_toRightOf="@id/doItButton"
         android:layout_alignBaseline="@id/doItButton"
         android:padding="20dp"
-        android:background="#7f7"
+        android:background="#00BCD4"
         android:text="@string/apply_immediately"
         />
     <EditText
@@ -60,7 +60,7 @@
         android:gravity="end"
         android:textSize="16sp"
         android:text="@string/your_name"
-        android:background="#F26224"
+        android:background="#FF9800"
         />
     <LinearLayout
         android:id="@+id/seekbarGroup"
