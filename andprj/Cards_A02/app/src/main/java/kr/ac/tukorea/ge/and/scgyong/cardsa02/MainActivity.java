@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         askRestart();
     }
 
+    // 3월 26일
     private void askRestart() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.restart_dlg_title)
