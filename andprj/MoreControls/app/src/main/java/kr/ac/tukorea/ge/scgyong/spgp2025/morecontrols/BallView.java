@@ -60,7 +60,7 @@ public class BallView extends View {
             transformOffset.set((w - h * game_ratio) / 2, 0);
             transformScale = h / SCREEN_HEIGHT;
         } else {
-            transformOffset.set(0, (h - w * game_ratio) / 2);
+            transformOffset.set(0, (h - w / game_ratio) / 2);
             transformScale = w / SCREEN_WIDTH;
         }
     }
