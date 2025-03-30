@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             width = 50;
         }
-        ui.myView.paint.setStrokeWidth(width);
-        ui.myView.invalidate();
+        ui.myView1.paint.setStrokeWidth(width);
+        ui.myView1.invalidate();
     }
 
     public void onRadioCap(View view) {
@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             cap = Paint.Cap.ROUND;
         }
-        ui.myView.paint.setStrokeCap(cap);
-        ui.myView.invalidate();
+        ui.myView1.paint.setStrokeCap(cap);
+        ui.myView1.invalidate();
     }
 
     public void onRadioJoin(View view) {
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             join = Paint.Join.ROUND;
         }
-        ui.myView.paint.setStrokeJoin(join);
-        ui.myView.invalidate();
+        ui.myView1.paint.setStrokeJoin(join);
+        ui.myView1.invalidate();
     }
 }

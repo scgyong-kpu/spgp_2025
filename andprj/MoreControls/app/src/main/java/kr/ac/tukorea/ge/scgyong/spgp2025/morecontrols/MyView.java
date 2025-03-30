@@ -63,7 +63,15 @@ public class MyView extends View {
             radius = contentWidth / 2;
         }
 
-        drawSmiley(canvas, cx, cy, radius, 3);
+        int depth = 1, scale = radius;
+        while (scale > 100) {
+            depth++;
+            Log.d(TAG, "scale=" + scale + " depth=" + depth);
+            scale /= 4;
+        }
+        Log.d(TAG, "Depth=" + depth + " for radius " + radius);
+
+        drawSmiley(canvas, cx, cy, radius, depth);
     }
     private void drawSmiley(Canvas canvas, float x, float y, float r, int depth) {
         canvas.save();
