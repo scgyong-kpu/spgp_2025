@@ -55,6 +55,7 @@ public class BallView extends View {
         float view_ratio = (float)w / (float)h;
         float game_ratio = SCREEN_WIDTH / SCREEN_HEIGHT;
 
+        transformMatrix.reset();
         if (view_ratio > game_ratio) {
             float scale = h / SCREEN_HEIGHT;
             transformMatrix.postScale(scale, scale);
