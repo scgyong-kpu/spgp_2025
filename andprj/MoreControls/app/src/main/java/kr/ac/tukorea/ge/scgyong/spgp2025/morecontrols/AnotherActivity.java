@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -18,6 +19,10 @@ public class AnotherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         ui = ActivityAnotherBinding.inflate(getLayoutInflater());
         setContentView(ui.getRoot());
     }
