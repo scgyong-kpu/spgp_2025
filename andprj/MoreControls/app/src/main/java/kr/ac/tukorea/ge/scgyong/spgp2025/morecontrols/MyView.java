@@ -66,7 +66,7 @@ public class MyView extends View {
         canvas.translate(cx, cy);
         canvas.scale(radius, radius);
 
-        drawSmiley(canvas, 2);
+        drawSmiley(canvas, 3);
     }
 
     private void drawSmiley(Canvas canvas, int depth) {
