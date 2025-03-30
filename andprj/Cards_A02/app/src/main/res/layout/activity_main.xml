@@ -20,6 +20,9 @@
             android:textSize="30sp"
             android:text="Flips: 0"
             />
+
+        <!-- Layout XML에도 Resource String 적용 / 버튼의 텍스트를 strings.xml에 저장된 문자열로 설정하는 코드
+        -->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -74,8 +74,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFlips(int flips) {
+        // score_fmt를 string resource로부터 얻는다.
+        // scoreTextView에 "Flips: 3" 같은 형식의 문자열을 설정하는 것
+        // Flips: %d라는 형식의 문자열에서 %d 부분이 flips 값으로 변환되어 UI에 표시
         this.flips = flips;
         Resources res = getResources();
+        // getString( fmt_id, .. ) fmt는 format(포맷) 의 약자 문자열 포맷팅
         String text = res.getString(R.string.score_fmt, flips);
         ui.scoreTextView.setText(text);
     }
@@ -84,11 +88,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "Btn ID=" + view.getId());
         //Toast.makeText(this, "Btn ID=" + view.getId(), Toast.LENGTH_SHORT).show();
 
+        // 같은 버튼이 눌렸다면 아무것도 안하기 Toast.LENGTH_SHORT → 메시지 표시 시간(짧게).show() → 실제로 화면에 표시.
         ImageButton btn = (ImageButton) view;
         if (btn == previousCardButton) {
             Toast.makeText(this, R.string.toast_same_card, Toast.LENGTH_SHORT).show();
             return;
         }
+
         int previousResourceId = 0;
         if (previousCardButton != null) {
             previousCardButton.setImageResource(R.mipmap.card_blue_back);
@@ -118,19 +124,31 @@ public class MainActivity extends AppCompatActivity {
         askRestart();
     }
 
-    // 3월 26일
+    // 3월 26일 - Android에서 AlertDialog(알림 대화상자) 를 만드는 코드
     private void askRestart() {
+        // 다이얼로그(AlertDialog)를 만드는 빌더 클래스.
+        //this: 현재 Activity(또는 Context)를 의미
         new AlertDialog.Builder(this)
+
+                // Restart Dialog에 사용되는 문자열을 모두 strings.xml로 빼낸다.
+
+                // 제목(title)과 메시지(message) 설정
                 .setTitle(R.string.restart_dlg_title)
                 .setMessage(R.string.restart_dlg_message)
+
+                // 예(확인) 버튼 추가 -> 버튼을 누르면 startGame(); 실행 (즉, 게임을 다시 시작)
                 .setPositiveButton(R.string.restart_dlg_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         startGame();
                     }
                 })
+                // "아니오(취소)" 버튼을 추가 (R.string.restart_dlg_no → "아니오")
+                //null이므로 아무 동작도 안 함.
                 .setNegativeButton(R.string.restart_dlg_no, null)
+                // 다이얼로그를 생성(create())하고 화면에 표시(show())
                 .create()
                 .show();
     }
+
 }

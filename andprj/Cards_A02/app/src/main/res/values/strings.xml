@@ -1,10 +1,19 @@
+
+<!--
+✔ 유지보수 편하고 다국어 지원이 가능 + 문자열을 한 곳(strings.xml)에 모아 관리하므로 수정이 쉬움.
+🎯 Translations Editor에서 Add Locale을 하고 테이블에 입력하면, 새로운 언어에 대한 strings.xml 파일이 자동 생성됩니다.
+-->
 <resources>
     <string name="app_name">CardsA02</string>
     <string name="score_fmt">Flips: %d</string>
+
+    <!-- Restart Dialog에 사용되는 문자열을 모두 strings.xml로 빼낸다. -->
     <string name="restart_dlg_title">Restart</string>
     <string name="restart_dlg_message">Are you sure to restart the game?</string>
     <string name="restart_dlg_yes">Yes</string>
     <string name="restart_dlg_no">No</string>
+
     <string name="toast_same_card">Same Card</string>
     <string name="btn_restart">Restart</string>
+
 </resources>
