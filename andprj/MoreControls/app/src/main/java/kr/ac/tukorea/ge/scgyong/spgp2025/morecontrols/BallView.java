@@ -40,6 +40,10 @@ public class BallView extends View {
     }
     private void init(AttributeSet attrs, int defStyleAttr) {
         // 모든 Constructor 들이 이곳을 통과하게 만들자.
+
+        setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        // NavigationBar 를 없앤다
+
         Resources res = getResources();
 
         BitmapFactory.Options options = new BitmapFactory.Options();
