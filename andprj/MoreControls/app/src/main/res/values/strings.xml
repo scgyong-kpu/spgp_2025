@@ -14,4 +14,5 @@
     <string name="noname">NoName</string>
     <string name="name_length_msg">Your name is %d character long.</string>
     <string name="naver">Naver</string>
+    <string name="another">Another</string>
 </resources>
