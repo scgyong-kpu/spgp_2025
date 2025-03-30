@@ -44,17 +44,20 @@ public class BallView extends View {
         bitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240, options);
     }
 
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        float cx = w / 2.0f, cy = h / 2.0f;
+        float ballRadius = w / 10.0f; // 화면폭의 1/10 이 되게 한다
+        ballRect.set(cx - ballRadius, cy - ballRadius, cx + ballRadius, cy + ballRadius);
+        Log.d(TAG, "Ball dest size=" + ballRect);
+    }
+
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         float cx = getWidth() / 2.0f;
         float cy = getHeight() / 2.0f;
 
-        float ballRadius = cx / 10; // 화면폭의 1/10 이 되게 한다
-        ballRect.set(cx - ballRadius, cy - ballRadius, cx + ballRadius, cy + ballRadius);
-        // Avoid object allocations during draw/ layout operations (preallocate and reuse instead)
-        // Inspection info: You should avoid allocating objects during a drawing or layout
-        Log.d(TAG, "Ball dest size=" + ballRect);
         canvas.drawBitmap(bitmap, null, ballRect, null);
     }
 }
