@@ -78,12 +78,16 @@ public class MyView extends View {
 
         //Log.d(TAG, "Radius=" + radius);
         if (depth > 1) {
+            canvas.save();
             canvas.translate(leftEyeX, eyeY);
             canvas.scale(eyeRadius, eyeRadius);
             drawSmiley(canvas, depth-1);
+            canvas.restore();
+            canvas.save();
             canvas.translate(rightEyeX, eyeY);
             canvas.scale(eyeRadius, eyeRadius);
             drawSmiley(canvas, depth-1);
+            canvas.restore();
         } else {
             canvas.drawCircle(leftEyeX, eyeY, eyeRadius, paint);
             canvas.drawCircle(rightEyeX, eyeY, eyeRadius, paint);
