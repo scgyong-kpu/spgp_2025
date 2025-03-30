@@ -6,12 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class BallView extends View {
+    private static final String TAG = BallView.class.getSimpleName();
     private Bitmap bitmap;
 
     public BallView(Context context) {
@@ -42,6 +44,9 @@ public class BallView extends View {
         super.onDraw(canvas);
         float cx = getWidth() / 2.0f;
         float cy = getHeight() / 2.0f;
-        canvas.drawBitmap(bitmap, cx, cy, null);
+        float w = bitmap.getWidth();
+        float h = bitmap.getHeight();
+        Log.d(TAG, "Ball image size=(" + w + "," + h + ")");
+        canvas.drawBitmap(bitmap, cx - w/2, cy - h/2, null);
     }
 }
