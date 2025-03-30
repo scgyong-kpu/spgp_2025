@@ -4,6 +4,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
@@ -135,5 +136,9 @@ public class MainActivity extends AppCompatActivity {
         }
         ui.myView1.paint.setStrokeJoin(join);
         ui.myView1.invalidate();
+    }
+
+    public void onBtnAnotherActivity(View view) {
+        Log.d(MainActivity.class.getSimpleName(), "open another");
     }
 }
