@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setVisibility(View.INVISIBLE);
             previousCardButton = null;
 
-            // 카드가 모두 오픈되어 게임오버가 되어도 재시작을 묻자 
+            // 카드가 모두 오픈되어 게임오버가 되어도 재시작을 묻자
             openCardCount -= 2;
             if (openCardCount == 0) {
                 askRestart();

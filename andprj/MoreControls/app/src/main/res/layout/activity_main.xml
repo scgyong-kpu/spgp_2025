@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+뷰(View)들을 서로 상대적으로 배치
+각 뷰가 다른 뷰나 부모 레이아웃에 대해 상대적인 위치를 지정할 수 있어 유연하게 UI를 구성
+한 뷰를 부모 레이아웃의 왼쪽에 맞추거나 다른 뷰의 오른쪽에 배치하는 등의 위치 지정이 가능
+
+layout_centerInParent="true" 속성을 사용하면 해당 뷰는 부모 레이아웃의 중앙에 배치
+
+layout_alignParentLeft: 부모의 왼쪽에 맞추기
+layout_alignParentTop: 부모의 상단에 맞추기
+layout_below: 다른 뷰 아래에 배치
+layout_toRightOf: 다른 뷰의 오른쪽에 배치
+
+뷰 간의 관계 설정:
+뷰가 서로 수평/수직으로 정렬될 수 있습니다. 예를 들어,
+한 뷰가 다른 뷰의 오른쪽에 위치하게 하거나, 아래에 위치하게 할 수 있습니다.
+
+-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,6 +42,12 @@
         android:layout_below="@id/pageTitleTextView"
         android:onClick="onCheckGoodProgrammer"
         />
+
+    <!--
+    android:layout_margin="20dp":
+    뷰의 모든 방향(상, 하, 좌, 우)에 대해 20dp의 여백을 설정합니다.
+    즉, 해당 뷰는 주변의 다른 뷰나 부모 레이아웃과 20dp 만큼의 간격
+    -->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,17 +57,50 @@
         android:layout_margin="20dp"
         android:onClick="onBtnDoIt"
         />
+
+    <!--
+    margin은 뷰의 외부 여백을 설정합니다.
+    즉, 뷰와 다른 뷰 또는 부모 레이아웃 사이의 간격을 설정하는 것
+
+    padding은 뷰의 내부 여백을 설정합니다.
+    즉, 뷰의 내용(텍스트, 이미지 등)과 뷰의 경계 사이의 간격을 설정하는 것
+
+    🔘 안드로이드의 Switch 위젯에서 기본적으로:
+	오른쪽이 "ON" (켜짐) 상태
+	왼쪽이 "OFF" (꺼짐) 상태
+
+	android:layout_alignParentRight="true"
+    설명: 이 속성은 뷰를 부모 레이아웃의 오른쪽 끝에 정렬
+
+    android:layout_toRightOf="@id/doItButton"
+    설명: 이 속성은 현재 뷰를 다른 뷰(doItButton)의 오른쪽에 배치
+
+    android:layout_alignBaseline="@id/doItButton"
+    설명: 이 속성은 현재 뷰의 기준선(baseline)을 doItButton 뷰의 기준선과 맞추도록 설정
+	-->
     <Switch
         android:id="@+id/immediateSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/doItButton"
         android:layout_alignBaseline="@id/doItButton"
+
         android:padding="20dp"
         android:background="#00BCD4"
         android:text="@string/apply_immediately"
         />
+
+    <!--
+     layout_below="@id/immediateSwitch":
+     이 속성은 EditText를 immediateSwitch라는 다른 뷰의 바로 아래에 배치하도록 합니다.
+     immediateSwitch의 바로 아래에 이 EditText가 배치되게 합니다.
+
+    layout_alignStart="@id/immediateSwitch": 이 속성은
+    EditText의 시작 지점(왼쪽)을 immediateSwitch의 시작 지점에 정렬시킵니다.
+    즉, immediateSwitch와 수평으로 왼쪽 정렬이 됩니다.
+     -->
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="match_parent"
@@ -51,6 +109,19 @@
         android:layout_alignStart="@id/immediateSwitch"
         android:hint="@string/noname"
         />
+
+    <!--
+    layout_toStartOf="@id/nameEditText":
+    이 속성은 TextView를 nameEditText 뷰의 왼쪽에 배치합니다.
+    즉, nameEditText의 시작 지점(왼쪽)을 기준으로 TextView가 배치
+
+    layout_alignBaseline="@id/nameEditText":
+    이 속성은 TextView와 nameEditText의 기준선(텍스트 기준선)을 맞추도록 합니다.
+    즉, nameEditText의 텍스트 기준선에 맞춰서 TextView가 배치됩니다.
+
+    gravity="end": TextView의 텍스트가 오른쪽 정렬되도록 설정합니다.
+    gravity는 텍스트의 정렬 방식을 지정하는 속성
+    -->
     <TextView
         android:labelFor="@id/nameEditText"
         android:layout_width="match_parent"
@@ -62,6 +133,7 @@
         android:text="@string/your_name"
         android:background="#FF9800"
         />
+
     <LinearLayout
         android:id="@+id/seekbarGroup"
         android:layout_width="match_parent"
@@ -74,6 +146,11 @@
             android:layout_height="wrap_content"
             android:text="Money"
             />
+
+        <!-- progress="1000":
+        SeekBar의 초기 진행 상태(progress)를 1000으로 설정합니다.
+        SeekBar의 슬라이더가 초기 상태에서 1000에 위치
+        -->
         <SeekBar
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -90,6 +167,7 @@
             android:text="$100"
             />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/paintControlGroup"
         android:visibility="gone"
@@ -215,6 +293,7 @@
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>
+
     <kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols.MyView
         android:id="@+id/myView"
         android:layout_below="@id/paintControlGroup"
@@ -222,4 +301,5 @@
         android:layout_height="match_parent"
         android:padding="10dp"
         />
+
 </RelativeLayout>
