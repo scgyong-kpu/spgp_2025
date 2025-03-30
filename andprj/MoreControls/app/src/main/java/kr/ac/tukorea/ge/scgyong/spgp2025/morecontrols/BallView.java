@@ -17,7 +17,9 @@ import androidx.annotation.Nullable;
 public class BallView extends View {
     private static final String TAG = BallView.class.getSimpleName();
     private Bitmap bitmap;
-    private final RectF ballRect = new RectF(0.45f, 0.45f, 0.55f, 0.55f);
+    private static final float SCREEN_WIDTH = 9.0f;
+    private static final float SCREEN_HEIGHT = 16.0f;
+    private final RectF ballRect = new RectF(4.0f, 7.5f, 5.0f, 8.5f);
     private final PointF transformOffset = new PointF();
     private float transformScale;
 
@@ -49,12 +51,16 @@ public class BallView extends View {
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (w < h) {
-            transformOffset.set(0, (h - w) / 2.0f);
-            transformScale = w;
+
+        float view_ratio = (float)w / (float)h;
+        float game_ratio = SCREEN_WIDTH / SCREEN_HEIGHT;
+
+        if (view_ratio > game_ratio) {
+            transformOffset.set((w - h * game_ratio) / 2, 0);
+            transformScale = h / SCREEN_HEIGHT;
         } else {
-            transformOffset.set((w - h) / 2.0f, 0);
-            transformScale = h;
+            transformOffset.set(0, (h - w * game_ratio) / 2);
+            transformScale = w / SCREEN_WIDTH;
         }
     }
 
