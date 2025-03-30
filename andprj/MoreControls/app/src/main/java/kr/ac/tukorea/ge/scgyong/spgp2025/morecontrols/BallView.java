@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,7 +17,9 @@ import androidx.annotation.Nullable;
 public class BallView extends View {
     private static final String TAG = BallView.class.getSimpleName();
     private Bitmap bitmap;
-    private RectF ballRect = new RectF();
+    private final RectF ballRect = new RectF(0.45f, 0.45f, 0.55f, 0.55f);
+    private final PointF transformOffset = new PointF();
+    private float transformScale;
 
     public BallView(Context context) {
         super(context);
@@ -46,18 +49,22 @@ public class BallView extends View {
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        float cx = w / 2.0f, cy = h / 2.0f;
-        float ballRadius = w / 10.0f; // 화면폭의 1/10 이 되게 한다
-        ballRect.set(cx - ballRadius, cy - ballRadius, cx + ballRadius, cy + ballRadius);
-        Log.d(TAG, "Ball dest size=" + ballRect);
+        if (w < h) {
+            transformOffset.set(0, (h - w) / 2.0f);
+            transformScale = w;
+        } else {
+            transformOffset.set((w - h) / 2.0f, 0);
+            transformScale = h;
+        }
     }
 
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
-        float cx = getWidth() / 2.0f;
-        float cy = getHeight() / 2.0f;
-
+        canvas.save();
+        canvas.translate(transformOffset.x, transformOffset.y);
+        canvas.scale(transformScale, transformScale);
         canvas.drawBitmap(bitmap, null, ballRect, null);
+        canvas.restore();
     }
 }
