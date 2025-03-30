@@ -8,6 +8,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--
+    닫는 태그는 </LinearLayout>입니다.
+    자식 요소가 없으면 <LinearLayout /> 처럼 자체 닫는 태그로 작성
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        <TextureView
+            android:layout_width=""
+            android:layout_height=""
+            />
+    </LinearLayout>
+    -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,6 +45,7 @@
             />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -49,6 +64,7 @@
             android:id="@+id/card_03"
             style="@style/cardButtonStyle" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -67,6 +83,7 @@
             android:id="@+id/card_13"
             style="@style/cardButtonStyle" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -85,6 +102,7 @@
             android:id="@+id/card_23"
             style="@style/cardButtonStyle" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

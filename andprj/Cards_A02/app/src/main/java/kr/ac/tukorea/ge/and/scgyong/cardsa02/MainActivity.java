@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton[] cardImageButtons;
 
     private int[] cardResIds = new int[] {
+            // 버튼에 각각 리소스 id를 tag로 달아놓고 눌렀을 때 보여준다
             R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
             R.mipmap.card_5s, R.mipmap.card_jc, R.mipmap.card_qh, R.mipmap.card_kd,
             R.mipmap.card_as, R.mipmap.card_2c, R.mipmap.card_3d, R.mipmap.card_4h,
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Binding 객체를 이용하여 화면 로딩
         ui = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(ui.getRoot());
 
@@ -51,19 +54,23 @@ public class MainActivity extends AppCompatActivity {
         //shuffleCards();
 
         for (int i = 0; i < cardResIds.length; i++) {
+            // 버튼에 각각 리소스 id를 tag로 달아놓고 눌렀을 때 보여준다
             Integer resId = cardResIds[i];
+
+            // 재시작시 디자인 타임의 상태로 되돌리는 코드
             cardImageButtons[i].setVisibility(View.VISIBLE);
             cardImageButtons[i].setImageResource(R.mipmap.card_blue_back);
             cardImageButtons[i].setTag(resId);
         }
 
+        // Flips, Prev도 초기화
         setFlips(0);
         previousCardButton = null;
         openCardCount = cardResIds.length;
     }
 
+    // Fisher-Yates Shuffle Algorithm
     private void shuffleCards() {
-        // Fisher-Yates Algorithm
         Random rand = new Random();
         for (int i = 0; i < cardResIds.length; i++) {
             int r = rand.nextInt(cardResIds.length);
@@ -85,8 +92,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnCard(View view) {
+        // Log Cat으로 로그 보기
         Log.d("MainActivity", "Btn ID=" + view.getId());
-        //Toast.makeText(this, "Btn ID=" + view.getId(), Toast.LENGTH_SHORT).show();
+
+        // Toast 사용
+        Toast.makeText(this, "Btn ID=" + view.getId(), Toast.LENGTH_SHORT).show();
 
         // 같은 버튼이 눌렸다면 아무것도 안하기 Toast.LENGTH_SHORT → 메시지 표시 시간(짧게).show() → 실제로 화면에 표시.
         ImageButton btn = (ImageButton) view;
@@ -96,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int previousResourceId = 0;
+
+        // 눌린 카드가 있었을 때에만 뒷면전환한다. - 첫번째 클릭땐 안해야한다
         if (previousCardButton != null) {
             previousCardButton.setImageResource(R.mipmap.card_blue_back);
             previousResourceId = (Integer) previousCardButton.getTag();
@@ -111,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setVisibility(View.INVISIBLE);
             previousCardButton = null;
 
+            // 카드가 모두 오픈되어 게임오버가 되어도 재시작을 묻자 
             openCardCount -= 2;
             if (openCardCount == 0) {
                 askRestart();
