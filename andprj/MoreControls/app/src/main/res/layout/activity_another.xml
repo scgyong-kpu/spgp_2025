@@ -6,19 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AnotherActivity">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/anotherMainTextView"
-        android:text="@string/another_main_text_view"
-        android:textSize="40sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        />
     <kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols.BallView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/anotherMainTextView"
         />
 
 </RelativeLayout>
