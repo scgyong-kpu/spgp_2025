@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -47,9 +48,12 @@ public class BallView extends View {
         super.onDraw(canvas);
         float cx = getWidth() / 2.0f;
         float cy = getHeight() / 2.0f;
-        float w = bitmap.getWidth();
-        float h = bitmap.getHeight();
-        Log.d(TAG, "Ball image size=(" + w + "," + h + ")");
-        canvas.drawBitmap(bitmap, cx - w/2, cy - h/2, null);
+
+        float ballRadius = cx / 10; // 화면폭의 1/10 이 되게 한다
+        RectF ballRect = new RectF(cx - ballRadius, cy - ballRadius, cx + ballRadius, cy + ballRadius);
+        // Avoid object allocations during draw/ layout operations (preallocate and reuse instead)
+        // Inspection info: You should avoid allocating objects during a drawing or layout
+        Log.d(TAG, "Ball dest size=" + ballRect);
+        canvas.drawBitmap(bitmap, null, ballRect, null);
     }
 }
