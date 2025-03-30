@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.activity.EdgeToEdge;
@@ -25,5 +26,6 @@ public class AnotherActivity extends AppCompatActivity {
 
         ui = ActivityAnotherBinding.inflate(getLayoutInflater());
         setContentView(ui.getRoot());
+        Log.d(AnotherActivity.class.getSimpleName(), "Root = " + ui.getRoot());
     }
 }
