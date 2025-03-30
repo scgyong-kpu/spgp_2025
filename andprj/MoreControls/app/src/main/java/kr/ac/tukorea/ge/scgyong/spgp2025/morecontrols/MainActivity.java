@@ -162,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnOpenAnother(View view) {
-        Log.d(TAG, "Opening Another Activity");
+//        Log.d(TAG, "Opening Another Activity");
+        Intent intent = new Intent(this, AnotherActivity.class);
+        startActivity(intent);
     }
 }
