@@ -1,6 +1,9 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols;
 
+import android.app.Notification;
+import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -138,7 +141,9 @@ public class MainActivity extends AppCompatActivity {
         ui.myView1.invalidate();
     }
 
-    public void onBtnAnotherActivity(View view) {
-        Log.d(MainActivity.class.getSimpleName(), "open another");
+    public void onBtnOpenNaver(View view) {
+        Uri uri = Uri.parse("https://www.naver.com/");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 }

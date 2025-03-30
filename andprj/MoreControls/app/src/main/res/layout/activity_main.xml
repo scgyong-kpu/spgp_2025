@@ -228,8 +228,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/open_another"
-            android:onClick="onBtnAnotherActivity"
+            android:text="@string/naver"
+            android:onClick="onBtnOpenNaver"
             />
         <View
             android:layout_width="0dp"
