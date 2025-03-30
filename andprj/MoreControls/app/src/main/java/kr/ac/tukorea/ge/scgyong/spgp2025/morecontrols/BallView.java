@@ -36,7 +36,10 @@ public class BallView extends View {
     private void init(AttributeSet attrs, int defStyleAttr) {
         // 모든 Constructor 들이 이곳을 통과하게 만들자.
         Resources res = getResources();
-        bitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+        bitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240, options);
     }
 
     @Override
