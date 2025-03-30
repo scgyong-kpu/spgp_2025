@@ -63,10 +63,14 @@ public class MyView extends View {
             radius = contentWidth / 2;
         }
 
-        canvas.translate(cx, cy);
-        canvas.scale(radius, radius);
-
-        drawSmiley(canvas, 3);
+        drawSmiley(canvas, cx, cy, radius, 3);
+    }
+    private void drawSmiley(Canvas canvas, float x, float y, float r, int depth) {
+        canvas.save();
+        canvas.translate(x, y);
+        canvas.scale(r, r);
+        drawSmiley(canvas, depth);
+        canvas.restore();
     }
 
     private void drawSmiley(Canvas canvas, int depth) {
@@ -78,16 +82,8 @@ public class MyView extends View {
 
         //Log.d(TAG, "Radius=" + radius);
         if (depth > 1) {
-            canvas.save();
-            canvas.translate(leftEyeX, eyeY);
-            canvas.scale(eyeRadius, eyeRadius);
-            drawSmiley(canvas, depth-1);
-            canvas.restore();
-            canvas.save();
-            canvas.translate(rightEyeX, eyeY);
-            canvas.scale(eyeRadius, eyeRadius);
-            drawSmiley(canvas, depth-1);
-            canvas.restore();
+            drawSmiley(canvas, leftEyeX, eyeY, eyeRadius, depth-1);
+            drawSmiley(canvas, rightEyeX, eyeY, eyeRadius, depth-1);
         } else {
             canvas.drawCircle(leftEyeX, eyeY, eyeRadius, paint);
             canvas.drawCircle(rightEyeX, eyeY, eyeRadius, paint);
