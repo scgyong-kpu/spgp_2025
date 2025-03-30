@@ -18,6 +18,7 @@ import kr.ac.tukorea.ge.scgyong.spgp2025.morecontrols.databinding.ActivityMainBi
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private @NonNull ActivityMainBinding ui;
     private int money;
 
@@ -31,6 +32,19 @@ public class MainActivity extends AppCompatActivity {
         ui.moneySeekBar.setOnSeekBarChangeListener(moneySeekbarChangeListener);
         setMoney(1000);
     }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
     private final TextWatcher nameEditTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
