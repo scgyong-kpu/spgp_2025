@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 public class BallView extends View {
     private static final String TAG = BallView.class.getSimpleName();
     private Bitmap bitmap;
+    private RectF ballRect = new RectF();
 
     public BallView(Context context) {
         super(context);
@@ -50,7 +51,7 @@ public class BallView extends View {
         float cy = getHeight() / 2.0f;
 
         float ballRadius = cx / 10; // 화면폭의 1/10 이 되게 한다
-        RectF ballRect = new RectF(cx - ballRadius, cy - ballRadius, cx + ballRadius, cy + ballRadius);
+        ballRect.set(cx - ballRadius, cy - ballRadius, cx + ballRadius, cy + ballRadius);
         // Avoid object allocations during draw/ layout operations (preallocate and reuse instead)
         // Inspection info: You should avoid allocating objects during a drawing or layout
         Log.d(TAG, "Ball dest size=" + ballRect);
