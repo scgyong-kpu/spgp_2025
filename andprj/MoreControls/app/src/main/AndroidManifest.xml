@@ -15,6 +15,7 @@
         <activity
             android:name=".AnotherActivity"
             android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
