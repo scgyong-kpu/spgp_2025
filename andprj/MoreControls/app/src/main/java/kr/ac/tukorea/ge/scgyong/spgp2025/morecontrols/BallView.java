@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,10 +15,11 @@ import androidx.annotation.Nullable;
 
 public class BallView extends View {
     private static final String TAG = BallView.class.getSimpleName();
-    private Bitmap bitmap;
+    private Bitmap ballBitmap, bgBitmap;
     private static final float SCREEN_WIDTH = 9.0f;
     private static final float SCREEN_HEIGHT = 16.0f;
     private final RectF ballRect = new RectF(4.0f, 7.5f, 5.0f, 8.5f);
+    private final RectF bgRect = new RectF(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT);
     private final PointF transformOffset = new PointF();
     private float transformScale;
 
@@ -46,7 +46,8 @@ public class BallView extends View {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
-        bitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240, options);
+        ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240, options);
+        bgBitmap = BitmapFactory.decodeResource(res, R.mipmap.block_9x16, options);
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -70,7 +71,8 @@ public class BallView extends View {
         canvas.save();
         canvas.translate(transformOffset.x, transformOffset.y);
         canvas.scale(transformScale, transformScale);
-        canvas.drawBitmap(bitmap, null, ballRect, null);
+        canvas.drawBitmap(bgBitmap, null, bgRect, null);
+        canvas.drawBitmap(ballBitmap, null, ballRect, null);
         canvas.restore();
     }
 }
