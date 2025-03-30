@@ -63,12 +63,7 @@ public class MyView extends View {
             radius = contentWidth / 2;
         }
 
-        int depth = 1, scale = radius;
-        while (scale > 100) {
-            depth++;
-            Log.d(TAG, "scale=" + scale + " depth=" + depth);
-            scale /= 4;
-        }
+        int depth = (int) Math.ceil(Math.log(radius / 100.0) / Math.log(4)) + 1;
         Log.d(TAG, "Depth=" + depth + " for radius " + radius);
 
         drawSmiley(canvas, cx, cy, radius, depth);
