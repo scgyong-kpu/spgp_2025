@@ -66,10 +66,10 @@ public class MyView extends View {
         canvas.translate(cx, cy);
         canvas.scale(radius, radius);
 
-        drawSmiley(canvas);
+        drawSmiley(canvas, 2);
     }
 
-    private void drawSmiley(Canvas canvas) {
+    private void drawSmiley(Canvas canvas, int depth) {
         canvas.drawCircle(0, 0, 1.0f, paint);
 
         float leftEyeX = - 1.0f / 3, rightEyeX = 1.0f / 3;
@@ -77,13 +77,17 @@ public class MyView extends View {
         float eyeRadius = 1.0f / 4;
 
         //Log.d(TAG, "Radius=" + radius);
-//        if (radius > 100) {
-//            drawSmiley(canvas, leftEyeX - eyeRadius, eyeY - eyeRadius, 2 * eyeRadius, 2 * eyeRadius);
-//            drawSmiley(canvas, rightEyeX - eyeRadius, eyeY - eyeRadius, 2 * eyeRadius, 2 * eyeRadius);
-//        } else {
+        if (depth > 1) {
+            canvas.translate(leftEyeX, eyeY);
+            canvas.scale(eyeRadius, eyeRadius);
+            drawSmiley(canvas, depth-1);
+            canvas.translate(rightEyeX, eyeY);
+            canvas.scale(eyeRadius, eyeRadius);
+            drawSmiley(canvas, depth-1);
+        } else {
             canvas.drawCircle(leftEyeX, eyeY, eyeRadius, paint);
             canvas.drawCircle(rightEyeX, eyeY, eyeRadius, paint);
-//        }
+        }
 
         float mouthX1 = - 1.0f / 2, mouthX2 = 1.0f / 2;
         float mouthY = + 1.0f / 2;
