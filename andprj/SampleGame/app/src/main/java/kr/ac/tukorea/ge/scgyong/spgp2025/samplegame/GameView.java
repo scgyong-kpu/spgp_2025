@@ -22,8 +22,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
     private final Matrix transformMatrix = new Matrix();
 
-    private final Ball ball1 = new Ball();
-    private final Ball ball2 = new Ball();
+    private final Ball ball1 = Ball.random();
+    private final Ball ball2 = Ball.random();
 
     public GameView(Context context) {
         super(context);

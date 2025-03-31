@@ -13,8 +13,8 @@ public class Ball {
     private float dx, dy;
 
     private static final Random random = new Random();
-    public Ball() {
-        this(random.nextFloat() * GameView.SCREEN_WIDTH,
+    public static Ball random() {
+        return new Ball(random.nextFloat() * GameView.SCREEN_WIDTH,
                 random.nextFloat() * GameView.SCREEN_HEIGHT,
                 random.nextFloat() * 360);
     }
