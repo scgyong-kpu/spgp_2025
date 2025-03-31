@@ -39,6 +39,8 @@ public class GameView extends View {
         // 실질적 생성자 역할
 
         ballBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.soccer_ball_240);
+
+        scheduleUpdate();
     }
 
     @Override
@@ -67,15 +69,16 @@ public class GameView extends View {
         canvas.drawBitmap(ballBitmap, null, ballRect, null);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            update();
-            invalidate();
-        }
-        return super.onTouchEvent(event);
+    private void scheduleUpdate() {
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                update();
+                invalidate();
+                scheduleUpdate();
+            }
+        }, 500);
     }
-
     private void update() {
         ballRect.offset(0.1f, 0.2f);
         Log.d(TAG, "Ball Rect = " + ballRect);
