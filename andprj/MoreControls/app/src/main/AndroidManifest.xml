@@ -13,6 +13,10 @@
         android:theme="@style/Theme.MoreControls"
         tools:targetApi="31">
         <activity
+            android:name=".AnotherActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true">
