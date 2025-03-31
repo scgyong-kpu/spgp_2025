@@ -4,12 +4,20 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
+import java.util.Random;
+
 public class Ball {
     private final RectF dstRect = new RectF();
     private static final float BALL_RADIUS = 1.0f;
     private static final float SPEED = 7.0f / 60;
     private float dx, dy;
 
+    private static final Random random = new Random();
+    public Ball() {
+        this(random.nextFloat() * GameView.SCREEN_WIDTH,
+                random.nextFloat() * GameView.SCREEN_HEIGHT,
+                random.nextFloat() * 360);
+    }
     public Ball(float centerX, float centerY, float angle_degree) {
         dstRect.set(centerX - BALL_RADIUS, centerY - BALL_RADIUS,
                 centerX + BALL_RADIUS, centerY + BALL_RADIUS);
