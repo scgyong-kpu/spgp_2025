@@ -8,10 +8,9 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
+import android.view.Choreographer;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -70,23 +69,12 @@ public class GameView extends View {
         canvas.drawBitmap(ballBitmap, null, ballRect, null);
     }
 
-    // Handler is android.os.Handler.
-    // do not import java.util.logging.Handler
-    private final Handler handler = new Handler();
-    private long lastUpdateTime = 0;
     private void scheduleUpdate() {
-        long now = System.currentTimeMillis();
-        long elapsedSinceLastUpdate = now - lastUpdateTime;
-        long targetDelay = 1000/60;
-        long delay = Math.max(0, targetDelay - elapsedSinceLastUpdate);
+        Choreographer.getInstance().postFrameCallback(gameLoopCallback);    }
 
-        handler.postDelayed(gameLoopRunnable, delay);
-        lastUpdateTime = now;
-    }
-
-    private final Runnable gameLoopRunnable = new Runnable() {
+    private final Choreographer.FrameCallback gameLoopCallback = new Choreographer.FrameCallback() {
         @Override
-        public void run() {
+        public void doFrame(long nanos) {
             update();
             invalidate();
             if (isShown()) {
