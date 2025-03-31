@@ -69,8 +69,15 @@ public class GameView extends View {
         canvas.drawBitmap(ballBitmap, null, ballRect, null);
     }
 
+    private long lastUpdateTime = 0;
     private void scheduleUpdate() {
-        postDelayed(gameLoopRunnable, 1000/60);
+        long now = System.currentTimeMillis();
+        long elapsedSinceLastUpdate = now - lastUpdateTime;
+        long targetDelay = 1000/60;
+        long delay = Math.max(0, targetDelay - elapsedSinceLastUpdate);
+
+        postDelayed(gameLoopRunnable, delay);
+        lastUpdateTime = now;
     }
 
     private final Runnable gameLoopRunnable = new Runnable() {
