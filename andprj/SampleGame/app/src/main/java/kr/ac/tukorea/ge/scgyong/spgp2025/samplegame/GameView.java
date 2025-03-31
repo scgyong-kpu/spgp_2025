@@ -9,7 +9,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
 
@@ -23,6 +22,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final Matrix transformMatrix = new Matrix();
 
     private Bitmap ballBitmap;
+    private float ballDx = 0.04f, ballDy = 0.06f;
     private final RectF ballRect = new RectF(3.5f, 7.0f, 5.5f, 9.0f);
 
     public GameView(Context context) {
@@ -82,8 +82,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     };
 
     private void update() {
-        ballRect.offset(0.01f, 0.02f);
-        Log.d(TAG, "Ball Rect = " + ballRect);
+        ballRect.offset(ballDx, ballDy);
+        //Log.d(TAG, "Ball Rect = " + ballRect);
     }
 
     private RectF borderRect;
