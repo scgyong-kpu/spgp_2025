@@ -45,6 +45,11 @@ public class MyView extends View {
         paint.setColor(Color.BLUE); // 선 색을 파란색
         paint.setStyle(Paint.Style.STROKE); // 선 스타일로 STROKE를 설정 (채우기 없이 선만 그리도록)
         paint.setStrokeWidth(10); // 선의 두께를 10px로 설정
+
+        paint = new Paint();
+        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(0.02f);
     }
 
     public Paint paint;
@@ -68,7 +73,26 @@ public class MyView extends View {
         int contentWidth = (w - l - r);
         int contentHeight = (h - t - b);
 
-        drawSmiley(canvas, l, t, contentWidth,contentHeight);
+        int cx = l + contentWidth / 2;
+        int cy = t + contentHeight / 2;
+        int radius;
+        if (contentWidth >= contentHeight) {
+            radius = contentHeight / 2;
+        } else {
+            radius = contentWidth / 2;
+        }
+
+        int depth = (int) Math.ceil(Math.log(radius / 100.0) / Math.log(4)) + 1;
+        Log.d(TAG, "Depth=" + depth + " for radius " + radius);
+
+        drawSmiley(canvas, cx, cy, radius, depth);
+    }
+    private void drawSmiley(Canvas canvas, float x, float y, float r, int depth) {
+        canvas.save();
+        canvas.translate(x, y);
+        canvas.scale(r, r);
+        drawSmiley(canvas, depth);
+        canvas.restore();
     }
 
     private void drawSmiley(Canvas canvas, int left, int top, int width, int height) {
@@ -78,9 +102,12 @@ public class MyView extends View {
         // 1. canvas.drawCircle로 원을 그려 얼굴을 만듭니다.
         // 원의 중심은 cx, cy로 계산하며, 반지름은 radius
 
-        int leftEyeX = cx - radius / 3, rightEyeX = cx + radius / 3;
-        int eyeY = cy - radius / 4;
-        int eyeRadius = radius / 4;
+    private void drawSmiley(Canvas canvas, int depth) {
+        canvas.drawCircle(0, 0, 1.0f, paint);
+
+        float leftEyeX = - 1.0f / 3, rightEyeX = 1.0f / 3;
+        float eyeY = - 1.0f / 4;
+        float eyeRadius = 1.0f / 4;
 
         Log.d(TAG, "Radius=" + radius);
         if (radius > 100) {
@@ -88,6 +115,11 @@ public class MyView extends View {
             // 더 작은 크기의 눈을 그리기 위해 재귀적으로 drawSmiley를 호출
             drawSmiley(canvas, leftEyeX - eyeRadius, eyeY - eyeRadius, 2 * eyeRadius, 2 * eyeRadius);
             drawSmiley(canvas, rightEyeX - eyeRadius, eyeY - eyeRadius, 2 * eyeRadius, 2 * eyeRadius);
+
+        //Log.d(TAG, "Radius=" + radius);
+        if (depth > 1) {
+            drawSmiley(canvas, leftEyeX, eyeY, eyeRadius, depth-1);
+            drawSmiley(canvas, rightEyeX, eyeY, eyeRadius, depth-1);
         } else {
 
             // 왼쪽과 오른쪽 눈의 위치를 계산한 후 drawCircle로 두 개의 눈을 그립니다.
@@ -95,8 +127,8 @@ public class MyView extends View {
             canvas.drawCircle(rightEyeX, eyeY, eyeRadius, paint);
         }
 
-        int mouthX1 = cx - radius / 2, mouthX2 = cx + radius / 2;
-        int mouthY = cy + radius / 2;
+        float mouthX1 = - 1.0f / 2, mouthX2 = 1.0f / 2;
+        float mouthY = + 1.0f / 2;
         canvas.drawArc(mouthX1, eyeY, mouthX2, mouthY, 15, 150, false, paint);
         // drawArc를 사용해 입을 그립니다.
         // mouthX1, mouthX2, mouthY는 입의 시작과 끝 위치를 계산하며, drawArc의 각도는 15도에서 150도 사이
