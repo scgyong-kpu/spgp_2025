@@ -74,11 +74,11 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public void doFrame(long nanos) {
-            update();
-            invalidate();
-            if (isShown()) {
-                scheduleUpdate();
-            }
+        update();
+        invalidate();
+        if (isShown()) {
+            scheduleUpdate();
+        }
     };
 
     private void update() {
