@@ -1,5 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnStartGame(View view) {
-        // start game activity here
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
     }
 }
