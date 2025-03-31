@@ -1,6 +1,8 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -19,6 +21,9 @@ public class GameView extends View {
     private final RectF borderRect = new RectF(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     private final Paint borderPaint = new Paint();
 
+    private Bitmap ballBitmap;
+    private final RectF ballRect = new RectF(3.5f, 7.0f, 5.5f, 9.0f);
+
     public GameView(Context context) {
         super(context);
         init();
@@ -34,6 +39,8 @@ public class GameView extends View {
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setStrokeWidth(0.1f);
         borderPaint.setColor(Color.RED);
+
+        ballBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.soccer_ball_240);
     }
 
     @Override
@@ -59,5 +66,6 @@ public class GameView extends View {
         super.onDraw(canvas);
         canvas.setMatrix(transformMatrix);
         canvas.drawRect(borderRect, borderPaint);
+        canvas.drawBitmap(ballBitmap, null, ballRect, null);
     }
 }
