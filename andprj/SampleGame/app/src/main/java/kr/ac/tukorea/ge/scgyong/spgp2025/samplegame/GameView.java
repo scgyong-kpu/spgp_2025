@@ -71,6 +71,7 @@ public class GameView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             update();
+            invalidate();
         }
         return super.onTouchEvent(event);
     }
@@ -78,7 +79,6 @@ public class GameView extends View {
     private void update() {
         ballRect.offset(0.1f, 0.2f);
         Log.d(TAG, "Ball Rect = " + ballRect);
-        invalidate();
     }
 
     private RectF borderRect;
