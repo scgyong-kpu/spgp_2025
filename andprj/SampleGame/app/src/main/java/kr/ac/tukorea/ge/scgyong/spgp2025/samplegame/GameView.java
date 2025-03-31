@@ -77,7 +77,9 @@ public class GameView extends View {
 
     private void move() {
         ballRect.left += 1.0f;
+        ballRect.right += 1.0f;
         Log.d(TAG, "Ball Rect = " + ballRect);
+        invalidate();
     }
 
     private RectF borderRect;
