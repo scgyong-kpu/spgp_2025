@@ -9,6 +9,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import androidx.annotation.Nullable;
 public class GameView extends View {
     private static final float SCREEN_WIDTH = 9.0f;
     private static final float SCREEN_HEIGHT = 16.0f;
+    private static final String TAG = GameView.class.getSimpleName();
     private final Matrix transformMatrix = new Matrix();
 
     private Bitmap ballBitmap;
@@ -62,6 +65,19 @@ public class GameView extends View {
         canvas.setMatrix(transformMatrix);
         drawDebugBackground(canvas);
         canvas.drawBitmap(ballBitmap, null, ballRect, null);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            move();
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private void move() {
+        ballRect.left += 1.0f;
+        Log.d(TAG, "Ball Rect = " + ballRect);
     }
 
     private RectF borderRect;
