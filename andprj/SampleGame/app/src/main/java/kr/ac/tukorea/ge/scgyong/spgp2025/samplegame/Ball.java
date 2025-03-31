@@ -7,13 +7,16 @@ import android.graphics.RectF;
 public class Ball {
     private final RectF dstRect = new RectF();
     private static final float BALL_RADIUS = 1.0f;
+    private static final float SPEED = 7.0f / 60;
     private float dx, dy;
 
-    public Ball(float centerX, float centerY, float dx, float dy) {
+    public Ball(float centerX, float centerY, float angle_degree) {
         dstRect.set(centerX - BALL_RADIUS, centerY - BALL_RADIUS,
                 centerX + BALL_RADIUS, centerY + BALL_RADIUS);
-        this.dx = dx;
-        this.dy = dy;
+        //double radian = Math.PI * angle_degree / 180;
+        double radian = Math.toRadians(angle_degree);
+        this.dx = SPEED * (float) Math.cos(radian);
+        this.dy = SPEED * (float) Math.sin(radian);
     }
     private static Bitmap bitmap;
     public static void setBitmap(Bitmap bitmap) { // Alt+Insert -> Setter
