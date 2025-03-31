@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -16,16 +17,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class GameView extends View implements Choreographer.FrameCallback {
-    private static final float SCREEN_WIDTH = 9.0f;
-    private static final float SCREEN_HEIGHT = 16.0f;
+    public static final float SCREEN_WIDTH = 9.0f;
+    public static final float SCREEN_HEIGHT = 16.0f;
     private static final String TAG = GameView.class.getSimpleName();
     private final Matrix transformMatrix = new Matrix();
 
-    private Bitmap ballBitmap;
-    private float ballDx = 0.04f, ballDy = 0.06f;
-    private final RectF ballRect = new RectF(3.5f, 7.0f, 5.5f, 9.0f);
-    private float ballDx2 = 0.06f, ballDy2 = 0.04f;
-    private final RectF ballRect2 = new RectF(5.5f, 2.0f, 7.5f, 4.0f);
+    private final Ball ball1 = new Ball(4.5f, 8.0f, 0.04f, 0.06f);
+    private final Ball ball2 = new Ball(6.5f, 3.0f, 0.06f, 0.04f);
 
     public GameView(Context context) {
         super(context);
@@ -40,7 +38,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private void init() {
         // 실질적 생성자 역할
 
-        ballBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.soccer_ball_240);
+        Resources res = getResources();
+        Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
+        Ball.setBitmap(ballBitmap);
 
         scheduleUpdate();
     }
@@ -68,8 +68,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
         super.onDraw(canvas);
         canvas.setMatrix(transformMatrix);
         drawDebugBackground(canvas);
-        canvas.drawBitmap(ballBitmap, null, ballRect, null);
-        canvas.drawBitmap(ballBitmap, null, ballRect2, null);
+        ball1.draw(canvas);
+        ball2.draw(canvas);
     }
 
     private void scheduleUpdate() {
@@ -85,46 +85,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     };
 
     private void update() {
-        ballRect.offset(ballDx, ballDy);
-        //Log.d(TAG, "Ball Rect = " + ballRect);
-        if (ballDx > 0) {
-            if (ballRect.right > SCREEN_WIDTH) {
-                ballDx = -ballDx;
-            }
-        } else {
-            if (ballRect.left < 0) {
-                ballDx = -ballDx;
-            }
-        }
-        if (ballDy > 0) {
-            if (ballRect.bottom > SCREEN_HEIGHT) {
-                ballDy = -ballDy;
-            }
-        } else {
-            if (ballRect.top < 0) {
-                ballDy = -ballDy;
-            }
-        }
-
-        ballRect2.offset(ballDx2, ballDy2);
-        if (ballDx2 > 0) {
-            if (ballRect2.right > SCREEN_WIDTH) {
-                ballDx2 = -ballDx2;
-            }
-        } else {
-            if (ballRect2.left < 0) {
-                ballDx2 = -ballDx2;
-            }
-        }
-        if (ballDy2 > 0) {
-            if (ballRect2.bottom > SCREEN_HEIGHT) {
-                ballDy2 = -ballDy2;
-            }
-        } else {
-            if (ballRect2.top < 0) {
-                ballDy2 = -ballDy2;
-            }
-        }
+        ball1.update();
+        ball2.update();
     }
 
     private RectF borderRect;
