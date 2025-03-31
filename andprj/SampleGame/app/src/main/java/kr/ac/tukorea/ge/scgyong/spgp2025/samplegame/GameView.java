@@ -89,7 +89,9 @@ public class GameView extends View {
         public void run() {
             update();
             invalidate();
-            scheduleUpdate();
+            if (isShown()) {
+                scheduleUpdate();
+            }
         }
     };
 
