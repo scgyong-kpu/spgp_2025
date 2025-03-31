@@ -16,7 +16,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class GameView extends View {
+public class GameView extends View implements Choreographer.FrameCallback {
     private static final float SCREEN_WIDTH = 9.0f;
     private static final float SCREEN_HEIGHT = 16.0f;
     private static final String TAG = GameView.class.getSimpleName();
@@ -70,17 +70,15 @@ public class GameView extends View {
     }
 
     private void scheduleUpdate() {
-        Choreographer.getInstance().postFrameCallback(gameLoopCallback);    }
+        Choreographer.getInstance().postFrameCallback(this);    }
 
-    private final Choreographer.FrameCallback gameLoopCallback = new Choreographer.FrameCallback() {
-        @Override
-        public void doFrame(long nanos) {
+    @Override
+    public void doFrame(long nanos) {
             update();
             invalidate();
             if (isShown()) {
                 scheduleUpdate();
             }
-        }
     };
 
     private void update() {
