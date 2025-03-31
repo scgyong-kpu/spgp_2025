@@ -70,12 +70,12 @@ public class GameView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            move();
+            update();
         }
         return super.onTouchEvent(event);
     }
 
-    private void move() {
+    private void update() {
         ballRect.offset(0.1f, 0.2f);
         Log.d(TAG, "Ball Rect = " + ballRect);
         invalidate();
