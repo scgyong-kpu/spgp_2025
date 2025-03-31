@@ -60,7 +60,7 @@ public class GameView extends View {
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         canvas.setMatrix(transformMatrix);
-        drawDebugBackground(canvas);
+        //drawDebugBackground(canvas);
         canvas.drawBitmap(ballBitmap, null, ballRect, null);
     }
 
