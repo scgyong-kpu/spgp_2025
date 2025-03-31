@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -69,6 +70,9 @@ public class GameView extends View {
         canvas.drawBitmap(ballBitmap, null, ballRect, null);
     }
 
+    // Handler is android.os.Handler.
+    // do not import java.util.logging.Handler
+    private final Handler handler = new Handler();
     private long lastUpdateTime = 0;
     private void scheduleUpdate() {
         long now = System.currentTimeMillis();
@@ -76,7 +80,7 @@ public class GameView extends View {
         long targetDelay = 1000/60;
         long delay = Math.max(0, targetDelay - elapsedSinceLastUpdate);
 
-        postDelayed(gameLoopRunnable, delay);
+        handler.postDelayed(gameLoopRunnable, delay);
         lastUpdateTime = now;
     }
 
