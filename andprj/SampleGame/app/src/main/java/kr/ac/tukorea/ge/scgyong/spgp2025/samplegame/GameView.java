@@ -70,15 +70,18 @@ public class GameView extends View {
     }
 
     private void scheduleUpdate() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                update();
-                invalidate();
-                scheduleUpdate();
-            }
-        }, 500);
+        postDelayed(gameLoopRunnable, 500);
     }
+
+    private final Runnable gameLoopRunnable = new Runnable() {
+        @Override
+        public void run() {
+            update();
+            invalidate();
+            scheduleUpdate();
+        }
+    };
+
     private void update() {
         ballRect.offset(0.1f, 0.2f);
         Log.d(TAG, "Ball Rect = " + ballRect);
