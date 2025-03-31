@@ -24,6 +24,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private Bitmap ballBitmap;
     private float ballDx = 0.04f, ballDy = 0.06f;
     private final RectF ballRect = new RectF(3.5f, 7.0f, 5.5f, 9.0f);
+    private float ballDx2 = 0.06f, ballDy2 = 0.04f;
+    private final RectF ballRect2 = new RectF(5.5f, 2.0f, 7.5f, 4.0f);
 
     public GameView(Context context) {
         super(context);
@@ -67,6 +69,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         canvas.setMatrix(transformMatrix);
         drawDebugBackground(canvas);
         canvas.drawBitmap(ballBitmap, null, ballRect, null);
+        canvas.drawBitmap(ballBitmap, null, ballRect2, null);
     }
 
     private void scheduleUpdate() {
@@ -100,6 +103,26 @@ public class GameView extends View implements Choreographer.FrameCallback {
         } else {
             if (ballRect.top < 0) {
                 ballDy = -ballDy;
+            }
+        }
+
+        ballRect2.offset(ballDx2, ballDy2);
+        if (ballDx2 > 0) {
+            if (ballRect2.right > SCREEN_WIDTH) {
+                ballDx2 = -ballDx2;
+            }
+        } else {
+            if (ballRect2.left < 0) {
+                ballDx2 = -ballDx2;
+            }
+        }
+        if (ballDy2 > 0) {
+            if (ballRect2.bottom > SCREEN_HEIGHT) {
+                ballDy2 = -ballDy2;
+            }
+        } else {
+            if (ballRect2.top < 0) {
+                ballDy2 = -ballDy2;
             }
         }
     }
