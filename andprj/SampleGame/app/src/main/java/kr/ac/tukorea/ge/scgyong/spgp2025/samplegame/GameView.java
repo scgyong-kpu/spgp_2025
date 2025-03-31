@@ -84,6 +84,24 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private void update() {
         ballRect.offset(ballDx, ballDy);
         //Log.d(TAG, "Ball Rect = " + ballRect);
+        if (ballDx > 0) {
+            if (ballRect.right > SCREEN_WIDTH) {
+                ballDx = -ballDx;
+            }
+        } else {
+            if (ballRect.left < 0) {
+                ballDx = -ballDx;
+            }
+        }
+        if (ballDy > 0) {
+            if (ballRect.bottom > SCREEN_HEIGHT) {
+                ballDy = -ballDy;
+            }
+        } else {
+            if (ballRect.top < 0) {
+                ballDy = -ballDy;
+            }
+        }
     }
 
     private RectF borderRect;
