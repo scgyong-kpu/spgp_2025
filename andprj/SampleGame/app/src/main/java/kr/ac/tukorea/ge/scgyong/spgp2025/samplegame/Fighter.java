@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.RectF;
 
 public class Fighter {
@@ -12,5 +13,9 @@ public class Fighter {
         float cx = 5.0f, y = 12.0f;
         float r = 1.25f;
         dstRect.set(cx-r, y, cx+r, y+2*r);
+    }
+
+    public void draw(Canvas canvas) {
+        canvas.drawBitmap(bitmap, null, dstRect, null);
     }
 }
