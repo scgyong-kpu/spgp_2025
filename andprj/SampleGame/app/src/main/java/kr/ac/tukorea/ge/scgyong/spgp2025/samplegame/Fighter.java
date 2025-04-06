@@ -17,7 +17,10 @@ public class Fighter {
     }
 
     public void draw(Canvas canvas) {
+        canvas.save();
+        canvas.rotate(angle); // intentional bug here
         canvas.drawBitmap(bitmap, null, dstRect, null);
+        canvas.restore();
     }
 
     public void setPositionOnly(float x, float y) {
