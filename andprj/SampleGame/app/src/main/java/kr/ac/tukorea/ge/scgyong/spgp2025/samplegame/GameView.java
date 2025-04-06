@@ -43,8 +43,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
         Ball.setBitmap(ballBitmap);
 
-        balls.add(Ball.random());
-        balls.add(Ball.random());
+        for (int i = 0; i < 10; i++) {
+            balls.add(Ball.random());
+        }
 
         scheduleUpdate();
     }
