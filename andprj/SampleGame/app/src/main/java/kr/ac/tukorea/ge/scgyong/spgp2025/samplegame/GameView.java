@@ -93,7 +93,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
             float x = event.getX();
             float y = event.getY();
             float[] pts = new float[] { x, y };
-            transformMatrix.mapPoints(pts);
+            Matrix invertedMatrix = new Matrix();
+            transformMatrix.invert(invertedMatrix);
+            invertedMatrix.mapPoints(pts);
             fighter.setPosition(pts[0], pts[1]);
         }
         return super.onTouchEvent(event);
