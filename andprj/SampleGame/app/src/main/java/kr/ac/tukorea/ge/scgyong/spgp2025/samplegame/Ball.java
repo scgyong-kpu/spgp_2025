@@ -9,7 +9,7 @@ import java.util.Random;
 public class Ball {
     private final RectF dstRect = new RectF();
     private static final float BALL_RADIUS = 1.0f;
-    private static final float SPEED = 7.0f / 60;
+    private static final float SPEED = 7.0f; // 초당 7.0 unit 을 움직이는 속도.
     private float dx, dy;
 
     private static final Random random = new Random();
