@@ -37,20 +37,20 @@ public class Ball {
         dstRect.offset(dx, dy);
         if (dx > 0) {
             if (dstRect.right > GameView.SCREEN_WIDTH) { // Alt+Enter -> Make GameView.SCREEN_WIDTH public
-                dx = -dx;
+                this.dx = -this.dx;
             }
         } else {
             if (dstRect.left < 0) {
-                dx = -dx;
+                this.dx = -this.dx;
             }
         }
         if (dy > 0) {
             if (dstRect.bottom > GameView.SCREEN_HEIGHT) {
-                dy = -dy;
+                this.dy = -this.dy;
             }
         } else {
             if (dstRect.top < 0) {
-                dy = -dy;
+                this.dy = -this.dy;
             }
         }
     }
