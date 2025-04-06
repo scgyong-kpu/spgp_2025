@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Choreographer;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -86,13 +87,23 @@ public class GameView extends View implements Choreographer.FrameCallback {
         fighter.draw(canvas);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            float x = event.getX();
+            float y = event.getY();
+            fighter.setPosition(x, y);
+        }
+        return super.onTouchEvent(event);
+    }
+
     private void scheduleUpdate() {
         Choreographer.getInstance().postFrameCallback(this);
     }
 
     @Override
     public void doFrame(long nanos) {
-        Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
+        //Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
         if (previousNanos != 0) {
             frameTime = (nanos - previousNanos) / 1_000_000_000f;
             update();
