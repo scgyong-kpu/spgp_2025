@@ -34,7 +34,7 @@ public class Fighter {
         float dx = x - this.x;
         float dy = y - this.y;
         double radian = Math.atan2(dy, dx);
-        angle = (float) Math.toDegrees(radian); // intentional bug here
+        angle = (float) Math.toDegrees(radian) + 90;
         Log.d(TAG, "angle=" + angle);
         setPositionOnly(x, y);
     }
