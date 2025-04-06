@@ -32,25 +32,25 @@ public class Ball {
     }
 
     public void update() {
-        float dx = this.dx * GameView.frameTime;
-        float dy = this.dy * GameView.frameTime;
-        dstRect.offset(dx, dy);
+        float timedDx = dx * GameView.frameTime;
+        float timedDy = dy * GameView.frameTime;
+        dstRect.offset(timedDx, timedDy);
         if (dx > 0) {
             if (dstRect.right > GameView.SCREEN_WIDTH) { // Alt+Enter -> Make GameView.SCREEN_WIDTH public
-                this.dx = -this.dx;
+                dx = -dx;
             }
         } else {
             if (dstRect.left < 0) {
-                this.dx = -this.dx;
+                dx = -dx;
             }
         }
         if (dy > 0) {
             if (dstRect.bottom > GameView.SCREEN_HEIGHT) {
-                this.dy = -this.dy;
+                dy = -dy;
             }
         } else {
             if (dstRect.top < 0) {
-                this.dy = -this.dy;
+                dy = -dy;
             }
         }
     }
