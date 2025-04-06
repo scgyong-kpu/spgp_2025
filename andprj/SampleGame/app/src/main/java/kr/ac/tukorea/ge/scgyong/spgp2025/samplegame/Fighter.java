@@ -22,5 +22,6 @@ public class Fighter {
     public void setPosition(float x, float y) {
         float r = 1.25f;
         dstRect.set(x-r, y-r, x+r, y+r);
-        Log.d(TAG, "x=" + x + " y=" + y + " rect=" + dstRect);
-    }}
+        //Log.d(TAG, "x=" + x + " y=" + y + " rect=" + dstRect);
+    }
+}

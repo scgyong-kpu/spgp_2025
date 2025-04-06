@@ -98,7 +98,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             pointsBuffer[1] = event.getY();
             invertedMatrix.mapPoints(pointsBuffer);
             fighter.setPosition(pointsBuffer[0], pointsBuffer[1]);
-            Log.d(TAG, "Event=" + event.getAction());
+            //Log.d(TAG, "Event=" + event.getAction());
             return true;
         }
         return super.onTouchEvent(event);
