@@ -25,7 +25,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public static final float SCREEN_HEIGHT = 16.0f;
     private static final String TAG = GameView.class.getSimpleName();
     private final Matrix transformMatrix = new Matrix();
-
+    private final Matrix invertedMatrix = new Matrix();
+    private final float[] pointsBuffer = new float[2];
     private final ArrayList<Ball> balls = new ArrayList<>();
     private Fighter fighter;
     private static long previousNanos;
@@ -74,6 +75,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             transformMatrix.preTranslate(0, (h - w / game_ratio) / 2);
             transformMatrix.preScale(scale, scale);
         }
+        transformMatrix.invert(invertedMatrix);
     }
 
     @Override
@@ -90,13 +92,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            float x = event.getX();
-            float y = event.getY();
-            float[] pts = new float[] { x, y };
-            Matrix invertedMatrix = new Matrix();
-            transformMatrix.invert(invertedMatrix);
-            invertedMatrix.mapPoints(pts);
-            fighter.setPosition(pts[0], pts[1]);
+            pointsBuffer[0] = event.getX();
+            pointsBuffer[1] = event.getY();
+            invertedMatrix.mapPoints(pointsBuffer);
+            fighter.setPosition(pointsBuffer[0], pointsBuffer[1]);
         }
         return super.onTouchEvent(event);
     }
