@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
 
@@ -25,6 +26,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final Matrix transformMatrix = new Matrix();
 
     private final ArrayList<Ball> balls = new ArrayList<>();
+    private static long previousNanos;
+    public static float frameTime;
 
     public GameView(Context context) {
         super(context);
@@ -79,12 +82,18 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     private void scheduleUpdate() {
-        Choreographer.getInstance().postFrameCallback(this);    }
+        Choreographer.getInstance().postFrameCallback(this);
+    }
 
     @Override
     public void doFrame(long nanos) {
-        update();
-        invalidate();
+        Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
+        if (previousNanos != 0) {
+            frameTime = (nanos - previousNanos) / 1_000_000_000f;
+            update();
+            invalidate();
+        }
+        previousNanos = nanos;
         if (isShown()) {
             scheduleUpdate();
         }
