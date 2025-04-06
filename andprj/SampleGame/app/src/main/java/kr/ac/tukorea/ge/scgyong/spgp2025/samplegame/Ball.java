@@ -32,6 +32,8 @@ public class Ball {
     }
 
     public void update() {
+        float dx = this.dx * GameView.frameTime;
+        float dy = this.dy * GameView.frameTime;
         dstRect.offset(dx, dy);
         if (dx > 0) {
             if (dstRect.right > GameView.SCREEN_WIDTH) { // Alt+Enter -> Make GameView.SCREEN_WIDTH public
