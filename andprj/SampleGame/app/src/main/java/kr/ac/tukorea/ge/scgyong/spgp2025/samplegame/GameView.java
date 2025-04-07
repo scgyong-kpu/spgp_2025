@@ -10,7 +10,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Choreographer;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -23,8 +25,12 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public static final float SCREEN_HEIGHT = 16.0f;
     private static final String TAG = GameView.class.getSimpleName();
     private final Matrix transformMatrix = new Matrix();
-
+    private final Matrix invertedMatrix = new Matrix();
+    private final float[] pointsBuffer = new float[2];
     private final ArrayList<Ball> balls = new ArrayList<>();
+    private Fighter fighter;
+    private static long previousNanos;
+    public static float frameTime;
 
     public GameView(Context context) {
         super(context);
@@ -43,8 +49,12 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
         Ball.setBitmap(ballBitmap);
 
-        balls.add(Ball.random());
-        balls.add(Ball.random());
+        Bitmap fighterBitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
+        fighter = new Fighter(fighterBitmap);
+
+        for (int i = 0; i < 10; i++) {
+            balls.add(Ball.random());
+        }
 
         scheduleUpdate();
     }
@@ -65,6 +75,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             transformMatrix.preTranslate(0, (h - w / game_ratio) / 2);
             transformMatrix.preScale(scale, scale);
         }
+        transformMatrix.invert(invertedMatrix);
     }
 
     @Override
@@ -75,15 +86,37 @@ public class GameView extends View implements Choreographer.FrameCallback {
         for (Ball ball : balls) {
             ball.draw(canvas);
         }
+        fighter.draw(canvas);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+        case MotionEvent.ACTION_MOVE:
+            pointsBuffer[0] = event.getX();
+            pointsBuffer[1] = event.getY();
+            invertedMatrix.mapPoints(pointsBuffer);
+            fighter.setPosition(pointsBuffer[0], pointsBuffer[1]);
+            //Log.d(TAG, "Event=" + event.getAction());
+            return true;
+        }
+        return super.onTouchEvent(event);
     }
 
     private void scheduleUpdate() {
-        Choreographer.getInstance().postFrameCallback(this);    }
+        Choreographer.getInstance().postFrameCallback(this);
+    }
 
     @Override
     public void doFrame(long nanos) {
-        update();
-        invalidate();
+        //Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
+        if (previousNanos != 0) {
+            frameTime = (nanos - previousNanos) / 1_000_000_000f;
+            update();
+            invalidate();
+        }
+        previousNanos = nanos;
         if (isShown()) {
             scheduleUpdate();
         }
