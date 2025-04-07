@@ -27,6 +27,24 @@ public class Fighter {
         float dy = SPEED * (float) Math.sin(radian);
         float x = this.x + dx * GameView.frameTime;
         float y = this.y + dy * GameView.frameTime;
+        if (dx > 0) {
+            if (x > tx) {
+                x = tx;
+            }
+        } else {
+            if (x < tx) {
+                x = tx;
+            }
+        }
+        if (dy > 0) {
+            if (y > ty) {
+                y = ty;
+            }
+        } else {
+            if (y < ty) {
+                y = ty;
+            }
+        }
         setPosition(x, y);
     }
 
