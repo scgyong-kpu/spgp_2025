@@ -28,6 +28,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final Matrix invertedMatrix = new Matrix();
     private final float[] pointsBuffer = new float[2];
     private final ArrayList<Ball> balls = new ArrayList<>();
+    private final ArrayList<BouncingCircle> circles = new ArrayList<>();
     private Fighter fighter;
     private static long previousNanos;
     public static float frameTime;
@@ -54,6 +55,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
         for (int i = 0; i < 10; i++) {
             balls.add(Ball.random());
+        }
+        for (int i = 0; i < 5; i++) {
+            circles.add(new BouncingCircle());
         }
 
         scheduleUpdate();
@@ -83,6 +87,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
         super.onDraw(canvas);
         canvas.setMatrix(transformMatrix);
         drawDebugBackground(canvas);
+        for (BouncingCircle bc : circles) {
+            bc.draw(canvas);
+        }
+
         for (Ball ball : balls) {
             ball.draw(canvas);
         }
@@ -123,6 +131,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
     };
 
     private void update() {
+        for (BouncingCircle bc : circles) {
+            bc.update();
+        }
         for (Ball ball : balls) {
             ball.update();
         }
