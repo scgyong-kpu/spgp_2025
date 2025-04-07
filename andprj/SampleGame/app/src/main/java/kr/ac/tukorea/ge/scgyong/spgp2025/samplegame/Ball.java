@@ -6,7 +6,7 @@ import android.graphics.RectF;
 
 import java.util.Random;
 
-public class Ball {
+public class Ball implements IGameObject {
     private final RectF dstRect = new RectF();
     private static final float BALL_RADIUS = 1.0f;
     private static final float SPEED = 7.0f; // 초당 7.0 unit 을 움직이는 속도.

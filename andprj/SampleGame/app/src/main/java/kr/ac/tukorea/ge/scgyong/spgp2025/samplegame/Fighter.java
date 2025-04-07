@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
 
-public class Fighter {
+public class Fighter implements IGameObject {
     private static final String TAG = Fighter.class.getSimpleName();
     private static final float SPEED = 8.0f;
     private final Bitmap bitmap;

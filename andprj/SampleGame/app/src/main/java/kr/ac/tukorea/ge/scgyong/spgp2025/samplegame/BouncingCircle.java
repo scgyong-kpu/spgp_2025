@@ -7,7 +7,7 @@ import android.util.Log;
 
 import java.util.Random;
 
-public class BouncingCircle {
+public class BouncingCircle implements IGameObject {
     private static final float GRAVITY = 18.0f;
     private static Random random = new Random();
     private final float x, radius;
