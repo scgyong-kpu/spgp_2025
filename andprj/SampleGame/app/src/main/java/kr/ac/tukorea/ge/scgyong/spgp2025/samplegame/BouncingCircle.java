@@ -15,8 +15,8 @@ public class BouncingCircle implements IGameObject {
     private final Paint paint;
 
     public BouncingCircle() {
-        this.x = random.nextFloat() * GameView.SCREEN_WIDTH;
-        this.y = random.nextFloat() * GameView.SCREEN_HEIGHT;
+        this.x = random.nextFloat() * Metrics.SCREEN_WIDTH;
+        this.y = random.nextFloat() * Metrics.SCREEN_HEIGHT;
         this.radius = random.nextFloat() + 1.0f; // 1.0 ~ 2.0
         this.speed = random.nextFloat() * 10.0f - 5.0f; // -5.0 ~ +5.0
 
@@ -33,7 +33,7 @@ public class BouncingCircle implements IGameObject {
     public void update() {
         this.y += this.speed * GameView.frameTime;
         //Log.d(BouncingCircle.class.getSimpleName(), "Speed=" + speed);
-        if (speed > 0 && y >= GameView.SCREEN_HEIGHT) { // bounce
+        if (speed > 0 && y >= Metrics.SCREEN_HEIGHT) { // bounce
             speed = -speed * 0.8f;
             if (Math.abs(speed) < 0.2f) {
                 this.speed = random.nextFloat() * 10.0f - 25.0f; // -25.0 ~ -15.0

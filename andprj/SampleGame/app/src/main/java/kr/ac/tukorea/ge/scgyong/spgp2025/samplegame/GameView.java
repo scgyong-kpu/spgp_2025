@@ -21,8 +21,6 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class GameView extends View implements Choreographer.FrameCallback {
-    public static final float SCREEN_WIDTH = 9.0f;
-    public static final float SCREEN_HEIGHT = 16.0f;
     private static final String TAG = GameView.class.getSimpleName();
     private final Matrix transformMatrix = new Matrix();
     private final Matrix invertedMatrix = new Matrix();
@@ -67,15 +65,15 @@ public class GameView extends View implements Choreographer.FrameCallback {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         float view_ratio = (float)w / (float)h;
-        float game_ratio = SCREEN_WIDTH / SCREEN_HEIGHT;
+        float game_ratio = Metrics.SCREEN_WIDTH / Metrics.SCREEN_HEIGHT;
 
         transformMatrix.reset();
         if (view_ratio > game_ratio) {
-            float scale = h / SCREEN_HEIGHT;
+            float scale = h / Metrics.SCREEN_HEIGHT;
             transformMatrix.preTranslate((w - h * game_ratio) / 2, 0);
             transformMatrix.preScale(scale, scale);
         } else {
-            float scale = w / SCREEN_WIDTH;
+            float scale = w / Metrics.SCREEN_WIDTH;
             transformMatrix.preTranslate(0, (h - w / game_ratio) / 2);
             transformMatrix.preScale(scale, scale);
         }
@@ -144,7 +142,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private Paint borderPaint, gridPaint, fpsPaint;
     private void drawDebugBackground(@NonNull Canvas canvas) {
         if (borderRect == null) {
-            borderRect = new RectF(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            borderRect = new RectF(0, 0, Metrics.SCREEN_WIDTH, Metrics.SCREEN_HEIGHT);
 
             borderPaint = new Paint();
             borderPaint.setStyle(Paint.Style.STROKE);
@@ -158,11 +156,11 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
 
         canvas.drawRect(borderRect, borderPaint);
-        for (float x = 1.0f; x < SCREEN_WIDTH; x += 1.0f) {
-            canvas.drawLine(x, 0, x, SCREEN_HEIGHT, gridPaint);
+        for (float x = 1.0f; x < Metrics.SCREEN_WIDTH; x += 1.0f) {
+            canvas.drawLine(x, 0, x, Metrics.SCREEN_HEIGHT, gridPaint);
         }
-        for (float y = 1.0f; y < SCREEN_HEIGHT; y += 1.0f) {
-            canvas.drawLine(0, y, SCREEN_WIDTH, y, gridPaint);
+        for (float y = 1.0f; y < Metrics.SCREEN_HEIGHT; y += 1.0f) {
+            canvas.drawLine(0, y, Metrics.SCREEN_WIDTH, y, gridPaint);
         }
     }
     private void drawDebugInfo(Canvas canvas) {
