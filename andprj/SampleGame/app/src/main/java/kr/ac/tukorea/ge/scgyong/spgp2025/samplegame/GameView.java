@@ -126,6 +126,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         for (Ball ball : balls) {
             ball.update();
         }
+        fighter.update();
     }
 
     private RectF borderRect;
