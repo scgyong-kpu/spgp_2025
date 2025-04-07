@@ -28,7 +28,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final Matrix invertedMatrix = new Matrix();
     private final float[] pointsBuffer = new float[2];
     private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
-    //private Fighter fighter;
+    private Fighter fighter;
     private static long previousNanos;
     public static float frameTime;
 
@@ -50,7 +50,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Ball.setBitmap(ballBitmap);
 
         Bitmap fighterBitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
-        gameObjects.add(new Fighter(fighterBitmap));
+        fighter = new Fighter(fighterBitmap);
+        gameObjects.add(fighter);
 
         for (int i = 0; i < 10; i++) {
             gameObjects.add(Ball.random());
@@ -99,17 +100,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             pointsBuffer[0] = event.getX();
             pointsBuffer[1] = event.getY();
             invertedMatrix.mapPoints(pointsBuffer);
-            Fighter fighter = (Fighter)gameObjects.get(0);
-            // 첫번째 object 가 fighter 라고 보장할 수 있을까?
-            // 다음 코드가 더 안전하긴 할거다
-//            Fighter fighter;
-//            for (IGameObject gobj: gameObjects) {
-//                if (gobj instanceof Fighter) {
-//                    fighter = gobj;
-//                    break;
-//                }
-//            }
-            fighter.setTargetPosition(pointsBuffer[0], pointsBuffer[1]);
+            this.fighter.setTargetPosition(pointsBuffer[0], pointsBuffer[1]);
             //Log.d(TAG, "Event=" + event.getAction());
             return true;
         }
