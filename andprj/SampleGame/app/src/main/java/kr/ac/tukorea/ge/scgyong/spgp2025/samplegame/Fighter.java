@@ -10,7 +10,7 @@ public class Fighter {
     private static final float SPEED = 8.0f;
     private final Bitmap bitmap;
     private float x, y, angle;
-    private float tx, ty;
+    private float tx, ty, dx, dy;
     private final RectF dstRect = new RectF();
 
     public Fighter(Bitmap bitmap) {
@@ -22,9 +22,6 @@ public class Fighter {
 
     public void update() {
         if (tx == x && ty == y) { return; }
-        double radian = Math.toRadians(angle - 90);
-        float dx = SPEED * (float) Math.cos(radian);
-        float dy = SPEED * (float) Math.sin(radian);
         float x = this.x + dx * GameView.frameTime;
         float y = this.y + dy * GameView.frameTime;
         if ((dx > 0 && x > tx) || (dx < 0 && x < tx)) {
@@ -50,6 +47,8 @@ public class Fighter {
         angle = (float) Math.toDegrees(radian) + 90;
         tx = x;
         ty = y;
+        this.dx = SPEED * (float) Math.cos(radian);
+        this.dy = SPEED * (float) Math.sin(radian);
     }
     public void setPosition(float x, float y) {
         float r = 1.25f;
