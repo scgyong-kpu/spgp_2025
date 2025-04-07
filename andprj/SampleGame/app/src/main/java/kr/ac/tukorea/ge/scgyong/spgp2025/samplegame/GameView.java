@@ -51,14 +51,14 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
         Bitmap fighterBitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
         fighter = new Fighter(fighterBitmap);
-        gameObjects.add(fighter);
 
-        for (int i = 0; i < 10; i++) {
-            gameObjects.add(Ball.random());
-        }
         for (int i = 0; i < 5; i++) {
             gameObjects.add(new BouncingCircle());
         }
+        for (int i = 0; i < 10; i++) {
+            gameObjects.add(Ball.random());
+        }
+        gameObjects.add(fighter);
 
         scheduleUpdate();
     }
