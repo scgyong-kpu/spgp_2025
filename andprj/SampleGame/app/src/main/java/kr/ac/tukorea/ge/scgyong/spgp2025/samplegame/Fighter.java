@@ -13,7 +13,7 @@ public class Fighter {
 
     public Fighter(Bitmap bitmap) {
         this.bitmap = bitmap;
-        setPosition(5.0f, 12.0f, false);
+        setPosition(5.0f, 12.0f);
     }
 
     public void draw(Canvas canvas) {
@@ -23,18 +23,13 @@ public class Fighter {
         canvas.restore();
     }
 
-    public void setPosition(float x, float y) {
-        setPosition(x, y, true);
+    public void setTargetPosition(float x, float y) {
+        float dx = x - this.x;
+        float dy = y - this.y;
+        double radian = Math.atan2(dy, dx);
+        angle = (float) Math.toDegrees(radian) + 90;
     }
-    public void setPosition(float x, float y, boolean appliesAngle) {
-        if (appliesAngle) {
-            float dx = x - this.x;
-            float dy = y - this.y;
-            double radian = Math.atan2(dy, dx);
-            angle = (float) Math.toDegrees(radian) + 90;
-            //Log.d(TAG, "angle=" + angle);
-        }
-
+    public void setPosition(float x, float y) {
         float r = 1.25f;
         dstRect.set(x-r, y-r, x+r, y+r);
         this.x = x;
