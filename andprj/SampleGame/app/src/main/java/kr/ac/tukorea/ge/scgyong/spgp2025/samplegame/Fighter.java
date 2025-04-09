@@ -30,8 +30,11 @@ public class Fighter {
         if (appliesAngle) {
             float dx = x - this.x;
             float dy = y - this.y;
+
+            // y,x를 주면 부호에 따라 알맞은 각도를 반환해줄 거임
+            // 안드로이드는 시계방향으로 각도가 증가한다
             double radian = Math.atan2(dy, dx);
-            angle = (float) Math.toDegrees(radian) + 90;
+            angle = (float) Math.toDegrees(radian) + 90; // 90해야 오른족으로 비행기가 돌아감
             //Log.d(TAG, "angle=" + angle);
         }
 
