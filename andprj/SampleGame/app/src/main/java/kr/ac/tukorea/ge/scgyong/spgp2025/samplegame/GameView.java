@@ -1,16 +1,11 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,14 +13,11 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
-    private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
-    private Fighter fighter;
     private static long previousNanos;
     public static float frameTime;
+    private MainScene scene;
 
     public GameView(Context context) {
         super(context);
@@ -40,21 +32,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private void init() {
         // 실질적 생성자 역할
 
-        Resources res = getResources();
-        Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
-        Ball.setBitmap(ballBitmap);
-
-        Bitmap fighterBitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
-        fighter = new Fighter(fighterBitmap);
-
-        for (int i = 0; i < 5; i++) {
-            gameObjects.add(new BouncingCircle());
-        }
-        for (int i = 0; i < 10; i++) {
-            gameObjects.add(Ball.random());
-        }
-        gameObjects.add(fighter);
-
+        this.scene = new MainScene(this);
         scheduleUpdate();
     }
 
@@ -74,9 +52,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         if (BuildConfig.DEBUG) {
             drawDebugBackground(canvas);
         }
-        for (IGameObject gobj : gameObjects) {
-            gobj.draw(canvas);
-        }
+        scene.draw(canvas);
         canvas.restore();
         if (BuildConfig.DEBUG) {
             drawDebugInfo(canvas);
@@ -85,14 +61,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN:
-        case MotionEvent.ACTION_MOVE:
-            float[] xy = Metrics.fromScreen(event.getX(), event.getY());
-            fighter.setTargetPosition(xy[0], xy[1]);
-            return true;
-        }
-        return super.onTouchEvent(event);
+        return scene.onTouchEvent(event);
     }
 
     private void scheduleUpdate() {
@@ -114,9 +83,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     };
 
     private void update() {
-        for (IGameObject gobj : gameObjects) {
-            gobj.update();
-        }
+        scene.update();
     }
 
     private RectF borderRect;
