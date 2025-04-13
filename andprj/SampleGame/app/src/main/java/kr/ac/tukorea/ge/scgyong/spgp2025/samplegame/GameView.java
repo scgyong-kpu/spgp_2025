@@ -106,7 +106,16 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
         return super.onTouchEvent(event);
     }
+    public void onBackPressed() {
+        int last = sceneStack.size() - 1;
+        if (last < 0) return; // finish activity here ?
 
+        Scene scene = sceneStack.get(last);
+        boolean handled = scene.onBackPressed();
+        if (handled) return;
+
+        popScene();
+    }
     private void scheduleUpdate() {
         Choreographer.getInstance().postFrameCallback(this);
     }

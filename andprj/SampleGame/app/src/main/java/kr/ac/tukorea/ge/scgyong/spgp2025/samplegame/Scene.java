@@ -43,4 +43,8 @@ public class Scene {
     public void onExit() {
         Log.v(TAG, "onExit: " + getClass().getSimpleName());
     }
+
+    public boolean onBackPressed() {
+        return false;
+    }
 }

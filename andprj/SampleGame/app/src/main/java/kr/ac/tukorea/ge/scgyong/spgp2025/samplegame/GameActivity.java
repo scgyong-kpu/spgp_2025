@@ -24,7 +24,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        gameView.onBackPressed();
     }
     @SuppressWarnings("deprecation")
     public void setFullScreen() {
