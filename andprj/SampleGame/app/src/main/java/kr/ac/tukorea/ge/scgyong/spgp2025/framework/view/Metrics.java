@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.framework;
+package kr.ac.tukorea.ge.scgyong.spgp2025.framework.view;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;

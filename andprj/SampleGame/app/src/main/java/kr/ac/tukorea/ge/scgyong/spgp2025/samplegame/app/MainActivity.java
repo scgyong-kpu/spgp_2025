@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.GameActivity;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.activity.GameActivity;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 
 public class MainActivity extends AppCompatActivity {

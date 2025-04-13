@@ -1,10 +1,15 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.framework;
+package kr.ac.tukorea.ge.scgyong.spgp2025.framework.objects;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
+
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.Metrics;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.util.RectUtil;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.interfaces.IGameObject;
 
 public class JoyStick implements IGameObject {
     private static final String TAG = JoyStick.class.getSimpleName();

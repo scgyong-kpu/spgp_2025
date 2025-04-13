@@ -2,9 +2,9 @@ package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game;
 
 import android.view.MotionEvent;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.JoyStick;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Metrics;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Scene;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.objects.JoyStick;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.Metrics;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.scene.Scene;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 
 public class MainScene extends Scene {

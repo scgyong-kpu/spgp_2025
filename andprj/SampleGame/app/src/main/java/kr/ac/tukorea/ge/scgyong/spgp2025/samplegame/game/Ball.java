@@ -6,10 +6,10 @@ import android.graphics.RectF;
 
 import java.util.Random;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.BitmapPool;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.GameView;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.IGameObject;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Metrics;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.GameView;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.interfaces.IGameObject;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.Metrics;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 
 public class Ball implements IGameObject {

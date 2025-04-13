@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.framework;
+package kr.ac.tukorea.ge.scgyong.spgp2025.framework.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.scene.Scene;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.BuildConfig;
 
 public class GameView extends View implements Choreographer.FrameCallback {
