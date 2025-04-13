@@ -29,10 +29,13 @@ public class Fighter implements IGameObject {
             return;
         }
         float distance = SPEED * GameView.frameTime;
-        x += (float) (distance * Math.cos(joyStick.angle_radian));
-        y += (float) (distance * Math.sin(joyStick.angle_radian));
+        final int way = 8;
+        final double TWO_PI = Math.PI * 2;
+        float eightWayAngle = (float) (Math.round(way * joyStick.angle_radian / TWO_PI) * TWO_PI / way);
+        x += (float) (distance * Math.cos(eightWayAngle));
+        y += (float) (distance * Math.sin(eightWayAngle));
         setPosition(x, y);
-        angle = (float) Math.toDegrees(joyStick.angle_radian) + 90;
+        angle = (float) Math.toDegrees(eightWayAngle) + 90;
     }
 
     public void draw(Canvas canvas) {
