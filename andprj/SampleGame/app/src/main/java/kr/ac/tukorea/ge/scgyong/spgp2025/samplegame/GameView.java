@@ -39,12 +39,29 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     public void pushScene(Scene scene) {
-        this.sceneStack.add(scene);
+        int last = sceneStack.size() - 1;
+        if (last >= 0) {
+            sceneStack.get(last).onPause();
+        }
+        sceneStack.add(scene);
+        scene.onEnter();
     }
     public Scene popScene() {
         int last = sceneStack.size() - 1;
         if (last < 0) return null;
-        return sceneStack.remove(last);
+        Scene top = sceneStack.remove(last);
+        top.onExit();
+        if (last >= 1) {
+            sceneStack.get(last - 1).onResume();
+        }
+        return top;
+    }
+    public void changeScene(Scene scene) {
+        int last = sceneStack.size() - 1;
+        if (last < 0) return;
+        sceneStack.get(last).onExit();
+        sceneStack.add(scene);
+        scene.onEnter();
     }
     public Scene getTopScene() {
         //return sceneStack.getLast();
