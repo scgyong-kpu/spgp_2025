@@ -24,8 +24,8 @@ public class JoyStick implements IGameObject {
     public JoyStick() {
         bgBitmap = BitmapPool.get(R.mipmap.joystick_bg);
         thumbBitmap = BitmapPool.get(R.mipmap.joystick_thumb);
-        bgRect = new RectF(CENTER_X - BG_RADIUS, CENTER_Y - BG_RADIUS, CENTER_X + BG_RADIUS, CENTER_Y + BG_RADIUS);
-        thumbRect = new RectF(CENTER_X - THUMB_RADIUS, CENTER_Y - THUMB_RADIUS, CENTER_X + THUMB_RADIUS, CENTER_Y + THUMB_RADIUS);
+        bgRect = RectUtil.newRectF(CENTER_X, CENTER_Y, BG_RADIUS);
+        thumbRect = RectUtil.newRectF(CENTER_X, CENTER_Y, THUMB_RADIUS);
     }
 
     @Override
@@ -47,16 +47,19 @@ public class JoyStick implements IGameObject {
                 pts = Metrics.fromScreen(event.getX(), event.getY());
                 startX = pts[0];
                 startY = pts[1];
+                RectUtil.setRect(thumbRect, CENTER_X, CENTER_Y, THUMB_RADIUS);
+
                 return true;
             case MotionEvent.ACTION_MOVE:
                 pts = Metrics.fromScreen(event.getX(), event.getY());
                 float dx = Math.max(-BG_RADIUS, Math.min(pts[0] - startX, BG_RADIUS));
                 float dy = Math.max(-BG_RADIUS, Math.min(pts[1] - startY, BG_RADIUS));
                 double radius = Math.sqrt(dx * dx + dy * dy);
-                if (radius > BG_RADIUS) {
+                double max_radius = BG_RADIUS - THUMB_RADIUS;
+                if (radius > max_radius) {
                     double radian = Math.atan2(dy, dx);
-                    dx = (float) (BG_RADIUS * Math.cos(radian));
-                    dy = (float) (BG_RADIUS * Math.sin(radian));
+                    dx = (float) (max_radius * Math.cos(radian));
+                    dy = (float) (max_radius * Math.sin(radian));
                 }
                 float cx = CENTER_X + dx, cy = CENTER_Y + dy;
                 Log.d(TAG, "sx="+startX+" sy="+startY+" dx="+dx + " dy="+dy);
