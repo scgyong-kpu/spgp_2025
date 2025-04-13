@@ -17,7 +17,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
     private static long previousNanos;
     public static float frameTime;
-    private MainScene scene;
+    private Scene scene;
 
     public GameView(Context context) {
         super(context);
@@ -34,7 +34,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         scheduleUpdate();
     }
 
-    public void setCurrentScene(MainScene scene) {
+    public void setCurrentScene(Scene scene) {
         this.scene = scene;
     }
 
