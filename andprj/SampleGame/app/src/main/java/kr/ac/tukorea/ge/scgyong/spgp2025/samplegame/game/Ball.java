@@ -1,10 +1,16 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
+package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import java.util.Random;
+
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.BitmapPool;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.GameView;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.IGameObject;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Metrics;
+import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 
 public class Ball implements IGameObject {
     private final RectF dstRect = new RectF();

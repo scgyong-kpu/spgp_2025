@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
+package kr.ac.tukorea.ge.scgyong.spgp2025.framework;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.WindowInsetsController;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+
+import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game.MainScene;
 
 public class GameActivity extends AppCompatActivity {
 

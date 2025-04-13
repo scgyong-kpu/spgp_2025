@@ -1,13 +1,9 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
+package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Metrics;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Scene;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();

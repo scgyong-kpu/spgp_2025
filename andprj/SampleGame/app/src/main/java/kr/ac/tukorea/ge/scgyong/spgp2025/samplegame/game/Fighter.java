@@ -1,11 +1,16 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
+package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.util.Log;
+
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.BitmapPool;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.GameView;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.IGameObject;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Metrics;
+import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Scene;
 
 public class Fighter implements IGameObject {
     private static final String TAG = Fighter.class.getSimpleName();

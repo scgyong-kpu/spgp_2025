@@ -1,10 +1,14 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
+package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.Random;
+
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.GameView;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.IGameObject;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Metrics;
 
 public class BouncingCircle implements IGameObject {
     private static final float GRAVITY = 1800f;
