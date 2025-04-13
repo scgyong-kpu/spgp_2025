@@ -15,6 +15,9 @@ public class Fighter implements IGameObject {
     private float x, y, angle;
     private final RectF dstRect = new RectF();
 
+    private static final float BULLET_INTERVAL = 1.0f / 3.0f;
+    private float bulletCoolTime;
+
     public Fighter(JoyStick joyStick) {
         this.joyStick = joyStick;
         Resources res = GameView.view.getResources();
@@ -22,9 +25,17 @@ public class Fighter implements IGameObject {
         float x = Metrics.width / 2;
         float y = 2 * Metrics.height / 3;
         setPosition(x, y);
+        angle = -90;
     }
 
     public void update() {
+        bulletCoolTime -= GameView.frameTime;
+        if (bulletCoolTime <= 0) {
+            Bullet bullet = new Bullet(x, y, (float) Math.toRadians(angle));
+            Scene.top().add(bullet);
+            bulletCoolTime = BULLET_INTERVAL;
+        }
+
         if (joyStick.power <= 0) {
             return;
         }
@@ -35,12 +46,12 @@ public class Fighter implements IGameObject {
         x += (float) (distance * Math.cos(eightWayAngle));
         y += (float) (distance * Math.sin(eightWayAngle));
         setPosition(x, y);
-        angle = (float) Math.toDegrees(eightWayAngle) + 90;
+        angle = (float) Math.toDegrees(eightWayAngle);
     }
 
     public void draw(Canvas canvas) {
         canvas.save();
-        canvas.rotate(angle, x, y);
+        canvas.rotate(angle + 90, x, y);
         canvas.drawBitmap(bitmap, null, dstRect, null);
         canvas.restore();
     }
