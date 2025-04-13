@@ -5,15 +5,32 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
 
-public class Fighter {
+public class Fighter implements IGameObject {
     private static final String TAG = Fighter.class.getSimpleName();
+    private static final float SPEED = 8.0f;
     private final Bitmap bitmap;
     private float x, y, angle;
+    private float tx, ty, dx, dy;
     private final RectF dstRect = new RectF();
 
     public Fighter(Bitmap bitmap) {
         this.bitmap = bitmap;
-        setPosition(5.0f, 12.0f, false);
+        setPosition(5.0f, 12.0f);
+        tx = x;
+        ty = y;
+    }
+
+    public void update() {
+        if (tx == x && ty == y) { return; }
+        float x = this.x + dx * GameView.frameTime;
+        float y = this.y + dy * GameView.frameTime;
+        if ((dx > 0 && x > tx) || (dx < 0 && x < tx)) {
+            x = tx;
+        }
+        if ((dy > 0 && y > ty) || (dy < 0 && y < ty)) {
+            y = ty;
+        }
+        setPosition(x, y);
     }
 
     public void draw(Canvas canvas) {
@@ -23,21 +40,17 @@ public class Fighter {
         canvas.restore();
     }
 
-    public void setPosition(float x, float y) {
-        setPosition(x, y, true);
+    public void setTargetPosition(float x, float y) {
+        float dx = x - this.x;
+        float dy = y - this.y;
+        double radian = Math.atan2(dy, dx);
+        angle = (float) Math.toDegrees(radian) + 90;
+        tx = x;
+        ty = y;
+        this.dx = SPEED * (float) Math.cos(radian);
+        this.dy = SPEED * (float) Math.sin(radian);
     }
-    public void setPosition(float x, float y, boolean appliesAngle) {
-        if (appliesAngle) {
-            float dx = x - this.x;
-            float dy = y - this.y;
-
-            // y,x를 주면 부호에 따라 알맞은 각도를 반환해줄 거임
-            // 안드로이드는 시계방향으로 각도가 증가한다
-            double radian = Math.atan2(dy, dx);
-            angle = (float) Math.toDegrees(radian) + 90; // 90해야 오른족으로 비행기가 돌아감
-            //Log.d(TAG, "angle=" + angle);
-        }
-
+    public void setPosition(float x, float y) {
         float r = 1.25f;
         dstRect.set(x-r, y-r, x+r, y+r);
         this.x = x;
