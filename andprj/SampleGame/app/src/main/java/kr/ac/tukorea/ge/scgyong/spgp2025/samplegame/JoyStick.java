@@ -3,20 +3,29 @@ package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 
 public class JoyStick implements IGameObject {
+    private static final String TAG = JoyStick.class.getSimpleName();
     private final Bitmap bgBitmap;
     private final Bitmap thumbBitmap;
 
-    private final RectF bgRect = new RectF(0, 1200, 400, 1600);
-    private final RectF thumbRect = new RectF(150, 1350, 250, 1450);
+    private static final float CENTER_X = 200f;
+    private static final float CENTER_Y = 1400f;
+    private static final float BG_RADIUS = 200f;
+    private static final float THUMB_RADIUS = 60f;
+    private final RectF bgRect;
+    private final RectF thumbRect;
 
     private boolean visible;
+    private float startX, startY;
 
     public JoyStick() {
         bgBitmap = BitmapPool.get(R.mipmap.joystick_bg);
         thumbBitmap = BitmapPool.get(R.mipmap.joystick_thumb);
+        bgRect = new RectF(CENTER_X - BG_RADIUS, CENTER_Y - BG_RADIUS, CENTER_X + BG_RADIUS, CENTER_Y + BG_RADIUS);
+        thumbRect = new RectF(CENTER_X - THUMB_RADIUS, CENTER_Y - THUMB_RADIUS, CENTER_X + THUMB_RADIUS, CENTER_Y + THUMB_RADIUS);
     }
 
     @Override
@@ -31,11 +40,23 @@ public class JoyStick implements IGameObject {
     }
 
     public boolean onTouch(MotionEvent event) {
+        float[] pts;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
                 visible = true;
+                pts = Metrics.fromScreen(event.getX(), event.getY());
+                startX = pts[0];
+                startY = pts[1];
                 return true;
+            case MotionEvent.ACTION_MOVE:
+                pts = Metrics.fromScreen(event.getX(), event.getY());
+                float dx = Math.max(-BG_RADIUS, Math.min(pts[0] - startX, BG_RADIUS));
+                float dy = Math.max(-BG_RADIUS, Math.min(pts[1] - startY, BG_RADIUS));
+                float cx = CENTER_X + dx, cy = CENTER_Y + dy;
+                Log.d(TAG, "sx="+startX+" sy="+startY+" dx="+dx + " dy="+dy);
+                thumbRect.set(cx - THUMB_RADIUS, cy - THUMB_RADIUS, cx + THUMB_RADIUS, cy + THUMB_RADIUS);
+                break;
+
             case MotionEvent.ACTION_UP:
                 visible = false;
                 return true;
