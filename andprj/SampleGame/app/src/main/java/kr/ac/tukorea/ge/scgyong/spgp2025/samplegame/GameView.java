@@ -21,13 +21,11 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class GameView extends View implements Choreographer.FrameCallback {
-    public static final float SCREEN_WIDTH = 9.0f;
-    public static final float SCREEN_HEIGHT = 16.0f;
     private static final String TAG = GameView.class.getSimpleName();
     private final Matrix transformMatrix = new Matrix();
     private final Matrix invertedMatrix = new Matrix();
     private final float[] pointsBuffer = new float[2];
-    private final ArrayList<Ball> balls = new ArrayList<>();
+    private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
     private Fighter fighter;
     private static long previousNanos;
     public static float frameTime;
@@ -52,9 +50,13 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Bitmap fighterBitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
         fighter = new Fighter(fighterBitmap);
 
-        for (int i = 0; i < 10; i++) {
-            balls.add(Ball.random());
+        for (int i = 0; i < 5; i++) {
+            gameObjects.add(new BouncingCircle());
         }
+        for (int i = 0; i < 10; i++) {
+            gameObjects.add(Ball.random());
+        }
+        gameObjects.add(fighter);
 
         scheduleUpdate();
     }
@@ -63,15 +65,15 @@ public class GameView extends View implements Choreographer.FrameCallback {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         float view_ratio = (float)w / (float)h;
-        float game_ratio = SCREEN_WIDTH / SCREEN_HEIGHT;
+        float game_ratio = Metrics.SCREEN_WIDTH / Metrics.SCREEN_HEIGHT;
 
         transformMatrix.reset();
         if (view_ratio > game_ratio) {
-            float scale = h / SCREEN_HEIGHT;
+            float scale = h / Metrics.SCREEN_HEIGHT;
             transformMatrix.preTranslate((w - h * game_ratio) / 2, 0);
             transformMatrix.preScale(scale, scale);
         } else {
-            float scale = w / SCREEN_WIDTH;
+            float scale = w / Metrics.SCREEN_WIDTH;
             transformMatrix.preTranslate(0, (h - w / game_ratio) / 2);
             transformMatrix.preScale(scale, scale);
         }
@@ -81,12 +83,20 @@ public class GameView extends View implements Choreographer.FrameCallback {
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
+        canvas.save();
         canvas.setMatrix(transformMatrix);
-        drawDebugBackground(canvas);
-        for (Ball ball : balls) {
-            ball.draw(canvas);
+        // 반드시 성공적인 빌드가 진행된 후에 BuildConfig.java 가 생성되므로
+        // 아래 코드가 문제가 되면 잠시 삭제해서 빌드만 성공시키고 다시 살려두어도 된다.
+        if (BuildConfig.DEBUG) {
+            drawDebugBackground(canvas);
         }
-        fighter.draw(canvas);
+        for (IGameObject gobj : gameObjects) {
+            gobj.draw(canvas);
+        }
+        canvas.restore();
+        if (BuildConfig.DEBUG) {
+            drawDebugInfo(canvas);
+        }
     }
 
     @Override
@@ -99,7 +109,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
             // 400을 줬을 때 (2,0)이 나올 수 있도록
             invertedMatrix.mapPoints(pointsBuffer);
-            fighter.setPosition(pointsBuffer[0], pointsBuffer[1]);
+            this.fighter.setTargetPosition(pointsBuffer[0], pointsBuffer[1]);
             //Log.d(TAG, "Event=" + event.getAction());
             return true;
         }
@@ -126,16 +136,16 @@ public class GameView extends View implements Choreographer.FrameCallback {
     };
 
     private void update() {
-        for (Ball ball : balls) {
-            ball.update();
+        for (IGameObject gobj : gameObjects) {
+            gobj.update();
         }
     }
 
     private RectF borderRect;
-    private Paint borderPaint, gridPaint;
+    private Paint borderPaint, gridPaint, fpsPaint;
     private void drawDebugBackground(@NonNull Canvas canvas) {
         if (borderRect == null) {
-            borderRect = new RectF(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            borderRect = new RectF(0, 0, Metrics.SCREEN_WIDTH, Metrics.SCREEN_HEIGHT);
 
             borderPaint = new Paint();
             borderPaint.setStyle(Paint.Style.STROKE);
@@ -149,11 +159,21 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
 
         canvas.drawRect(borderRect, borderPaint);
-        for (float x = 1.0f; x < SCREEN_WIDTH; x += 1.0f) {
-            canvas.drawLine(x, 0, x, SCREEN_HEIGHT, gridPaint);
+        for (float x = 1.0f; x < Metrics.SCREEN_WIDTH; x += 1.0f) {
+            canvas.drawLine(x, 0, x, Metrics.SCREEN_HEIGHT, gridPaint);
         }
-        for (float y = 1.0f; y < SCREEN_HEIGHT; y += 1.0f) {
-            canvas.drawLine(0, y, SCREEN_WIDTH, y, gridPaint);
+        for (float y = 1.0f; y < Metrics.SCREEN_HEIGHT; y += 1.0f) {
+            canvas.drawLine(0, y, Metrics.SCREEN_WIDTH, y, gridPaint);
         }
+    }
+    private void drawDebugInfo(Canvas canvas) {
+        if (fpsPaint == null) {
+            fpsPaint = new Paint();
+            fpsPaint.setColor(Color.BLUE);
+            fpsPaint.setTextSize(100f);
+        }
+
+        int fps = (int) (1.0f / frameTime);
+        canvas.drawText("FPS: " + fps, 100f, 200f, fpsPaint);
     }
 }
