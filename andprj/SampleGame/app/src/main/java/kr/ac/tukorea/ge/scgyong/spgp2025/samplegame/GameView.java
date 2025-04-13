@@ -13,11 +13,13 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
     private static long previousNanos;
     public static float frameTime;
-    private Scene scene;
+    private ArrayList<Scene> sceneStack = new ArrayList<>();
 
     public GameView(Context context) {
         super(context);
@@ -34,8 +36,15 @@ public class GameView extends View implements Choreographer.FrameCallback {
         scheduleUpdate();
     }
 
-    public void setCurrentScene(Scene scene) {
-        this.scene = scene;
+    public void pushScene(Scene scene) {
+        this.sceneStack.add(scene);
+    }
+    public Scene getTopScene() {
+        //return sceneStack.getLast();
+        // Call requires API level 35 (current min is 24): java. util. ArrayList#getLast
+        int last = sceneStack.size() - 1;
+        if (last < 0) return null;
+        return sceneStack.get(last);
     }
 
     @Override
@@ -54,7 +63,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
         if (BuildConfig.DEBUG) {
             drawDebugBackground(canvas);
         }
-        scene.draw(canvas);
+        Scene scene = getTopScene();
+        if (scene != null) {
+            scene.draw(canvas);
+        }
         canvas.restore();
         if (BuildConfig.DEBUG) {
             drawDebugInfo(canvas);
@@ -63,7 +75,12 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return scene.onTouchEvent(event);
+        Scene scene = getTopScene();
+        if (scene != null) {
+            return scene.onTouchEvent(event);
+        }
+
+        return super.onTouchEvent(event);
     }
 
     private void scheduleUpdate() {
@@ -85,7 +102,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
     };
 
     private void update() {
-        scene.update();
+        Scene scene = getTopScene();
+        if (scene != null) {
+            scene.update();
+        }
     }
 
     private RectF borderRect;
