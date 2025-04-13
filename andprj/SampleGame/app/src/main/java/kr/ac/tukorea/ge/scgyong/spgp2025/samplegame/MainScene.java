@@ -18,15 +18,15 @@ public class MainScene extends Scene {
         Metrics.setGameSize(900, 1600);
 
         for (int i = 0; i < 5; i++) {
-            gameObjects.add(new BouncingCircle());
+            add(new BouncingCircle());
         }
         for (int i = 0; i < 10; i++) {
-            gameObjects.add(Ball.random());
+            add(Ball.random());
         }
         joyStick = new JoyStick();
         fighter = new Fighter(joyStick);
-        gameObjects.add(fighter);
-        gameObjects.add(joyStick);
+        add(fighter);
+        add(joyStick);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
