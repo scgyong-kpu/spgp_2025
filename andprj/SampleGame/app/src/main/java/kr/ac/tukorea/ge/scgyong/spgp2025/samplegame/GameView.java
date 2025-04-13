@@ -31,9 +31,11 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     private void init() {
         // 실질적 생성자 역할
-
-        this.scene = new MainScene(this);
         scheduleUpdate();
+    }
+
+    public void setCurrentScene(MainScene scene) {
+        this.scene = scene;
     }
 
     @Override
