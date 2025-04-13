@@ -8,6 +8,7 @@ import android.graphics.RectF;
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.BitmapPool;
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.GameView;
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.IGameObject;
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.JoyStick;
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Metrics;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Scene;
