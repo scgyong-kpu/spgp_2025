@@ -14,6 +14,9 @@ public class MainScene extends Scene {
     private Fighter fighter;
 
     public MainScene() {
+        //Metrics.setGameSize(1000, 1600);
+        //Metrics.setGameSize(700, 1600);
+        Metrics.setGameSize(1000, 600);
         fighter = new Fighter();
 
         for (int i = 0; i < 5; i++) {

@@ -1,8 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
@@ -16,8 +14,8 @@ public class Ball implements IGameObject {
 
     private static final Random random = new Random();
     public static Ball random() {
-        return new Ball(random.nextFloat() * Metrics.SCREEN_WIDTH,
-                random.nextFloat() * Metrics.SCREEN_HEIGHT,
+        return new Ball(random.nextFloat() * Metrics.width,
+                random.nextFloat() * Metrics.height,
                 random.nextFloat() * 360);
     }
     public Ball(float centerX, float centerY, float angle_degree) {
@@ -37,7 +35,7 @@ public class Ball implements IGameObject {
         float timedDy = dy * GameView.frameTime;
         dstRect.offset(timedDx, timedDy);
         if (dx > 0) {
-            if (dstRect.right > Metrics.SCREEN_WIDTH) { // Alt+Enter -> Make GameView.SCREEN_WIDTH public
+            if (dstRect.right > Metrics.width) { // Alt+Enter -> Make GameView.SCREEN_WIDTH public
                 dx = -dx;
             }
         } else {
@@ -46,7 +44,7 @@ public class Ball implements IGameObject {
             }
         }
         if (dy > 0) {
-            if (dstRect.bottom > Metrics.SCREEN_HEIGHT) {
+            if (dstRect.bottom > Metrics.height) {
                 dy = -dy;
             }
         } else {

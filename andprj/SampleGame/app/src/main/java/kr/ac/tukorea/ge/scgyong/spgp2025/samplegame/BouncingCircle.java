@@ -3,7 +3,6 @@ package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 import java.util.Random;
 
@@ -17,8 +16,8 @@ public class BouncingCircle implements IGameObject {
     private float textOffsetX, textOffsetY;
 
     public BouncingCircle() {
-        this.x = random.nextFloat() * Metrics.SCREEN_WIDTH;
-        this.y = random.nextFloat() * Metrics.SCREEN_HEIGHT;
+        this.x = random.nextFloat() * Metrics.width;
+        this.y = random.nextFloat() * Metrics.height;
         this.radius = random.nextFloat() * 100 + 100f; // 100 ~ 200
         this.speed = random.nextFloat() * 1000f - 500f; // -500 ~ +500
 
@@ -47,7 +46,7 @@ public class BouncingCircle implements IGameObject {
     public void update() {
         this.y += this.speed * GameView.frameTime;
         //Log.d(BouncingCircle.class.getSimpleName(), "Speed=" + speed);
-        if (speed > 0 && y >= Metrics.SCREEN_HEIGHT) { // bounce
+        if (speed > 0 && y >= Metrics.height) { // bounce
             speed = -speed * 0.8f;
             if (Math.abs(speed) < 20f) {
                 this.speed = random.nextFloat() * 1000f - 2500f; // -2500 ~ -1500
