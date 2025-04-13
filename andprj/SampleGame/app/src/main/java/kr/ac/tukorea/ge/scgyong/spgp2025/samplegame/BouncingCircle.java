@@ -28,6 +28,7 @@ public class BouncingCircle implements IGameObject {
                 random.nextInt(128) + 64,
                 random.nextInt(128) + 64
         ));
+        this.paint.setTextSize(radius - 0.5f);
     }
 
     public void update() {
@@ -46,5 +47,6 @@ public class BouncingCircle implements IGameObject {
 
     public void draw(Canvas canvas) {
         canvas.drawCircle(x, y, radius, paint);
+        canvas.drawText("BC", x, y, paint);
     }
 }
