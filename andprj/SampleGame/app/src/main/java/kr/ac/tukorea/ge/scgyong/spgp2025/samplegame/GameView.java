@@ -22,9 +22,6 @@ import java.util.ArrayList;
 
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
-    private final Matrix transformMatrix = new Matrix();
-    private final Matrix invertedMatrix = new Matrix();
-    private final float[] pointsBuffer = new float[2];
     private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
     private Fighter fighter;
     private static long previousNanos;
@@ -64,27 +61,14 @@ public class GameView extends View implements Choreographer.FrameCallback {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        float view_ratio = (float)w / (float)h;
-        float game_ratio = Metrics.SCREEN_WIDTH / Metrics.SCREEN_HEIGHT;
-
-        transformMatrix.reset();
-        if (view_ratio > game_ratio) {
-            float scale = h / Metrics.SCREEN_HEIGHT;
-            transformMatrix.preTranslate((w - h * game_ratio) / 2, 0);
-            transformMatrix.preScale(scale, scale);
-        } else {
-            float scale = w / Metrics.SCREEN_WIDTH;
-            transformMatrix.preTranslate(0, (h - w / game_ratio) / 2);
-            transformMatrix.preScale(scale, scale);
-        }
-        transformMatrix.invert(invertedMatrix);
+        Metrics.onSize(w, h);
     }
 
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         canvas.save();
-        canvas.setMatrix(transformMatrix);
+        Metrics.concat(canvas);
         // 반드시 성공적인 빌드가 진행된 후에 BuildConfig.java 가 생성되므로
         // 아래 코드가 문제가 되면 잠시 삭제해서 빌드만 성공시키고 다시 살려두어도 된다.
         if (BuildConfig.DEBUG) {
@@ -104,11 +88,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
         switch (event.getAction()) {
         case MotionEvent.ACTION_DOWN:
         case MotionEvent.ACTION_MOVE:
-            pointsBuffer[0] = event.getX();
-            pointsBuffer[1] = event.getY();
-            invertedMatrix.mapPoints(pointsBuffer);
-            this.fighter.setTargetPosition(pointsBuffer[0], pointsBuffer[1]);
-            //Log.d(TAG, "Event=" + event.getAction());
+            float[] xy = Metrics.fromScreen(event.getX(), event.getY());
+            fighter.setTargetPosition(xy[0], xy[1]);
             return true;
         }
         return super.onTouchEvent(event);
