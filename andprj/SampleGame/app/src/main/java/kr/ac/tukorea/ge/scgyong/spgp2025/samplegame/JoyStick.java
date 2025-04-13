@@ -15,6 +15,7 @@ public class JoyStick implements IGameObject {
     private static final float CENTER_Y = 1400f;
     private static final float BG_RADIUS = 200f;
     private static final float THUMB_RADIUS = 60f;
+    private static final float MOVE_RADIUS = BG_RADIUS - THUMB_RADIUS;
     private final RectF bgRect;
     private final RectF thumbRect;
 
@@ -55,11 +56,10 @@ public class JoyStick implements IGameObject {
                 float dx = Math.max(-BG_RADIUS, Math.min(pts[0] - startX, BG_RADIUS));
                 float dy = Math.max(-BG_RADIUS, Math.min(pts[1] - startY, BG_RADIUS));
                 double radius = Math.sqrt(dx * dx + dy * dy);
-                double max_radius = BG_RADIUS - THUMB_RADIUS;
-                if (radius > max_radius) {
+                if (radius > MOVE_RADIUS) {
                     double radian = Math.atan2(dy, dx);
-                    dx = (float) (max_radius * Math.cos(radian));
-                    dy = (float) (max_radius * Math.sin(radian));
+                    dx = (float) (MOVE_RADIUS * Math.cos(radian));
+                    dy = (float) (MOVE_RADIUS * Math.sin(radian));
                 }
                 float cx = CENTER_X + dx, cy = CENTER_Y + dy;
                 Log.d(TAG, "sx="+startX+" sy="+startY+" dx="+dx + " dy="+dy);
