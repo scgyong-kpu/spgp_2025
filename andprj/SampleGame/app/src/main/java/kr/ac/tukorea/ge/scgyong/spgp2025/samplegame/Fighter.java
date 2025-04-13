@@ -28,7 +28,7 @@ public class Fighter implements IGameObject {
         if (joyStick.power <= 0) {
             return;
         }
-        float distance = SPEED * joyStick.power * GameView.frameTime;
+        float distance = SPEED * GameView.frameTime;
         x += (float) (distance * Math.cos(joyStick.angle_radian));
         y += (float) (distance * Math.sin(joyStick.angle_radian));
         setPosition(x, y);
