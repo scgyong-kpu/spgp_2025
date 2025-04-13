@@ -14,7 +14,7 @@ public class Scene {
     // Game Object Management
     public void add(IGameObject gameObject) {
         gameObjects.add(gameObject);
-        Log.d(TAG, gameObjects.size() + " objects in " + this);
+        //Log.d(TAG, gameObjects.size() + " objects in " + this);
     }
 
     //////////////////////////////////////////////////

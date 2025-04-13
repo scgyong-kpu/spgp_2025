@@ -44,14 +44,27 @@ public class Fighter implements IGameObject {
         if (joyStick.power <= 0) {
             return;
         }
-        float distance = SPEED * GameView.frameTime;
-        final int way = 8;
-        final double TWO_PI = Math.PI * 2;
-        float eightWayAngle = (float) (Math.round(way * joyStick.angle_radian / TWO_PI) * TWO_PI / way);
-        x += (float) (distance * Math.cos(eightWayAngle));
-        y += (float) (distance * Math.sin(eightWayAngle));
+
+        // 옵션 1-1 : power 를 적용하지 않는 경우
+        //float distance = SPEED * GameView.frameTime;
+
+        // 옵션 1-2 : power 를 적용하는 경우
+        float distance = SPEED * joyStick.power * GameView.frameTime;
+
+        // 옵션 2-1 : 8방향인 경우
+        //final int way = 8;
+        //final double TWO_PI = Math.PI * 2;
+        //float eightWayAngle = (float) (Math.round(way * joyStick.angle_radian / TWO_PI) * TWO_PI / way);
+        //x += (float) (distance * Math.cos(eightWayAngle));
+        //y += (float) (distance * Math.sin(eightWayAngle));
+        //setPosition(x, y);
+        //angle = (float) Math.toDegrees(eightWayAngle);
+
+        // 옵션 2-2 : 360° 인 경우
+        x += (float) (distance * Math.cos(joyStick.angle_radian));
+        y += (float) (distance * Math.sin(joyStick.angle_radian));
         setPosition(x, y);
-        angle = (float) Math.toDegrees(eightWayAngle);
+        angle = (float) Math.toDegrees(joyStick.angle_radian);
     }
 
     public void draw(Canvas canvas) {
