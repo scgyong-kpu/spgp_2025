@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
+package kr.ac.tukorea.ge.scgyong.spgp2025.framework.activity;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -6,7 +6,11 @@ import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+
+import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.GameView;
+import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game.MainScene;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -16,11 +20,26 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameView = new GameView(this);
+        new MainScene().push();
         setContentView(gameView);
 
         setFullScreen();
+
+        gameView.setEmptyStackListener(new GameView.OnEmptyStackListener() {
+            @Override
+            public void onEmptyStack() {
+                finish();
+            }
+        });
+        getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
     }
 
+    private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+        @Override
+        public void handleOnBackPressed() {
+            gameView.onBackPressed();
+        }
+    };
     @SuppressWarnings("deprecation")
     public void setFullScreen() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
