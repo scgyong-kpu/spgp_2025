@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.BitmapPool;
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.IGameObject;
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.Metrics;
-import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.RectUtil;
 
 public class JoyStick implements IGameObject {
@@ -17,25 +16,27 @@ public class JoyStick implements IGameObject {
     private final Bitmap bgBitmap;
     private final Bitmap thumbBitmap;
 
-    private static final float CENTER_X = 200f;
-    private static final float CENTER_Y = 1400f;
-    private static final float BG_RADIUS = 200f;
-    private static final float THUMB_RADIUS = 60f;
-    private static final float MOVE_RADIUS = BG_RADIUS - THUMB_RADIUS;
+    private float x; // = 200f;
+    private float y; //CENTER_Y = 1400f;
+    private float bg_radius; //BG_RADIUS = 200f;
+    private float thumb_radius; //THUMB_RADIUS = 60f;
+    private float move_radius; //MOVE_RADIUS = BG_RADIUS - THUMB_RADIUS;
     private final RectF bgRect;
     private final RectF thumbRect;
 
     private boolean visible;
     private float startX, startY;
     public float power, angle_radian;
-
-    public JoyStick() {
-        bgBitmap = BitmapPool.get(R.mipmap.joystick_bg);
-        thumbBitmap = BitmapPool.get(R.mipmap.joystick_thumb);
-        bgRect = RectUtil.newRectF(CENTER_X, CENTER_Y, BG_RADIUS);
-        thumbRect = RectUtil.newRectF(CENTER_X, CENTER_Y, THUMB_RADIUS);
+    public JoyStick(int bgBmpId, int thumbBmpId, float x, float y, float bg_radius, float thumb_radius, float move_radius) {
+        this.x = x; this.y = y;
+        this.bg_radius = bg_radius;
+        this.thumb_radius = thumb_radius;
+        this.move_radius = move_radius;
+        bgBitmap = BitmapPool.get(bgBmpId);
+        thumbBitmap = BitmapPool.get(thumbBmpId);
+        bgRect = RectUtil.newRectF(x, y, bg_radius);
+        thumbRect = RectUtil.newRectF(x, y, thumb_radius);
     }
-
     @Override
     public void update() {
     }
@@ -55,25 +56,25 @@ public class JoyStick implements IGameObject {
                 pts = Metrics.fromScreen(event.getX(), event.getY());
                 startX = pts[0];
                 startY = pts[1];
-                RectUtil.setRect(thumbRect, CENTER_X, CENTER_Y, THUMB_RADIUS);
+                RectUtil.setRect(thumbRect, x, y, thumb_radius);
                 power = 0;
                 return true;
             case MotionEvent.ACTION_MOVE:
                 pts = Metrics.fromScreen(event.getX(), event.getY());
-                float dx = Math.max(-BG_RADIUS, Math.min(pts[0] - startX, BG_RADIUS));
-                float dy = Math.max(-BG_RADIUS, Math.min(pts[1] - startY, BG_RADIUS));
+                float dx = Math.max(-bg_radius, Math.min(pts[0] - startX, bg_radius));
+                float dy = Math.max(-bg_radius, Math.min(pts[1] - startY, bg_radius));
                 double radius = Math.sqrt(dx * dx + dy * dy);
                 angle_radian = (float) Math.atan2(dy, dx);
-                if (radius > MOVE_RADIUS) {
-                    dx = (float) (MOVE_RADIUS * Math.cos(angle_radian));
-                    dy = (float) (MOVE_RADIUS * Math.sin(angle_radian));
-                    radius = MOVE_RADIUS;
+                if (radius > move_radius) {
+                    dx = (float) (move_radius * Math.cos(angle_radian));
+                    dy = (float) (move_radius * Math.sin(angle_radian));
+                    radius = move_radius;
                 }
-                power = (float) (radius / MOVE_RADIUS);
-                float cx = CENTER_X + dx, cy = CENTER_Y + dy;
-                //Log.d(TAG, "sx="+startX+" sy="+startY+" dx="+dx + " dy="+dy);
+                power = (float) (radius / move_radius);
+                float cx = x + dx, cy = y + dy;
+                //Log.d(TAG, "sx="+startX+" sy="+startY+" dx="+dx + " dy=" + dy + " x=" + x + " y=" + y + " cx=" + cx + " cy=" + cy);
                 Log.d(TAG, "angle=" + (int)Math.toDegrees(angle_radian) + "° power=" + String.format("%.2f", power));
-                thumbRect.set(cx - THUMB_RADIUS, cy - THUMB_RADIUS, cx + THUMB_RADIUS, cy + THUMB_RADIUS);
+                RectUtil.setRect(thumbRect, cx, cy, thumb_radius);
                 break;
 
             case MotionEvent.ACTION_UP:
