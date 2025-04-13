@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class Fighter implements IGameObject {
     private static final String TAG = Fighter.class.getSimpleName();
-    private static final float SPEED = 8.0f;
+    private static final float SPEED = 800f;
     private final Bitmap bitmap;
     private float x, y, angle;
     private float tx, ty, dx, dy;
@@ -15,7 +15,7 @@ public class Fighter implements IGameObject {
 
     public Fighter(Bitmap bitmap) {
         this.bitmap = bitmap;
-        setPosition(5.0f, 12.0f);
+        setPosition(500f, 1200f);
         tx = x;
         ty = y;
     }
@@ -51,7 +51,7 @@ public class Fighter implements IGameObject {
         this.dy = SPEED * (float) Math.sin(radian);
     }
     public void setPosition(float x, float y) {
-        float r = 1.25f;
+        float r = 125f;
         dstRect.set(x-r, y-r, x+r, y+r);
         this.x = x;
         this.y = y;

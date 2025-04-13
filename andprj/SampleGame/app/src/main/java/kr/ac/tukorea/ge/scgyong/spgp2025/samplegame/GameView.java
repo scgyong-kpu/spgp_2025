@@ -127,20 +127,20 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
             borderPaint = new Paint();
             borderPaint.setStyle(Paint.Style.STROKE);
-            borderPaint.setStrokeWidth(0.1f);
+            borderPaint.setStrokeWidth(10f);
             borderPaint.setColor(Color.RED);
 
             gridPaint = new Paint();
             gridPaint.setStyle(Paint.Style.STROKE);
-            gridPaint.setStrokeWidth(0.01f);
+            gridPaint.setStrokeWidth(1f);
             gridPaint.setColor(Color.GRAY);
         }
 
         canvas.drawRect(borderRect, borderPaint);
-        for (float x = 1.0f; x < Metrics.SCREEN_WIDTH; x += 1.0f) {
+        for (float x = Metrics.GRID_UNIT; x < Metrics.SCREEN_WIDTH; x += Metrics.GRID_UNIT) {
             canvas.drawLine(x, 0, x, Metrics.SCREEN_HEIGHT, gridPaint);
         }
-        for (float y = 1.0f; y < Metrics.SCREEN_HEIGHT; y += 1.0f) {
+        for (float y = Metrics.GRID_UNIT; y < Metrics.SCREEN_HEIGHT; y += Metrics.GRID_UNIT) {
             canvas.drawLine(0, y, Metrics.SCREEN_WIDTH, y, gridPaint);
         }
     }

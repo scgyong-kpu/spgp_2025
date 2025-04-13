@@ -2,10 +2,13 @@ package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.util.Log;
 
 public class Metrics {
-    public static final float SCREEN_WIDTH = 9.0f;
-    public static final float SCREEN_HEIGHT = 16.0f;
+    public static final float SCREEN_WIDTH = 900f;
+    public static final float SCREEN_HEIGHT = 1600f;
+    public static final float GRID_UNIT = 100f;
+
     private static final Matrix transformMatrix = new Matrix();
     private static final Matrix invertedMatrix = new Matrix();
     private static final float[] pointsBuffer = new float[2];
