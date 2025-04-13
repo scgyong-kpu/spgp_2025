@@ -38,8 +38,8 @@ public class MainScene extends Scene {
                 float[] xy = Metrics.fromScreen(event.getX(), event.getY());
                 if (xy[0] < 100 && xy[1] < 100) {
                     Log.d(TAG, "Push SubScene Here. How to get gameView?");
-                    //SubScene subScene = new SubScene();
-                    //gameView.pushScene(subScene);
+                    SubScene subScene = new SubScene();
+                    GameView.view.pushScene(subScene);
                     return false;
                 }
                 fighter.setTargetPosition(xy[0], xy[1]);
