@@ -13,6 +13,8 @@ public class BouncingCircle implements IGameObject {
     private final float x, radius;
     private float speed, y;
     private final Paint paint;
+    private final String text;
+    private float textOffsetX, textOffsetY;
 
     public BouncingCircle() {
         this.x = random.nextFloat() * Metrics.SCREEN_WIDTH;
@@ -29,6 +31,17 @@ public class BouncingCircle implements IGameObject {
                 random.nextInt(128) + 64
         ));
         this.paint.setTextSize(radius / 2);
+
+        this.text = String.valueOf((int)radius);
+        // 텍스트의 가로 너비
+        float textWidth = paint.measureText(text);
+        // 텍스트의 세로 높이 정보
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        //float textHeight = fontMetrics.descent - fontMetrics.ascent;
+
+        // 중심을 맞추기 위한 보정값
+        this.textOffsetX = -textWidth / 2;
+        this.textOffsetY = -(fontMetrics.ascent + fontMetrics.descent) / 2;
     }
 
     public void update() {
@@ -47,6 +60,6 @@ public class BouncingCircle implements IGameObject {
 
     public void draw(Canvas canvas) {
         canvas.drawCircle(x, y, radius, paint);
-        canvas.drawText("BC", x, y, paint);
+        canvas.drawText(text, x + textOffsetX, y + textOffsetY, paint);
     }
 }
