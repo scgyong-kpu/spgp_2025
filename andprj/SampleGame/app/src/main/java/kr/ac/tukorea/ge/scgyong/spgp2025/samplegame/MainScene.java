@@ -23,10 +23,9 @@ public class MainScene extends Scene {
         for (int i = 0; i < 10; i++) {
             gameObjects.add(Ball.random());
         }
-        fighter = new Fighter();
-        gameObjects.add(fighter);
-
         joyStick = new JoyStick();
+        fighter = new Fighter(joyStick);
+        gameObjects.add(fighter);
         gameObjects.add(joyStick);
     }
 
