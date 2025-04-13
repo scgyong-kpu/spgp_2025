@@ -22,6 +22,10 @@ public class GameActivity extends AppCompatActivity {
         setFullScreen();
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
     @SuppressWarnings("deprecation")
     public void setFullScreen() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
