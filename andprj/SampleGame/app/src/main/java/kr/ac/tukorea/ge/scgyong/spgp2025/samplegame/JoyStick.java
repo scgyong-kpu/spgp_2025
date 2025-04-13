@@ -52,6 +52,12 @@ public class JoyStick implements IGameObject {
                 pts = Metrics.fromScreen(event.getX(), event.getY());
                 float dx = Math.max(-BG_RADIUS, Math.min(pts[0] - startX, BG_RADIUS));
                 float dy = Math.max(-BG_RADIUS, Math.min(pts[1] - startY, BG_RADIUS));
+                double radius = Math.sqrt(dx * dx + dy * dy);
+                if (radius > BG_RADIUS) {
+                    double radian = Math.atan2(dy, dx);
+                    dx = (float) (BG_RADIUS * Math.cos(radian));
+                    dy = (float) (BG_RADIUS * Math.sin(radian));
+                }
                 float cx = CENTER_X + dx, cy = CENTER_Y + dy;
                 Log.d(TAG, "sx="+startX+" sy="+startY+" dx="+dx + " dy="+dy);
                 thumbRect.set(cx - THUMB_RADIUS, cy - THUMB_RADIUS, cx + THUMB_RADIUS, cy + THUMB_RADIUS);
