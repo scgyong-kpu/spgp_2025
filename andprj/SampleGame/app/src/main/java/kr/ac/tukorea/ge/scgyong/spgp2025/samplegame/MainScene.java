@@ -14,12 +14,7 @@ public class MainScene extends Scene {
     private Fighter fighter;
 
     public MainScene() {
-        Resources res = GameView.view.getResources();
-        Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
-        Ball.setBitmap(ballBitmap);
-
-        Bitmap fighterBitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
-        fighter = new Fighter(fighterBitmap);
+        fighter = new Fighter();
 
         for (int i = 0; i < 5; i++) {
             gameObjects.add(new BouncingCircle());

@@ -1,6 +1,8 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
@@ -13,8 +15,9 @@ public class Fighter implements IGameObject {
     private float tx, ty, dx, dy;
     private final RectF dstRect = new RectF();
 
-    public Fighter(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public Fighter() {
+        Resources res = GameView.view.getResources();
+        bitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
         setPosition(500f, 1200f);
         tx = x;
         ty = y;

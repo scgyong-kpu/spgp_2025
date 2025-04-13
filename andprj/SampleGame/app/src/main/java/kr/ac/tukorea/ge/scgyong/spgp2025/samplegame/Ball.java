@@ -1,6 +1,8 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
@@ -25,11 +27,13 @@ public class Ball implements IGameObject {
         double radian = Math.toRadians(angle_degree);
         this.dx = SPEED * (float) Math.cos(radian);
         this.dy = SPEED * (float) Math.sin(radian);
+
+        if (bitmap == null) {
+            Resources res = GameView.view.getResources();
+            bitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
+        }
     }
     private static Bitmap bitmap;
-    public static void setBitmap(Bitmap bitmap) { // Alt+Insert -> Setter
-        Ball.bitmap = bitmap;
-    }
 
     public void update() {
         float timedDx = dx * GameView.frameTime;
