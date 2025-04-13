@@ -12,12 +12,10 @@ import java.util.ArrayList;
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
     private Fighter fighter;
+    private JoyStick joyStick;
 
     public MainScene() {
-        //Metrics.setGameSize(1000, 1600);
-        //Metrics.setGameSize(700, 1600);
-        Metrics.setGameSize(1000, 600);
-        fighter = new Fighter();
+        Metrics.setGameSize(900, 1600);
 
         for (int i = 0; i < 5; i++) {
             gameObjects.add(new BouncingCircle());
@@ -25,22 +23,14 @@ public class MainScene extends Scene {
         for (int i = 0; i < 10; i++) {
             gameObjects.add(Ball.random());
         }
+        fighter = new Fighter();
         gameObjects.add(fighter);
 
+        joyStick = new JoyStick();
+        gameObjects.add(joyStick);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-                float[] xy = Metrics.fromScreen(event.getX(), event.getY());
-                if (xy[0] < 100 && xy[1] < 100) {
-                    new SubScene().push();
-                    return false;
-                }
-                fighter.setTargetPosition(xy[0], xy[1]);
-                return true;
-        }
-        return false;
+        return joyStick.onTouch(event);
     }
 }
