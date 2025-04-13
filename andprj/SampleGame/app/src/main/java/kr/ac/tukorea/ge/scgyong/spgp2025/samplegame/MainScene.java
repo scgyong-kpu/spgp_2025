@@ -13,8 +13,8 @@ public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
     private Fighter fighter;
 
-    public MainScene(GameView gameView) {
-        Resources res = gameView.getResources();
+    public MainScene() {
+        Resources res = GameView.view.getResources();
         Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
         Ball.setBitmap(ballBitmap);
 
@@ -37,9 +37,7 @@ public class MainScene extends Scene {
             case MotionEvent.ACTION_MOVE:
                 float[] xy = Metrics.fromScreen(event.getX(), event.getY());
                 if (xy[0] < 100 && xy[1] < 100) {
-                    Log.d(TAG, "Push SubScene Here. How to get gameView?");
-                    SubScene subScene = new SubScene();
-                    GameView.view.pushScene(subScene);
+                    new SubScene().push();
                     return false;
                 }
                 fighter.setTargetPosition(xy[0], xy[1]);
