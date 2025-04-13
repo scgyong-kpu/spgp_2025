@@ -39,6 +39,11 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public void pushScene(Scene scene) {
         this.sceneStack.add(scene);
     }
+    public Scene popScene() {
+        int last = sceneStack.size() - 1;
+        if (last < 0) return null;
+        return sceneStack.remove(last);
+    }
     public Scene getTopScene() {
         //return sceneStack.getLast();
         // Call requires API level 35 (current min is 24): java. util. ArrayList#getLast
