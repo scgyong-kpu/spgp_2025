@@ -3,12 +3,15 @@ package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.util.Log;
 
 public class Metrics {
+    private static final String TAG = Metrics.class.getSimpleName();
     public static float width = 900f;
     public static float height = 1600f;
     public static final float GRID_UNIT = 100f;
     public static final RectF borderRect = new RectF(0, 0, Metrics.width, Metrics.height);
+    public static final RectF screenRect = new RectF();
     private static final Matrix transformMatrix = new Matrix();
     private static final Matrix invertedMatrix = new Matrix();
     private static final float[] pointsBuffer = new float[2];
@@ -35,6 +38,10 @@ public class Metrics {
             transformMatrix.preScale(scale, scale);
         }
         transformMatrix.invert(invertedMatrix);
+
+        screenRect.set(0, 0, w, h);
+        invertedMatrix.mapRect(screenRect);
+        Log.d(TAG, "Screen Rect = " + screenRect);
     }
 
     public static float[] fromScreen(float x, float y) {
