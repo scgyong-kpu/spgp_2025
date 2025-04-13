@@ -20,6 +20,13 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private static long previousNanos;
     public static float frameTime;
     public static GameView view;
+    public interface OnEmptyStackListener {
+        public void onEmptyStack();
+    }
+    private OnEmptyStackListener emptyStackListener;
+    public void setEmptyStackListener(OnEmptyStackListener emptyStackListener) {
+        this.emptyStackListener = emptyStackListener;
+    }
     private ArrayList<Scene> sceneStack = new ArrayList<>();
 
     public GameView(Context context) {
@@ -48,14 +55,26 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
     public Scene popScene() {
         int last = sceneStack.size() - 1;
-        if (last < 0) return null;
+        if (last < 0) {
+            notifyEmptyStack();
+            return null;
+        }
         Scene top = sceneStack.remove(last);
         top.onExit();
         if (last >= 1) {
             sceneStack.get(last - 1).onResume();
+        } else {
+            notifyEmptyStack();
         }
         return top;
     }
+
+    private void notifyEmptyStack() {
+        if (emptyStackListener != null) {
+            emptyStackListener.onEmptyStack();
+        }
+    }
+
     public void changeScene(Scene scene) {
         int last = sceneStack.size() - 1;
         if (last < 0) return;

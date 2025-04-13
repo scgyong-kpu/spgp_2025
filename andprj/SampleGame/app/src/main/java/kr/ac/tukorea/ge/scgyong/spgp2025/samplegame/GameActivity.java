@@ -22,6 +22,12 @@ public class GameActivity extends AppCompatActivity {
 
         setFullScreen();
 
+        gameView.setEmptyStackListener(new GameView.OnEmptyStackListener() {
+            @Override
+            public void onEmptyStack() {
+                finish();
+            }
+        });
         getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
     }
 
