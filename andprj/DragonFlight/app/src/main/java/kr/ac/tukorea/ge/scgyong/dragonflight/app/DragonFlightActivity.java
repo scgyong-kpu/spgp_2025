@@ -2,15 +2,9 @@ package kr.ac.tukorea.ge.scgyong.dragonflight.app;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.activity.GameActivity;
 
-import kr.ac.tukorea.ge.scgyong.dragonflight.R;
-
-public class DragonFlightActivity extends AppCompatActivity {
+public class DragonFlightActivity extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
