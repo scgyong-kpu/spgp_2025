@@ -4,6 +4,8 @@ import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Fighter extends Sprite {
@@ -11,6 +13,8 @@ public class Fighter extends Sprite {
     private static final float SPEED = 300f;
     private float targetX;
 
+    private static final float FIRE_INTERVAL = 0.25f;
+    private float fireCoolTime = FIRE_INTERVAL;
     public Fighter() {
         super(R.mipmap.fighter);
         setPosition(Metrics.width / 2, Metrics.height - 200, RADIUS);
@@ -36,6 +40,15 @@ public class Fighter extends Sprite {
         if (adjx != x) {
             setPosition(adjx, y, RADIUS);
         }
+        fireCoolTime -= GameView.frameTime;
+        if (fireCoolTime <= 0) {
+            fireBullet();
+            fireCoolTime = FIRE_INTERVAL;
+        }
+    }
+
+    private void fireBullet() {
+        Scene.top().add(new Bullet(x, y));
     }
 
     private void setTargetX(float x) {
