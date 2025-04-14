@@ -10,7 +10,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.GameView;
-import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game.MainScene;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -20,7 +19,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameView = new GameView(this);
-        new MainScene().push();
         setContentView(gameView);
 
         setFullScreen();
