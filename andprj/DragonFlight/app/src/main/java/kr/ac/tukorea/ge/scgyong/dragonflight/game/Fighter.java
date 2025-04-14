@@ -1,9 +1,13 @@
 package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
@@ -15,10 +19,19 @@ public class Fighter extends Sprite {
 
     private static final float FIRE_INTERVAL = 0.25f;
     private float fireCoolTime = FIRE_INTERVAL;
+
+    private static final float SPARK_DURATION = 0.1f;
+    private static final float SPARK_WIDTH = 112f;
+    private static final float SPARK_HEIGHT = SPARK_WIDTH * 3 / 5;
+    private RectF sparkRect = new RectF();
+    private Bitmap sparkBitmap;
+
     public Fighter() {
         super(R.mipmap.fighter);
         setPosition(Metrics.width / 2, Metrics.height - 200, RADIUS);
         targetX = x;
+
+        sparkBitmap = BitmapPool.get(R.mipmap.laser_spark);
     }
 
     @Override
@@ -44,6 +57,16 @@ public class Fighter extends Sprite {
         if (fireCoolTime <= 0) {
             fireBullet();
             fireCoolTime = FIRE_INTERVAL;
+        }
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        if (FIRE_INTERVAL - fireCoolTime > SPARK_DURATION) {
+            sparkRect.set(x - SPARK_WIDTH/2, y - SPARK_HEIGHT/2,
+                    x + SPARK_WIDTH/2, y + SPARK_HEIGHT/2);
+            canvas.drawBitmap(sparkBitmap, null, sparkRect, null);
         }
     }
 
