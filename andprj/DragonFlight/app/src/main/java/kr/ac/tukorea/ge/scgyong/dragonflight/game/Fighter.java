@@ -21,6 +21,7 @@ public class Fighter extends Sprite {
 
     private static final float FIRE_INTERVAL = 0.25f;
     private float fireCoolTime = FIRE_INTERVAL;
+    private static final float BULLET_OFFSET = 80f;
 
     private static final float SPARK_OFFSET = 66f;
     private static final float SPARK_DURATION = 0.1f;
@@ -73,7 +74,7 @@ public class Fighter extends Sprite {
     }
 
     private void fireBullet() {
-        Scene.top().add(new Bullet(x, y));
+        Scene.top().add(new Bullet(x, y - BULLET_OFFSET));
     }
 
     private void setTargetX(float x) {
