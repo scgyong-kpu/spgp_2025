@@ -4,8 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.GameView;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.interfaces.IGameObject;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 
 public class Bullet implements IGameObject {
     private static final float SPEED = 1000f;

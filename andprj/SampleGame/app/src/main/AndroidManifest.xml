@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SampleGame"
         tools:targetApi="31">
         <activity
-            android:name="kr.ac.tukorea.ge.scgyong.spgp2025.framework.activity.GameActivity"
+            android:name=".app.SampleGameActivity"
             android:exported="false" />
         <activity
             android:name=".app.MainActivity"

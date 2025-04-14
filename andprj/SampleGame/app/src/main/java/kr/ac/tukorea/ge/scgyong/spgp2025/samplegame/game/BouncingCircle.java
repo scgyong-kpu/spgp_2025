@@ -6,9 +6,9 @@ import android.graphics.Paint;
 
 import java.util.Random;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.GameView;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.interfaces.IGameObject;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.Metrics;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class BouncingCircle implements IGameObject {
     private static final float GRAVITY = 1800f;
