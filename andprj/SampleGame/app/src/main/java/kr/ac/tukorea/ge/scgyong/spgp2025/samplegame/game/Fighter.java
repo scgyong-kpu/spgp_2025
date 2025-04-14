@@ -1,16 +1,12 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.RectF;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.objects.JoyStick;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.objects.Sprite;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.res.BitmapPool;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.scene.Scene;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.GameView;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.Metrics;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.JoyStick;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 
 public class Fighter extends Sprite {

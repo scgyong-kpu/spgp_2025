@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.spgp2025.framework.res;
+package kr.ac.tukorea.ge.spgp2025.a2dg.framework.res;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -7,7 +7,7 @@ import android.util.Log;
 
 import java.util.HashMap;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class BitmapPool {
     private static final String TAG = BitmapPool.class.getSimpleName();

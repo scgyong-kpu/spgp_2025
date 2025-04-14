@@ -2,10 +2,10 @@ package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game;
 
 import android.view.MotionEvent;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.objects.JoyStick;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.GameView;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.Metrics;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.JoyStick;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.BuildConfig;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 
