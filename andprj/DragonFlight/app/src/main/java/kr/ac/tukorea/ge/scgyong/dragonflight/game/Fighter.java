@@ -13,7 +13,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Fighter extends Sprite {
-    private static final float RADIUS = 100f;
+    private static final float PLANE_WIDTH = 175f;
+    private static final float PLANE_HEIGHT = PLANE_WIDTH * 80 / 72;
     private static final float SPEED = 300f;
     private float targetX;
 
@@ -28,7 +29,7 @@ public class Fighter extends Sprite {
 
     public Fighter() {
         super(R.mipmap.fighter);
-        setPosition(Metrics.width / 2, Metrics.height - 200, RADIUS);
+        setPosition(Metrics.width / 2, Metrics.height - 200, PLANE_WIDTH, PLANE_HEIGHT);
         targetX = x;
 
         sparkBitmap = BitmapPool.get(R.mipmap.laser_spark);
@@ -48,10 +49,10 @@ public class Fighter extends Sprite {
         if ((dx < 0 && x < targetX) || (dx > 0 && x > targetX)) {
             adjx = targetX;
         } else {
-            adjx = Math.max(RADIUS, Math.min(x, Metrics.width - RADIUS));
+            adjx = Math.max(radius, Math.min(x, Metrics.width - radius));
         }
         if (adjx != x) {
-            setPosition(adjx, y, RADIUS);
+            setPosition(adjx, y, PLANE_WIDTH, PLANE_HEIGHT);
         }
         fireCoolTime -= GameView.frameTime;
         if (fireCoolTime <= 0) {
@@ -75,7 +76,7 @@ public class Fighter extends Sprite {
     }
 
     private void setTargetX(float x) {
-        targetX = Math.max(RADIUS, Math.min(x, Metrics.width - RADIUS));
+        targetX = Math.max(radius, Math.min(x, Metrics.width - radius));
     }
     public boolean onTouch(MotionEvent event) {
         switch (event.getAction()) {
