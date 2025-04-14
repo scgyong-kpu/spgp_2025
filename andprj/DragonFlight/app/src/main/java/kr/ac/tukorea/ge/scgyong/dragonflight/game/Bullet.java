@@ -2,6 +2,7 @@ package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class Bullet extends Sprite {
     private static final float BULLET_WIDTH = 68f;
@@ -11,5 +12,12 @@ public class Bullet extends Sprite {
         super(R.mipmap.laser_1);
         setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
         dy = -SPEED;
+    }
+    @Override
+    public void update() {
+        super.update();
+        if (dstRect.bottom < 0) {
+            Scene.top().remove(this);
+        }
     }
 }
