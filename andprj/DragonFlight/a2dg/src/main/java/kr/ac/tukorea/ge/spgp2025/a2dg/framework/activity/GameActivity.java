@@ -2,6 +2,7 @@ package kr.ac.tukorea.ge.spgp2025.a2dg.framework.activity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
@@ -13,6 +14,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class GameActivity extends AppCompatActivity {
 
+    private static final String TAG = GameActivity.class.getSimpleName();
     private GameView gameView;
 
     @Override
@@ -38,6 +40,27 @@ public class GameActivity extends AppCompatActivity {
             gameView.onBackPressed();
         }
     };
+
+
+    @Override
+    protected void onPause() {
+        gameView.pauseGame();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gameView.resumeGame();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.i(TAG, "onDestroy");
+        gameView.destroyGame();
+        super.onDestroy();
+    }
+
     @SuppressWarnings("deprecation")
     public void setFullScreen() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
