@@ -27,7 +27,12 @@ public class Fighter extends Sprite {
             dx = 0;
         }
         super.update();
-        float adjx = Math.max(RADIUS, Math.min(x, Metrics.width - RADIUS));
+        float adjx = x;
+        if ((dx < 0 && x < targetX) || (dx > 0 && x > targetX)) {
+            adjx = targetX;
+        } else {
+            adjx = Math.max(RADIUS, Math.min(x, Metrics.width - RADIUS));
+        }
         if (adjx != x) {
             setPosition(adjx, y, RADIUS);
         }
