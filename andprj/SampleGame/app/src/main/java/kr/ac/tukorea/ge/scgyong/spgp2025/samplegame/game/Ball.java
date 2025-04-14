@@ -2,8 +2,8 @@ package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game;
 
 import java.util.Random;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.objects.Sprite;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.Metrics;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 
 public class Ball extends Sprite {

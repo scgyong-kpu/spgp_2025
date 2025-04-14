@@ -1,36 +1,28 @@
 package kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.game;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.RectF;
 
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.res.BitmapPool;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.GameView;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.interfaces.IGameObject;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.objects.JoyStick;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.view.Metrics;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.JoyStick;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
-import kr.ac.tukorea.ge.scgyong.spgp2025.framework.scene.Scene;
 
-public class Fighter implements IGameObject {
+public class Fighter extends Sprite {
     private static final String TAG = Fighter.class.getSimpleName();
     private static final float SPEED = 800f;
-    private final Bitmap bitmap;
+    private static final float RADIUS = 125f;
     private final JoyStick joyStick;
-    private float x, y, angle;
-    private final RectF dstRect = new RectF();
+    private float angle;
 
     private static final float BULLET_INTERVAL = 1.0f / 3.0f;
     private float bulletCoolTime;
 
     public Fighter(JoyStick joyStick) {
+        super(R.mipmap.plane_240);
         this.joyStick = joyStick;
-        Resources res = GameView.view.getResources();
-        bitmap = BitmapPool.get(R.mipmap.plane_240);
-        float x = Metrics.width / 2;
-        float y = 2 * Metrics.height / 3;
-        setPosition(x, y);
+        setPosition(Metrics.width / 2, 2 * Metrics.height / 3, RADIUS);
         angle = -90;
     }
 
@@ -64,22 +56,16 @@ public class Fighter implements IGameObject {
         // 옵션 2-2 : 360° 인 경우
         x += (float) (distance * Math.cos(joyStick.angle_radian));
         y += (float) (distance * Math.sin(joyStick.angle_radian));
-        setPosition(x, y);
+        setPosition(x, y, RADIUS);
         angle = (float) Math.toDegrees(joyStick.angle_radian);
     }
 
+    // 회전해서 그리므로 구현해야 한다
     public void draw(Canvas canvas) {
         canvas.save();
         canvas.rotate(angle + 90, x, y);
-        canvas.drawBitmap(bitmap, null, dstRect, null);
+        //canvas.drawBitmap(bitmap, null, dstRect, null);
+        super.draw(canvas); // 직접 그려도 되고 super 를 불러도 된다.
         canvas.restore();
-    }
-
-    public void setPosition(float x, float y) {
-        float r = 125f;
-        dstRect.set(x-r, y-r, x+r, y+r);
-        this.x = x;
-        this.y = y;
-        //Log.d(TAG, "x=" + x + " y=" + y + " rect=" + dstRect);
     }
 }
