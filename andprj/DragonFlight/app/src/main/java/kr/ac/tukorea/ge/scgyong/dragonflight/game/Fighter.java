@@ -9,15 +9,23 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 public class Fighter extends Sprite {
     private static final float RADIUS = 100f;
     private static final float SPEED = 300f;
-    private float startX;
+    private float targetX;
 
     public Fighter() {
         super(R.mipmap.fighter);
         setPosition(Metrics.width / 2, Metrics.height - 200, RADIUS);
+        targetX = x;
     }
 
     @Override
     public void update() {
+        if (targetX < x) {
+            dx = -SPEED;
+        } else if (x < targetX) {
+            dx = SPEED;
+        } else {
+            dx = 0;
+        }
         super.update();
         float adjx = Math.max(RADIUS, Math.min(x, Metrics.width - RADIUS));
         if (adjx != x) {
@@ -25,24 +33,18 @@ public class Fighter extends Sprite {
         }
     }
 
+    private void setTargetX(float x) {
+        targetX = Math.max(RADIUS, Math.min(x, Metrics.width - RADIUS));
+    }
     public boolean onTouch(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                startX = event.getX();
-                return true;
             case MotionEvent.ACTION_MOVE:
-                float x = event.getX();
-                if (x < startX) {
-                    dx = -SPEED;
-                } else if (startX < x) {
-                    dx = SPEED;
-                } else {
-                    dx = 0;
-                }
-                return true;
             case MotionEvent.ACTION_UP:
-                dx = 0;
+                float[] pts = Metrics.fromScreen(event.getX(), event.getY());
+                setTargetX(pts[0]);
                 return true;
+
         }
         return false;
     }
