@@ -130,7 +130,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
     public void onBackPressed() {
         int last = sceneStack.size() - 1;
-        if (last < 0) return; // finish activity here ?
+        if (last < 0) {
+            notifyEmptyStack(); // finish activity here
+            return;
+        }
 
         Scene scene = sceneStack.get(last);
         boolean handled = scene.onBackPressed();
