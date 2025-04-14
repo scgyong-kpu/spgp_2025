@@ -6,6 +6,10 @@ android {
     namespace = "kr.ac.tukorea.ge.scgyong.dragonflight"
     compileSdk = 35
 
+    buildFeatures {
+        buildConfig = true
+    }
+    
     defaultConfig {
         applicationId = "kr.ac.tukorea.ge.scgyong.dragonflight"
         minSdk = 24
