@@ -14,6 +14,7 @@
         tools:targetApi="31">
         <activity
             android:name=".app.DragonFlightActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".app.MainActivity"
