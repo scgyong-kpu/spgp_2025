@@ -16,6 +16,15 @@ public class Fighter extends Sprite {
         setPosition(Metrics.width / 2, Metrics.height - 200, RADIUS);
     }
 
+    @Override
+    public void update() {
+        super.update();
+        float adjx = Math.max(RADIUS, Math.min(x, Metrics.width - RADIUS));
+        if (adjx != x) {
+            setPosition(adjx, y, RADIUS);
+        }
+    }
+
     public boolean onTouch(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
