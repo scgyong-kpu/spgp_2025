@@ -193,6 +193,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public void resumeGame() {
         if (running) return;
         running = true;
+        previousNanos = 0;
         scheduleUpdate();
         Scene scene = getTopScene();
         if (scene != null) {
