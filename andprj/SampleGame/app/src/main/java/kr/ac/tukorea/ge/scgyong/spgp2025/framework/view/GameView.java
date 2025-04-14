@@ -15,13 +15,14 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.scgyong.spgp2025.framework.scene.Scene;
-import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.BuildConfig;
 
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
     private static long previousNanos;
     public static float frameTime;
     public static GameView view;
+    public static boolean drawsDebugStuffs = false;
+
     public interface OnEmptyStackListener {
         public void onEmptyStack();
     }
@@ -105,7 +106,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Metrics.concat(canvas);
         // 반드시 성공적인 빌드가 진행된 후에 BuildConfig.java 가 생성되므로
         // 아래 코드가 문제가 되면 잠시 삭제해서 빌드만 성공시키고 다시 살려두어도 된다.
-        if (BuildConfig.DEBUG) {
+        if (drawsDebugStuffs) {
             drawDebugBackground(canvas);
         }
         Scene scene = getTopScene();
@@ -113,7 +114,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             scene.draw(canvas);
         }
         canvas.restore();
-        if (BuildConfig.DEBUG) {
+        if (drawsDebugStuffs) {
             drawDebugInfo(canvas);
         }
     }
