@@ -20,6 +20,10 @@ public class Scene {
         //Log.d(TAG, gameObjects.size() + " objects in " + this);
     }
 
+    public int count() {
+        return gameObjects.size();
+    }
+
     //////////////////////////////////////////////////
     // Game Loop Functions
 

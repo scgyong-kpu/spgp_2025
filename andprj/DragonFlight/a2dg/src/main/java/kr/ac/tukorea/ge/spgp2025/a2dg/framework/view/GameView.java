@@ -115,7 +115,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
         canvas.restore();
         if (drawsDebugStuffs) {
-            drawDebugInfo(canvas);
+            drawDebugInfo(canvas, scene);
         }
     }
 
@@ -188,7 +188,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             canvas.drawLine(0, y, Metrics.width, y, gridPaint);
         }
     }
-    private void drawDebugInfo(Canvas canvas) {
+    private void drawDebugInfo(Canvas canvas, Scene scene) {
         if (fpsPaint == null) {
             fpsPaint = new Paint();
             fpsPaint.setColor(Color.BLUE);
@@ -196,6 +196,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
 
         int fps = (int) (1.0f / frameTime);
-        canvas.drawText("FPS: " + fps, 100f, 200f, fpsPaint);
+        int count = scene.count();
+        canvas.drawText("FPS: " + fps + " objs: " + count, 100f, 200f, fpsPaint);
     }
 }
