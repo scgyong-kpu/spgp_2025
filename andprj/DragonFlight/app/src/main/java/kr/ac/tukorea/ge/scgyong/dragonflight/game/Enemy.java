@@ -5,9 +5,12 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 
 public class Enemy extends Sprite {
     private static final float SPEED = 300f;
-
+    private static final int[] resIds = {
+            R.mipmap.f_01_01, R.mipmap.f_02_01, R.mipmap.f_03_01, R.mipmap.f_04_01, R.mipmap.f_05_01,
+            R.mipmap.f_06_01, R.mipmap.f_07_01, R.mipmap.f_08_01, R.mipmap.f_09_01, R.mipmap.f_10_01,
+    };
     public Enemy(int level, int index) {
-        super(R.mipmap.f_01_01);
+        super(resIds[level]);
         setPosition(90 * (2 * index + 1), 300f, 160f, 160f);
         dy = SPEED;
     }
