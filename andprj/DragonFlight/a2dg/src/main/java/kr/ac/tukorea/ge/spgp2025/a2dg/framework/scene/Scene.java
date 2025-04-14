@@ -20,6 +20,10 @@ public class Scene {
         //Log.d(TAG, gameObjects.size() + " objects in " + this);
     }
 
+    public void remove(IGameObject gobj) {
+        gameObjects.remove(gobj);
+    }
+
     public int count() {
         return gameObjects.size();
     }
