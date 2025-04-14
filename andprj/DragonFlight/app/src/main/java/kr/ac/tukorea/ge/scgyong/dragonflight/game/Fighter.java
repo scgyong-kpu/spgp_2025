@@ -9,6 +9,7 @@ import kr.ac.tukorea.ge.scgyong.dragonflight.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.RectUtil;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
@@ -21,8 +22,9 @@ public class Fighter extends Sprite {
     private static final float FIRE_INTERVAL = 0.25f;
     private float fireCoolTime = FIRE_INTERVAL;
 
+    private static final float SPARK_OFFSET = 66f;
     private static final float SPARK_DURATION = 0.1f;
-    private static final float SPARK_WIDTH = 112f;
+    private static final float SPARK_WIDTH = 115f;
     private static final float SPARK_HEIGHT = SPARK_WIDTH * 3 / 5;
     private RectF sparkRect = new RectF();
     private Bitmap sparkBitmap;
@@ -65,8 +67,7 @@ public class Fighter extends Sprite {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (FIRE_INTERVAL - fireCoolTime > SPARK_DURATION) {
-            sparkRect.set(x - SPARK_WIDTH/2, y - SPARK_HEIGHT/2,
-                    x + SPARK_WIDTH/2, y + SPARK_HEIGHT/2);
+            RectUtil.setRect(sparkRect, x, y - SPARK_OFFSET, SPARK_WIDTH, SPARK_HEIGHT);
             canvas.drawBitmap(sparkBitmap, null, sparkRect, null);
         }
     }
