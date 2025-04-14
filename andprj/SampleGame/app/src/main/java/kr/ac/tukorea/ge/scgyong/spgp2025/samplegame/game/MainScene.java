@@ -31,6 +31,14 @@ public class MainScene extends Scene {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            float[] pts = Metrics.fromScreen(event.getX(), event.getY());
+            float x = pts[0], y = pts[1];
+            if (x < 100 && y < 100) {
+                new SubScene().push();
+                return false;
+            }
+        }
         return joyStick.onTouch(event);
     }
 }
