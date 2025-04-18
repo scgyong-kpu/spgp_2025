@@ -28,7 +28,15 @@
         <item name="android:src">@mipmap/card_blue_back</item>
         <item name="android:onClick">onBtnCard</item>
 
-        <!-- 배경을 "없음"으로 설정하는 것이며, 뷰는 더 이상 배경을 가지지 않게 됩니다. -->
+        <!-- 배경을 "없음"으로 설정하는 것이며, 뷰는 더 이상 배경을 가지지 않게 됩니다.
+         ImageView의 배경을 없애는 것
+
+        즉, 배경(background)을 없애고 투명하게 만드는 거예요.
+        기본적으로 어떤 View들은 background에 기본 색상이나
+        스타일이 적용되어 있을 수 있어서, 그걸 완전히 제거하고 싶을 때 사용해요.
+
+         @null을 지정하면 배경색 없이 이미지 자체만 깔끔하게 보여줍니다.
+         -->
         <item name="android:background">@null</item>
     </style>
 </resources>

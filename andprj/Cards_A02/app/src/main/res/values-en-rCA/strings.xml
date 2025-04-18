@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CardsA02</string>
+    <string name="score_fmt">4.18 언어 공부</string>
+    <string name="restart_dlg_title">asdf</string>
+    <string name="restart_dlg_message">gasdg</string>
+    <string name="restart_dlg_yes">asdf</string>
+    <string name="restart_dlg_no">asdf</string>
+    <string name="toast_same_card">sadf</string>
+    <string name="btn_restart">gasd</string>
+</resources>
