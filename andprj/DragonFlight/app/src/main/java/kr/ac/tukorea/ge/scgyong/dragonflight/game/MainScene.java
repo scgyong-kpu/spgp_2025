@@ -32,13 +32,21 @@ public class MainScene extends Scene {
     }
 
     private void checkCollision() {
-        for (IGameObject o1 : gameObjects) {
+        int count = gameObjects.size();
+        for (int i1 = count - 1; i1 >= 0; i1--) {
+            count = gameObjects.size();
+            if (i1 >= count) {
+                i1 = count - 1; // enemy 와 bullet 이 모두 삭제된 경우에는 count 가 더 많이 줄었을 수도 있다.
+            }
+            IGameObject o1 = gameObjects.get(i1);
             if (!(o1 instanceof Enemy)) {
                 continue;
             }
             Enemy enemy = (Enemy) o1;
 //            boolean removed = false;
-            for (IGameObject o2 : gameObjects) {
+            count = gameObjects.size();
+            for (int i2 = count - 1; i2 >= 0; i2--) {
+                IGameObject o2 = gameObjects.get(i2);
                 if (!(o2 instanceof Bullet)) {
                     continue;
                 }
