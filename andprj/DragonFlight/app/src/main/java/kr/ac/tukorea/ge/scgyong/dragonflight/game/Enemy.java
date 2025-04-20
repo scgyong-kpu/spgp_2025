@@ -26,16 +26,18 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable {
     private Enemy(int level, int index) {
         super(resIds[level], 10);
         setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
+        updateCollisionRect();
         dy = SPEED;
     }
     public static Enemy get(int level, int index) {
-        if (!objPool.isEmpty()) {
-            Enemy enemy = objPool.remove(0);
+        Enemy enemy = (Enemy) Scene.top().getRecyclable(Enemy.class);
+        if (enemy == null) {
+            enemy = new Enemy(level, index);
+        } else {
             enemy.setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
             enemy.updateCollisionRect();
-            return enemy;
         }
-        return new Enemy(level, index);
+        return enemy;
     }
     @Override
     public void update() {
@@ -58,6 +60,5 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable {
 
     @Override
     public void recycle() {
-        objPool.add(this);
     }
 }

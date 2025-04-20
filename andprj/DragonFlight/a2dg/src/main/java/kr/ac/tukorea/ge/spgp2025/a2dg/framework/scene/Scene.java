@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
@@ -27,14 +28,36 @@ public class Scene {
 
     public void remove(IGameObject gobj) {
         gameObjects.remove(gobj);
-        // IGameObject.onRemove() 를 생성하여 호출하는 것이 나을까?
         if (gobj instanceof IRecyclable) {
-            ((IRecyclable) gobj).recycle();
+            collectRecyclable((IRecyclable) gobj);
         }
     }
 
     public int count() {
         return gameObjects.size();
+    }
+
+    //////////////////////////////////////////////////
+    // Object Recycling
+    protected HashMap<Class, ArrayList<IRecyclable>> recycleBin = new HashMap<>();
+    public void collectRecyclable(IRecyclable object) {
+        Class clazz = object.getClass();
+        ArrayList<IRecyclable> bin = recycleBin.get(clazz);
+        if (bin == null) {
+            bin = new ArrayList<>();
+            recycleBin.put(clazz, bin);
+        }
+        //object.onRecycle(); // 객체가 재활용통에 들어가기 전에 정리해야 할 것이 있다면 여기서 한다
+        bin.add(object);
+        Log.d(TAG, "collect(): " + clazz.getSimpleName() + " : " + bin.size() + " objects");
+    }
+
+    public IRecyclable getRecyclable(Class clazz) {
+        ArrayList<IRecyclable> bin = recycleBin.get(clazz);
+        if (bin == null) return null;
+        if (bin.size() == 0) return null;
+        Log.d(TAG, "get(): " + clazz.getSimpleName() + " : " + (bin.size() - 1) + " objects");
+        return bin.remove(0);
     }
 
     //////////////////////////////////////////////////
