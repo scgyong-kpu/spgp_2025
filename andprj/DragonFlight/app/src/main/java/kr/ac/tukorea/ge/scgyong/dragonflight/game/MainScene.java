@@ -1,12 +1,16 @@
 package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.AnimSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
 
 public class MainScene extends Scene {
+    private static final String TAG = MainScene.class.getSimpleName();
     private final Fighter fighter;
     public MainScene() {
         this.fighter = new Fighter();
@@ -20,6 +24,34 @@ public class MainScene extends Scene {
 
     // Overridables
 
+    @Override
+    public void update() {
+        super.update();
+        checkCollision();
+    }
+
+    private void checkCollision() {
+        for (IGameObject o1 : gameObjects) {
+            if (!(o1 instanceof Enemy)) {
+                continue;
+            }
+            Enemy enemy = (Enemy) o1;
+//            boolean removed = false;
+            for (IGameObject o2 : gameObjects) {
+                if (!(o2 instanceof Bullet)) {
+                    continue;
+                }
+                Bullet bullet = (Bullet) o2;
+                if (CollisionHelper.collides(enemy, bullet)) {
+                    Log.d(TAG, "Collision !!");
+                    remove(bullet);
+                    remove(enemy);
+//                    removed = true;
+                    break;
+                }
+            }
+        }
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return fighter.onTouch(event);
