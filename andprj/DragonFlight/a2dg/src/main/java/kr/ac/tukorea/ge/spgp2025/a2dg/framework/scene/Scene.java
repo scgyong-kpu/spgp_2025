@@ -47,7 +47,7 @@ public class Scene {
             gobj.update();
         }
     }
-    public void draw(Canvas canvas) {`
+    public void draw(Canvas canvas) {
         for (IGameObject gobj : gameObjects) {
             gobj.draw(canvas);
         }
