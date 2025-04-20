@@ -12,6 +12,7 @@ public class Enemy extends Sprite {
             R.mipmap.f_01_01, R.mipmap.f_02_01, R.mipmap.f_03_01, R.mipmap.f_04_01, R.mipmap.f_05_01,
             R.mipmap.f_06_01, R.mipmap.f_07_01, R.mipmap.f_08_01, R.mipmap.f_09_01, R.mipmap.f_10_01,
     };
+    public static final int MAX_LEVEL = resIds.length - 1;
     public Enemy(int level, int index) {
         super(resIds[level]);
         setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
