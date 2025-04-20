@@ -1,5 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 
+import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -42,7 +43,9 @@ public class MainScene extends Scene {
                     continue;
                 }
                 Bullet bullet = (Bullet) o2;
-                if (CollisionHelper.collides(enemy, bullet)) {
+                RectF rect1 = enemy.getCollisionRect();
+                RectF rect2 = bullet.getCollisionRect();
+                if (CollisionHelper.collides(rect1, rect2)) {
                     Log.d(TAG, "Collision !!");
                     remove(bullet);
                     remove(enemy);

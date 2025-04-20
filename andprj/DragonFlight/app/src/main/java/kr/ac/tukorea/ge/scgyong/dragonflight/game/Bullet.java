@@ -1,5 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 
+import android.graphics.RectF;
+
 import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
@@ -32,6 +34,9 @@ public class Bullet extends Sprite implements IRecyclable {
             Scene.top().remove(this);
             objPool.add(this);
         }
+    }
+    public RectF getCollisionRect() {
+        return dstRect;
     }
 
     @Override
