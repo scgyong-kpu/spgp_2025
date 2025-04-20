@@ -30,16 +30,16 @@ public class EnemyGenerator implements IGameObject {
 
         wave++;
 
-        StringBuilder enemies = new StringBuilder(); // for debug
+        //StringBuilder enemies = new StringBuilder(); // for debug
 
         for (int i = 0; i < 5; i++) {
             int level = (wave + 3) / 10 - random.nextInt(3);
             if (level < 0) level = 0;
             if (level > Enemy.MAX_LEVEL) level = Enemy.MAX_LEVEL;
             scene.add(new Enemy(level, i));
-            enemies.append(level); // for debug
+            //enemies.append(level); // for debug
         }
-        Log.v(TAG, "Generating: wave " + wave + " : " + enemies.toString());
+        //Log.v(TAG, "Generating: wave " + wave + " : " + enemies.toString());
     }
 
     @Override
