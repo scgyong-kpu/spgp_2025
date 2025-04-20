@@ -1,11 +1,15 @@
 package kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.util.Log;
 
 import java.util.ArrayList;
 
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
@@ -43,11 +47,25 @@ public class Scene {
             gobj.update();
         }
     }
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas) {`
         for (IGameObject gobj : gameObjects) {
             gobj.draw(canvas);
         }
+        if (GameView.drawsDebugStuffs) {
+            if (bboxPaint == null) {
+                bboxPaint = new Paint();
+                bboxPaint.setStyle(Paint.Style.STROKE);
+                bboxPaint.setColor(Color.RED);
+            }
+            for (IGameObject gobj : gameObjects) {
+                if (gobj instanceof IBoxCollidable) {
+                    RectF rect = ((IBoxCollidable) gobj).getCollisionRect();
+                    canvas.drawRect(rect, bboxPaint);
+                }
+            }
+        }
     }
+    protected static Paint bboxPaint;
 
     //////////////////////////////////////////////////
     // Scene Stack Functions
