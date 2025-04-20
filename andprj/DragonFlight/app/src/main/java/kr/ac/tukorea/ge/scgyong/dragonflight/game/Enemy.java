@@ -1,5 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 
+import java.util.ArrayList;
+
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.AnimSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
@@ -15,12 +17,18 @@ public class Enemy extends AnimSprite {
             R.mipmap.enemy_16, R.mipmap.enemy_17, R.mipmap.enemy_18, R.mipmap.enemy_19, R.mipmap.enemy_20,
     };
     public static final int MAX_LEVEL = resIds.length - 1;
+    protected static ArrayList<Enemy> objPool = new ArrayList<>();
     private Enemy(int level, int index) {
         super(resIds[level], 10);
         setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
         dy = SPEED;
     }
     public static Enemy get(int level, int index) {
+        if (!objPool.isEmpty()) {
+            Enemy enemy = objPool.remove(0);
+            enemy.setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
+            return enemy;
+        }
         return new Enemy(level, index);
     }
     @Override
@@ -28,6 +36,7 @@ public class Enemy extends AnimSprite {
         super.update();
         if (dstRect.top > Metrics.height) {
             Scene.top().remove(this);
+            objPool.add(this);
         }
     }
 }
