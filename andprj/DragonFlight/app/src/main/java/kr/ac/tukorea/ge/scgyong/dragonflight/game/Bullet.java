@@ -32,7 +32,6 @@ public class Bullet extends Sprite implements IRecyclable {
         super.update();
         if (dstRect.bottom < 0) {
             Scene.top().remove(this);
-            objPool.add(this);
         }
     }
     public RectF getCollisionRect() {
@@ -40,6 +39,7 @@ public class Bullet extends Sprite implements IRecyclable {
     }
 
     @Override
-    public void onRecycle() {
+    public void recycle() {
+        objPool.add(this);
     }
 }

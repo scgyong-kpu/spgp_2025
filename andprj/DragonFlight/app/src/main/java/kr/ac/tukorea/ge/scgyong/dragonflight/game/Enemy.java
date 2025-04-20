@@ -39,7 +39,6 @@ public class Enemy extends AnimSprite implements IRecyclable {
         super.update();
         if (dstRect.top > Metrics.height) {
             Scene.top().remove(this);
-            objPool.add(this);
         }
     }
 
@@ -48,6 +47,7 @@ public class Enemy extends AnimSprite implements IRecyclable {
     }
 
     @Override
-    public void onRecycle() {
+    public void recycle() {
+        objPool.add(this);
     }
 }

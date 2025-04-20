@@ -54,7 +54,7 @@ public class MainScene extends Scene {
                 RectF rect1 = enemy.getCollisionRect();
                 RectF rect2 = bullet.getCollisionRect();
                 if (CollisionHelper.collides(rect1, rect2)) {
-                    Log.d(TAG, "Collision !!");
+                    Log.d(TAG, "Collision !! : Bullet@" + System.identityHashCode(bullet) + " vs Enemy@" + System.identityHashCode(enemy));
                     remove(bullet);
                     remove(enemy);
 //                    removed = true;
