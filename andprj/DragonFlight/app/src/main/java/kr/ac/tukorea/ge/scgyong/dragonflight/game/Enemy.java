@@ -15,7 +15,7 @@ public class Enemy extends AnimSprite {
             R.mipmap.enemy_16, R.mipmap.enemy_17, R.mipmap.enemy_18, R.mipmap.enemy_19, R.mipmap.enemy_20,
     };
     public static final int MAX_LEVEL = resIds.length - 1;
-    public Enemy(int level, int index) {
+    private Enemy(int level, int index) {
         super(resIds[level], 10);
         setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
         dy = SPEED;

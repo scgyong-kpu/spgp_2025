@@ -8,10 +8,13 @@ public class Bullet extends Sprite {
     private static final float BULLET_WIDTH = 68f;
     private static final float BULLET_HEIGHT = BULLET_WIDTH * 40 / 28;
     private static final float SPEED = 2000f;
-    public Bullet(float x, float y) {
+    private Bullet(float x, float y) {
         super(R.mipmap.laser_1);
         setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
         dy = -SPEED;
+    }
+    public static Bullet get(float x, float y) {
+        return new Bullet(x, y);
     }
     @Override
     public void update() {
