@@ -13,7 +13,7 @@ public class MainScene extends Scene {
         add(fighter);
         add(new EnemyGenerator());
 
-        AnimSprite animSprite = new AnimSprite(R.mipmap.enemy_01, 10, 0);
+        AnimSprite animSprite = new AnimSprite(R.mipmap.enemy_01, 10);
         animSprite.setPosition(450f, 450f, 90f);
         add(animSprite);
     }

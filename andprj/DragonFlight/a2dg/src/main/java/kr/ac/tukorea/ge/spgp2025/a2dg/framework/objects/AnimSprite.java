@@ -8,6 +8,9 @@ public class AnimSprite extends Sprite {
     protected final int frameCount;
     protected final int frameWidth, frameHeight;
     protected final long createdOn;
+    public AnimSprite(int mipmapId, float fps) {
+        this(mipmapId, fps, 0);
+    }
     public AnimSprite(int mipmapId, float fps, int frameCount) {
         super(mipmapId);
         this.fps = fps;
