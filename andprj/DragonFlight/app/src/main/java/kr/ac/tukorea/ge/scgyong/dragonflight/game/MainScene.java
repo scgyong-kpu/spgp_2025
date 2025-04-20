@@ -51,9 +51,7 @@ public class MainScene extends Scene {
                     continue;
                 }
                 Bullet bullet = (Bullet) o2;
-                RectF rect1 = enemy.getCollisionRect();
-                RectF rect2 = bullet.getCollisionRect();
-                if (CollisionHelper.collides(rect1, rect2)) {
+                if (CollisionHelper.collides(enemy, bullet)) {
                     Log.d(TAG, "Collision !! : Bullet@" + System.identityHashCode(bullet) + " vs Enemy@" + System.identityHashCode(enemy));
                     remove(bullet);
                     remove(enemy);
