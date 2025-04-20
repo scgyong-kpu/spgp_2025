@@ -22,6 +22,7 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable {
     };
     public static final int MAX_LEVEL = resIds.length - 1;
     protected static ArrayList<Enemy> objPool = new ArrayList<>();
+    protected RectF collisionRect = new RectF();
     private Enemy(int level, int index) {
         super(resIds[level], 10);
         setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
@@ -40,11 +41,14 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable {
         super.update();
         if (dstRect.top > Metrics.height) {
             Scene.top().remove(this);
+        } else {
+            collisionRect.set(dstRect);
+            collisionRect.inset(11f, 11f);
         }
     }
 
     public RectF getCollisionRect() {
-        return dstRect;
+        return collisionRect;
     }
 
     @Override
