@@ -3,11 +3,12 @@ package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.AnimSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
-public class Enemy extends AnimSprite {
+public class Enemy extends AnimSprite implements IRecyclable {
     private static final float SPEED = 300f;
     private static final float RADIUS = 90f;
     private static final int[] resIds = {
@@ -38,5 +39,9 @@ public class Enemy extends AnimSprite {
             Scene.top().remove(this);
             objPool.add(this);
         }
+    }
+
+    @Override
+    public void onRecycle() {
     }
 }

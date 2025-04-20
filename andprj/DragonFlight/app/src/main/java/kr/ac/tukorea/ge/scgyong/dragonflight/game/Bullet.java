@@ -3,10 +3,11 @@ package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
-public class Bullet extends Sprite {
+public class Bullet extends Sprite implements IRecyclable {
     private static final float BULLET_WIDTH = 68f;
     private static final float BULLET_HEIGHT = BULLET_WIDTH * 40 / 28;
     private static final float SPEED = 2000f;
@@ -31,5 +32,9 @@ public class Bullet extends Sprite {
             Scene.top().remove(this);
             objPool.add(this);
         }
+    }
+
+    @Override
+    public void onRecycle() {
     }
 }
