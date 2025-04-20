@@ -17,7 +17,7 @@ public class EnemyGenerator implements IGameObject {
     private int wave;
     @Override
     public void update() {
-        enemyTime -= GameView.frameTime * 5;
+        enemyTime -= GameView.frameTime;
         if (enemyTime < 0) {
             generate();
             enemyTime = GEN_INTERVAL;
