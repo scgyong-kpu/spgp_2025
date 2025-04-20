@@ -1,5 +1,8 @@
 package kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects;
 
+import android.graphics.Canvas;
+import android.graphics.Rect;
+
 public class AnimSprite extends Sprite {
     protected final float fps;
     protected final int frameCount;
@@ -18,5 +21,14 @@ public class AnimSprite extends Sprite {
             this.frameHeight = imageHeight;
             this.frameCount = frameCount;
         }
+        srcRect = new Rect();
+    }
+
+    int frameIndex;
+    @Override
+    public void draw(Canvas canvas) {
+        srcRect.set(frameIndex * frameWidth, 0, (frameIndex + 1) * frameWidth, frameHeight);
+        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+        frameIndex = (frameIndex + 1) % frameCount;
     }
 }
