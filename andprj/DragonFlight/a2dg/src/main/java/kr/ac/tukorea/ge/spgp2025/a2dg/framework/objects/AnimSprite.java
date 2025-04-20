@@ -7,6 +7,7 @@ public class AnimSprite extends Sprite {
     protected final float fps;
     protected final int frameCount;
     protected final int frameWidth, frameHeight;
+    protected final long createdOn;
     public AnimSprite(int mipmapId, float fps, int frameCount) {
         super(mipmapId);
         this.fps = fps;
@@ -22,13 +23,17 @@ public class AnimSprite extends Sprite {
             this.frameCount = frameCount;
         }
         srcRect = new Rect();
+        createdOn = System.currentTimeMillis();
     }
 
-    int frameIndex;
     @Override
     public void draw(Canvas canvas) {
+        // AnimSprite 는 단순반복하는 이미지이므로 time 을 update 에서 꼼꼼히 누적하지 않아도 된다.
+        // draw 에서 생성시각과의 차이로 frameIndex 를 계산한다.
+        long now = System.currentTimeMillis();
+        float time = (now - createdOn) / 1000.0f;
+        int frameIndex = Math.round(time * fps) % frameCount;
         srcRect.set(frameIndex * frameWidth, 0, (frameIndex + 1) * frameWidth, frameHeight);
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
-        frameIndex = (frameIndex + 1) % frameCount;
     }
 }
