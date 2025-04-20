@@ -38,6 +38,6 @@ public class Bullet extends Sprite implements IRecyclable, IBoxCollidable {
     }
 
     @Override
-    public void recycle() {
+    public void onRecycle() {
     }
 }

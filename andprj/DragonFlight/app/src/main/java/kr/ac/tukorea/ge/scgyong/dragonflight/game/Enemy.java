@@ -59,6 +59,6 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable {
     }
 
     @Override
-    public void recycle() {
+    public void onRecycle() {
     }
 }

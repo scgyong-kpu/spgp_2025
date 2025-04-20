@@ -30,6 +30,7 @@ public class Scene {
         gameObjects.remove(gobj);
         if (gobj instanceof IRecyclable) {
             collectRecyclable((IRecyclable) gobj);
+            ((IRecyclable) gobj).onRecycle();
         }
     }
 
