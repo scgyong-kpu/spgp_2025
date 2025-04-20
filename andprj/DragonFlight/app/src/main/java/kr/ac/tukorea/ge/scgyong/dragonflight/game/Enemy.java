@@ -20,7 +20,7 @@ public class Enemy extends AnimSprite {
         setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
         dy = SPEED;
     }
-    public Enemy get(int level, int index) {
+    public static Enemy get(int level, int index) {
         return new Enemy(level, index);
     }
     @Override
