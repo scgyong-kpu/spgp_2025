@@ -27,13 +27,15 @@ public class Scene {
             layers.add(new ArrayList<>());
         }
     }
-    public void add(int layerIndex, IGameObject gameObject) {
+    public <E extends Enum<E>> void add(E layer, IGameObject gameObject) {
+        int layerIndex = layer.ordinal();
         ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
         gameObjects.add(gameObject);
         //Log.d(TAG, gameObjects.size() + " objects in " + this);
     }
 
-    public void remove(int layerIndex, IGameObject gobj) {
+    public <E extends Enum<E>> void remove(E layer, IGameObject gobj) {
+        int layerIndex = layer.ordinal();
         ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
         gameObjects.remove(gobj);
         if (gobj instanceof IRecyclable) {
@@ -42,7 +44,8 @@ public class Scene {
         }
     }
 
-    public ArrayList<IGameObject> objectsAt(int layerIndex) {
+    public <E extends Enum<E>> ArrayList<IGameObject> objectsAt(E layer) {
+        int layerIndex = layer.ordinal();
         return layers.get(layerIndex);
     }
 
@@ -52,6 +55,10 @@ public class Scene {
             total += layer.size();
         }
         return total;
+    }
+    public <E extends Enum<E>> int countAt(E layer) {
+        int layerIndex = layer.ordinal();
+        return layers.get(layerIndex).size();
     }
 
 

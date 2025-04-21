@@ -43,7 +43,7 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable {
     public void update() {
         super.update();
         if (dstRect.top > Metrics.height) {
-            Scene.top().remove(MainScene.Layer.enemy.ordinal(), this);
+            Scene.top().remove(MainScene.Layer.enemy, this);
         } else {
             updateCollisionRect();
         }

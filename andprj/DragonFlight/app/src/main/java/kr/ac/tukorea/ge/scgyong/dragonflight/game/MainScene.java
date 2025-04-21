@@ -20,8 +20,8 @@ public class MainScene extends Scene {
         initLayers(Layer.COUNT);
 
         this.fighter = new Fighter();
-        add(Layer.fighter.ordinal(), fighter);
-        add(Layer.controller.ordinal(), new EnemyGenerator());
+        add(Layer.fighter, fighter);
+        add(Layer.controller, new EnemyGenerator());
     }
 
     // Overridables
@@ -33,17 +33,17 @@ public class MainScene extends Scene {
     }
 
     private void checkCollision() {
-        ArrayList<IGameObject> enemies = objectsAt(Layer.enemy.ordinal());
+        ArrayList<IGameObject> enemies = objectsAt(Layer.enemy);
         for (int i1 = enemies.size() - 1; i1 >= 0; i1--) {
             Enemy enemy = (Enemy) enemies.get(i1);
             // boolean removed = false;
-            ArrayList<IGameObject> bullets = objectsAt(Layer.bullet.ordinal());
+            ArrayList<IGameObject> bullets = objectsAt(Layer.bullet);
             for (int i2 = bullets.size() - 1; i2 >= 0; i2--) {
                 Bullet bullet = (Bullet) bullets.get(i2);
                 if (CollisionHelper.collides(enemy, bullet)) {
                     Log.d(TAG, "Collision !! : Bullet@" + System.identityHashCode(bullet) + " vs Enemy@" + System.identityHashCode(enemy));
-                    remove(Layer.bullet.ordinal(), bullet);
-                    remove(Layer.enemy.ordinal(), enemy);
+                    remove(Layer.bullet, bullet);
+                    remove(Layer.enemy, enemy);
                     // removed = true;
                     break;
                 }
