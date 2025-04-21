@@ -36,7 +36,7 @@ public class EnemyGenerator implements IGameObject {
             int level = (wave + 3) / 10 - random.nextInt(3);
             if (level < 0) level = 0;
             if (level > Enemy.MAX_LEVEL) level = Enemy.MAX_LEVEL;
-            scene.add(MainScene.Layer.enemy, Enemy.get(level, i));
+            scene.add(Enemy.get(level, i));
             //enemies.append(level); // for debug
         }
         //Log.v(TAG, "Generating: wave " + wave + " : " + enemies.toString());

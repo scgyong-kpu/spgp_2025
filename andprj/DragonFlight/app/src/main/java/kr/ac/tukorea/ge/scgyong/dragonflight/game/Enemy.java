@@ -6,12 +6,13 @@ import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.AnimSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
-public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable {
+public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, ILayerProvider<MainScene.Layer> {
     private static final float SPEED = 300f;
     private static final float RADIUS = 90f;
     private static final int[] resIds = {
@@ -43,7 +44,7 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable {
     public void update() {
         super.update();
         if (dstRect.top > Metrics.height) {
-            Scene.top().remove(MainScene.Layer.enemy, this);
+            Scene.top().remove(this);
         } else {
             updateCollisionRect();
         }
@@ -60,5 +61,10 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable {
 
     @Override
     public void onRecycle() {
+    }
+
+    @Override
+    public MainScene.Layer getLayer() {
+        return MainScene.Layer.enemy;
     }
 }

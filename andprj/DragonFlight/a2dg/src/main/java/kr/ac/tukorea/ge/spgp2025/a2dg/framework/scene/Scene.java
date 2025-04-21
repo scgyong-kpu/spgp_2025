@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
@@ -31,11 +32,27 @@ public class Scene {
         int layerIndex = layer.ordinal();
         ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
         gameObjects.add(gameObject);
-        //Log.d(TAG, gameObjects.size() + " objects in " + this);
+    }
+
+    public void add(ILayerProvider<?> gameObject) {
+        Enum<?> e = gameObject.getLayer();
+        int layerIndex = e.ordinal();
+        ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
+        gameObjects.add(gameObject);
     }
 
     public <E extends Enum<E>> void remove(E layer, IGameObject gobj) {
         int layerIndex = layer.ordinal();
+        remove(layerIndex, gobj);
+    }
+
+    public void remove(ILayerProvider<?> gameObject) {
+        Enum<?> e = gameObject.getLayer();
+        int layerIndex = e.ordinal();
+        remove(layerIndex, gameObject);
+    }
+
+    private void remove(int layerIndex, IGameObject gobj) {
         ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
         gameObjects.remove(gobj);
         if (gobj instanceof IRecyclable) {
