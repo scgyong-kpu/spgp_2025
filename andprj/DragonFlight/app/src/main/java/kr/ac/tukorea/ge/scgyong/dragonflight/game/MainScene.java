@@ -18,8 +18,8 @@ public class MainScene extends Scene {
     public MainScene() {
         initLayers(Layer.COUNT);
 
-        add(Layer.bg, new Background(R.mipmap.bg_city, 20));
-        add(Layer.bg, new Background(R.mipmap.clouds, 40));
+        add(Layer.bg, new VertScrollBackground(R.mipmap.bg_city, 20));
+        add(Layer.bg, new VertScrollBackground(R.mipmap.clouds, 40));
 
         this.fighter = new Fighter();
         add(Layer.fighter, fighter);

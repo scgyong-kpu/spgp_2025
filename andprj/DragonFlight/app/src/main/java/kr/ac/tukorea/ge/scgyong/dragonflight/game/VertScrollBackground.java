@@ -6,10 +6,10 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
-public class Background extends Sprite {
+public class VertScrollBackground extends Sprite {
     private final float speed;
     private final float height;
-    public Background(int bitmapResId, float speed) {
+    public VertScrollBackground(int bitmapResId, float speed) {
         super(bitmapResId);
         this.height = bitmap.getHeight() * Metrics.width / bitmap.getWidth();
         setPosition(Metrics.width / 2, Metrics.height / 2, Metrics.width, height);
