@@ -42,8 +42,8 @@ public class MainScene extends Scene {
                 Bullet bullet = (Bullet) bullets.get(i2);
                 if (CollisionHelper.collides(enemy, bullet)) {
                     Log.d(TAG, "Collision !! : Bullet@" + System.identityHashCode(bullet) + " vs Enemy@" + System.identityHashCode(enemy));
-                    remove(Layer.bullet, bullet);
-                    remove(Layer.enemy, enemy);
+                    remove(bullet);
+                    remove(enemy);
                     // removed = true;
                     break;
                 }
