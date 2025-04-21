@@ -37,6 +37,7 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, IL
             enemy = new Enemy(level, index);
         } else {
             enemy.level = level;
+            enemy.setImageResourceId(resIds[level]);
             enemy.setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
             enemy.updateCollisionRect();
         }
