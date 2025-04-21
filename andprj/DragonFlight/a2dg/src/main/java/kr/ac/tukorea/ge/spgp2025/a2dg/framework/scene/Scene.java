@@ -42,7 +42,7 @@ public class Scene {
         }
     }
 
-    public ArrayList<IGameObject> getLayer(int layerIndex) {
+    public ArrayList<IGameObject> objectsAt(int layerIndex) {
         return layers.get(layerIndex);
     }
 
