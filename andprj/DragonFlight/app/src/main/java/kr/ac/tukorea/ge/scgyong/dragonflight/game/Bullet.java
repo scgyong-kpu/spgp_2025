@@ -30,7 +30,7 @@ public class Bullet extends Sprite implements IRecyclable, IBoxCollidable {
     public void update() {
         super.update();
         if (dstRect.bottom < 0) {
-            Scene.top().remove(this);
+            Scene.top().remove(MainScene.Layer.bullet.ordinal(), this);
         }
     }
     public RectF getCollisionRect() {

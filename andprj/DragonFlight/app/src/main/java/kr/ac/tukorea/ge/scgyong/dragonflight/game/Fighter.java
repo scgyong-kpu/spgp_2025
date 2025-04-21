@@ -74,7 +74,7 @@ public class Fighter extends Sprite {
     }
 
     private void fireBullet() {
-        Scene.top().add(Bullet.get(x, y - BULLET_OFFSET));
+        Scene.top().add(MainScene.Layer.bullet.ordinal(), Bullet.get(x, y - BULLET_OFFSET));
     }
 
     private void setTargetX(float x) {
