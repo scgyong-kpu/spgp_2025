@@ -26,6 +26,9 @@ public class Sprite implements IGameObject {
         Log.v(TAG, "Created " + this.getClass().getSimpleName() + "@" + System.identityHashCode(this));
     }
 
+    public void setImageResourceId(int mipmapId) {
+        bitmap = BitmapPool.get(mipmapId);
+    }
     public void setPosition(float x, float y, float radius) {
         this.x = x;
         this.y = y;
