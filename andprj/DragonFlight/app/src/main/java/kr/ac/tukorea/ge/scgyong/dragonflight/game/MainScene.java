@@ -12,11 +12,14 @@ public class MainScene extends Scene {
     private final Score score;
 
     public enum Layer {
-        enemy, bullet, fighter, ui, controller;
+        bg, enemy, bullet, fighter, ui, controller;
         public static final int COUNT = values().length;
     }
     public MainScene() {
         initLayers(Layer.COUNT);
+
+        add(Layer.bg, new Background(R.mipmap.bg_city));
+        add(Layer.bg, new Background(R.mipmap.clouds));
 
         this.fighter = new Fighter();
         add(Layer.fighter, fighter);
