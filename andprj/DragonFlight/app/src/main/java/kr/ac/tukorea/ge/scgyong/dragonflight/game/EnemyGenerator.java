@@ -13,8 +13,14 @@ public class EnemyGenerator implements IGameObject {
     private static final String TAG = EnemyGenerator.class.getSimpleName();
     private final Random random = new Random();
     public static final float GEN_INTERVAL = 5.0f;
+    private final MainScene scene;
     private float enemyTime = 0;
     private int wave;
+
+    public EnemyGenerator(MainScene mainScene) {
+        this.scene = mainScene;
+    }
+
     @Override
     public void update() {
         enemyTime -= GameView.frameTime;
@@ -25,9 +31,6 @@ public class EnemyGenerator implements IGameObject {
     }
 
     private void generate() {
-        Scene scene = Scene.top();
-        if (scene == null) return;
-
         wave++;
 
         //StringBuilder enemies = new StringBuilder(); // for debug

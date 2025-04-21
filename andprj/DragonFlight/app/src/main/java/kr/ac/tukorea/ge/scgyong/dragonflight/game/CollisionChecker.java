@@ -11,11 +11,14 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
 
 public class CollisionChecker implements IGameObject {
     private static final String TAG = CollisionChecker.class.getSimpleName();
+    private final MainScene scene;
+
+    public CollisionChecker(MainScene mainScene) {
+        this.scene = mainScene;
+    }
+
     @Override
     public void update() {
-        MainScene scene = (MainScene) Scene.top(); // mainScene 임이 확실하다
-        if (scene == null) return;
-
         ArrayList<IGameObject> enemies = scene.objectsAt(MainScene.Layer.enemy);
         for (int e = enemies.size() - 1; e >= 0; e--) {
             Enemy enemy = (Enemy)enemies.get(e);

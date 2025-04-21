@@ -25,8 +25,8 @@ public class MainScene extends Scene {
         score.setScore(0);
         add(Layer.ui, score);
 
-        add(Layer.controller, new EnemyGenerator());
-        add(Layer.controller, new CollisionChecker());
+        add(Layer.controller, new EnemyGenerator(this));
+        add(Layer.controller, new CollisionChecker(this));
     }
     public void addScore(int amount) {
         score.add(amount);
