@@ -30,6 +30,10 @@ public class Score implements IGameObject {
         this.score = score;
     }
 
+    public void add(int amount) {
+        score += amount;
+    }
+
     @Override
     public void update() {
     }
