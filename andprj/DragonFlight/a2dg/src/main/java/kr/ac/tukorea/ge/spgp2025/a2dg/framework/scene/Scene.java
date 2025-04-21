@@ -1,11 +1,17 @@
 package kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 
@@ -22,10 +28,37 @@ public class Scene {
 
     public void remove(IGameObject gobj) {
         gameObjects.remove(gobj);
+        if (gobj instanceof IRecyclable) {
+            collectRecyclable((IRecyclable) gobj);
+            ((IRecyclable) gobj).onRecycle();
+        }
     }
 
     public int count() {
         return gameObjects.size();
+    }
+
+    //////////////////////////////////////////////////
+    // Object Recycling
+    protected HashMap<Class, ArrayList<IRecyclable>> recycleBin = new HashMap<>();
+    public void collectRecyclable(IRecyclable object) {
+        Class clazz = object.getClass();
+        ArrayList<IRecyclable> bin = recycleBin.get(clazz);
+        if (bin == null) {
+            bin = new ArrayList<>();
+            recycleBin.put(clazz, bin);
+        }
+        //object.onRecycle(); // 객체가 재활용통에 들어가기 전에 정리해야 할 것이 있다면 여기서 한다
+        bin.add(object);
+        // Log.d(TAG, "collect(): " + clazz.getSimpleName() + " : " + bin.size() + " objects");
+    }
+
+    public IRecyclable getRecyclable(Class clazz) {
+        ArrayList<IRecyclable> bin = recycleBin.get(clazz);
+        if (bin == null) return null;
+        if (bin.size() == 0) return null;
+        // Log.d(TAG, "get(): " + clazz.getSimpleName() + " : " + (bin.size() - 1) + " objects");
+        return bin.remove(0);
     }
 
     //////////////////////////////////////////////////
@@ -42,7 +75,21 @@ public class Scene {
         for (IGameObject gobj : gameObjects) {
             gobj.draw(canvas);
         }
+        if (GameView.drawsDebugStuffs) {
+            if (bboxPaint == null) {
+                bboxPaint = new Paint();
+                bboxPaint.setStyle(Paint.Style.STROKE);
+                bboxPaint.setColor(Color.RED);
+            }
+            for (IGameObject gobj : gameObjects) {
+                if (gobj instanceof IBoxCollidable) {
+                    RectF rect = ((IBoxCollidable) gobj).getCollisionRect();
+                    canvas.drawRect(rect, bboxPaint);
+                }
+            }
+        }
     }
+    protected static Paint bboxPaint;
 
     //////////////////////////////////////////////////
     // Scene Stack Functions
