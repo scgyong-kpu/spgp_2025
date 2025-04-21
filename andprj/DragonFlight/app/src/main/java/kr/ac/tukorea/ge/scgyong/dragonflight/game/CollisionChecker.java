@@ -13,7 +13,7 @@ public class CollisionChecker implements IGameObject {
     private static final String TAG = CollisionChecker.class.getSimpleName();
     @Override
     public void update() {
-        Scene scene = Scene.top();
+        MainScene scene = (MainScene) Scene.top(); // mainScene 임이 확실하다
         if (scene == null) return;
 
         ArrayList<IGameObject> enemies = scene.objectsAt(MainScene.Layer.enemy);
@@ -26,6 +26,7 @@ public class CollisionChecker implements IGameObject {
                     Log.d(TAG, "Collision !! : Bullet@" + System.identityHashCode(bullet) + " vs Enemy@" + System.identityHashCode(enemy));
                     scene.remove(bullet);
                     scene.remove(enemy);
+                    scene.addScore(10);
 //                    removed = true;
                     break;
                 }

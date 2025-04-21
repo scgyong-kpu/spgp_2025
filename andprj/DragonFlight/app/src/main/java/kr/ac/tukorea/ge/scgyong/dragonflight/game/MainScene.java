@@ -22,12 +22,16 @@ public class MainScene extends Scene {
         add(Layer.fighter, fighter);
 
         this.score = new Score(R.mipmap.number_24x32, 850f, 50f, 60f);
-        score.setScore(12345);
+        score.setScore(0);
         add(Layer.ui, score);
 
         add(Layer.controller, new EnemyGenerator());
         add(Layer.controller, new CollisionChecker());
     }
+    public void addScore(int amount) {
+        score.add(amount);
+    }
+
 
     // Overridables
 
