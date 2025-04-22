@@ -37,14 +37,16 @@ public class GameView extends View implements Choreographer.FrameCallback {
         init();
     }
 
+    // View의 Preview를 보려면 이 2번째 Constrouctor도 있어야 한다.
+    // 이건 에디터가 AttributeSet이라는 단어를 확인하기 때문이다.
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
+    // 실질적 생성자 역할
     private void init() {
         GameView.view = this;
-        // 실질적 생성자 역할
         scheduleUpdate();
     }
 
@@ -99,6 +101,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Metrics.onSize(w, h);
     }
 
+    // onDraw(Canvas canvas)는 뷰가 실제로 화면에 그려질 때 호출되는 메서드
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
