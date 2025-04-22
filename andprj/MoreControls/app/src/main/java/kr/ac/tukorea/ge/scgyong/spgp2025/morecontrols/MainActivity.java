@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     // int strID -> ID인 정수를 받아서 문자열을 수정할것임
     // setText 등 거의 모든 API는 ""(CharSequence)을 받는 버전과 int (R.string.xxx)를
     // 받는 버전이 마련되어 있다
+    // 리소스 ID를 의미하며, 실제로는 **정수값(int)**
     public void onCheckGoodProgrammer(View view) {
         boolean isGood = ui.goodProgrammerCheckbox.isChecked();
         int strId = isGood ? R.string.good_news : R.string.bad_news;
@@ -185,6 +186,10 @@ public class MainActivity extends AppCompatActivity {
         ui.myView1.invalidate();
     }
 
+    // intent : "무언가를 하고 싶다는 의도(Intent)를 안드로이드에게 전달하는 객체"
+    // Intent.ACTION_VIEW → 무언가를 보겠다는 의도를 담은 상수야.
+    // new Intent(...) → 이 인텐트를 만들어서 시스템에 "이걸 보고 싶어요"라고 말한 거지.
+    // startActivity(intent) → 시스템에 이 인텐트를 넘겨서 적절한 앱(여기선 브라우저)을 실행하라고 요청
     public void onBtnOpenNaver(View view) {
         Uri uri = Uri.parse("https://www.naver.com/");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);

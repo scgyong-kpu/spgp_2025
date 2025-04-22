@@ -76,11 +76,13 @@ public class MyView extends View {
         int l = getPaddingLeft(), r = getPaddingRight();
         int t = getPaddingTop(), b = getPaddingBottom();
         int w = getWidth(), h = getHeight();
+
         int contentWidth = (w - l - r);
         int contentHeight = (h - t - b);
 
         int cx = l + contentWidth / 2;
         int cy = t + contentHeight / 2;
+
         int radius;
         if (contentWidth >= contentHeight) {
             radius = contentHeight / 2;
@@ -121,6 +123,7 @@ public class MyView extends View {
 
         float mouthX1 = - 1.0f / 2, mouthX2 = 1.0f / 2;
         float mouthY = + 1.0f / 2;
+
         canvas.drawArc(mouthX1, eyeY, mouthX2, mouthY, 15, 150, false, paint);
     }
 }

@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--
+    RelativeLayout은 Android에서 제공하는
+    뷰 그룹(ViewGroup) 중 하나로, 자식 뷰들이
+    서로 상대적인 위치를 기반으로 배치될 수 있게 해주는 레이아웃입니다.
+    다른 레이아웃들과는 달리, 자식 뷰들이 자신의 위치를 고정된 좌표가 아니라
+    다른 뷰와의 상대적인 위치를 기준으로 설정
+
+    -->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,6 +32,7 @@
         android:layout_below="@id/pageTitleTextView"
         android:onClick="onCheckGoodProgrammer"
         />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,21 +42,31 @@
         android:layout_margin="20dp"
         android:onClick="onBtnDoIt"
         />
+
+    <!--
+    이 뷰를 부모의 오른쪽 끝에 정렬하라는 뜻이야.
+    이 뷰를 ID가 doItButton인 뷰의 오른쪽에 배치하라는 뜻이야.
+    이 뷰의 **텍스트 기준선(baseline)**을 doItButton과 같게 정렬하라는 의미
+    -->
     <Switch
         android:id="@+id/immediateSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/doItButton"
         android:layout_alignBaseline="@id/doItButton"
+
         android:padding="20dp"
         android:background="#7f7"
         android:text="@string/apply_immediately"
         />
+
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_below="@id/immediateSwitch"
         android:layout_alignStart="@id/immediateSwitch"
         android:hint="@string/noname"
@@ -55,13 +75,16 @@
         android:labelFor="@id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_toStartOf="@id/nameEditText"
         android:layout_alignBaseline="@id/nameEditText"
-        android:gravity="end"
+
+        android:gravity="center"
         android:textSize="16sp"
         android:text="@string/your_name"
         android:background="#F26224"
         />
+
     <LinearLayout
         android:id="@+id/seekbarGroup"
         android:layout_width="match_parent"
@@ -90,6 +113,7 @@
             android:text="$100"
             />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/paintControlGroup"
         android:visibility="gone"
@@ -215,6 +239,7 @@
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/buttonsGroup"
         android:layout_width="match_parent"
@@ -246,6 +271,7 @@
             android:layout_weight="1"
             android:layout_height="0dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -266,4 +292,5 @@
             android:padding="10dp"
             />
     </LinearLayout>
+
 </RelativeLayout>
