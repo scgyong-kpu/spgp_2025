@@ -81,7 +81,6 @@ public class BallView extends View {
 
         // 만약 뷰의 비율이 게임화면비율보다 크면, 세로 크기에 맞게 이미지를 스케일하고,
         // 나머지 공간은 좌우 여백으로 맞추고, 반대로 가로 크기에 맞춰 이미지를 스케일하고 상하 여백을 맞춘다.
-
         transformMatrix.reset();
         if (view_ratio > game_ratio) {
             float scale = h / SCREEN_HEIGHT;
@@ -110,3 +109,9 @@ public class BallView extends View {
         canvas.restore();
     }
 }
+
+// Avoid object allocations during draw/ layout operations
+// onDraw()에서는 매번 새로운 객체(RectF 등)를 생성하지 말자는 뜻
+// 메모리 성능상 좋지 않기 때문에,
+//        **미리 만들어둔 객체를 재사용하는 방식(Lazy Initialization)**이 권장돼.
+//        ✔ 예를 들어, RectF ballRect를 클래스 멤버로 선언하고 onDraw()에서 재사용하는 게 더 좋은 방식이야.
