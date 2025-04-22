@@ -22,6 +22,7 @@ public class AnotherActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        // BallView가 전체 화면을 차지하는 커스텀 뷰일 때 XML을 쓰지 않아도 된다.
         BallView ballView = new BallView(this);
         setContentView(ballView);
         Log.d(AnotherActivity.class.getSimpleName(), "Root = " + ballView);
