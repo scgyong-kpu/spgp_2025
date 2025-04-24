@@ -19,6 +19,7 @@ public class Fighter extends Sprite {
     // 비행기의 이동 속도. 초당 800 유닛의 거리를 이동
     private static final float RADIUS = 125f;
     // 비행기의 충돌 범위 또는 반지름 (게임 내에서 크기와 관련됨).
+    // 240x240 크기니까
     private final JoyStick joyStick;
     // 조이스틱을 통해 사용자가 입력하는 방향과 힘을 받아오는 객체.
     private float angle;
@@ -85,6 +86,9 @@ public class Fighter extends Sprite {
 
         setPosition(x, y, RADIUS);
         // 이동 후, 비행기의 새로운 위치를 설정합니다.
+
+        // 비트맵의 크기 2배로 확장
+        setScale(2.0f, 2.0f);
 
         angle = (float) Math.toDegrees(joyStick.angle_radian);
         // 조이스틱의 각도에 맞게 비행기의 회전 각도를 업데이트합니다.

@@ -25,6 +25,7 @@ public class Metrics {
     public static float width = 900f;
     public static float height = 1600f;
     // 게임 좌표계: 게임 내부에서 사용하는 좌표 기준 (기본 width: 900, height: 1600)
+    // -> 즉, 게임 화면의 기본 해상도를 900x1600으로 설정한 것
     //
     // 뷰 좌표계 (스크린 좌표계): 실제 안드로이드 디바이스의 화면 픽셀 기준
     //

@@ -28,6 +28,10 @@ public class Sprite implements IGameObject {
     // 객체의 크기
     // 중심 기준 반지름
 
+    // 비트맵의 스케일링 비율 (디폴트 1.0f, 즉 크기를 변경하지 않음)
+    protected float scaleX = 1.0f;
+    protected float scaleY = 1.0f;
+
 
     public Sprite(int mipmapId) {
         // BitmapPool은 메모리 낭비를 줄이기 위해 이미지 재사용하는 시스템.
@@ -60,6 +64,16 @@ public class Sprite implements IGameObject {
 
         RectUtil.setRect(dstRect, x, y, width, height);
     }
+
+    // 3. 스케일을 적용하는 메서드 추가
+    public void setScale(float scaleX, float scaleY) {
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+
+        // scaleRect를 사용하여 dstRect의 크기를 변경
+        RectUtil.scaleRect(dstRect, scaleX, scaleY);
+    }
+
     @Override
     public void update() {
         float timedDx = dx * GameView.frameTime;
