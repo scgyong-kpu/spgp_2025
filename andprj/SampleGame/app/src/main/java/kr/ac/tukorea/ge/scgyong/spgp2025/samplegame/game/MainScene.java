@@ -50,6 +50,9 @@ public class MainScene extends Scene {
         // Fighter와 JoyStick을 씬에 추가
         add(fighter);
         add(joyStick);
+
+        // 추가된 순서대로 그리므로, 비행기를 가장 나중에 그리고 싶다면 가장 나중에 넣어야 한다.
+        // 이 문제는 나중에 Object Layering으로 해결한다.
     }
 
 

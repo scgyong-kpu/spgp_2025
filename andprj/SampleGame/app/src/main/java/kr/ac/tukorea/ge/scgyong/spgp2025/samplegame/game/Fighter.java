@@ -97,6 +97,9 @@ public class Fighter extends Sprite {
         canvas.rotate(angle + 90, x, y);
         // 비행기를 angle + 90도만큼 회전시킵니다.
         // (이유: 기본적으로 이미지가 위쪽을 향하고 있기 때문에, 90도만큼 회전시켜야 맞는 방향으로 그려집니다.)
+        //
+         // 회전할 때 각도만 주면 원점 중심으로 회전한다 -> 비행기 중심점을 중심으로 회전해야 하므로
+        // 중심점 위치도 준다
 
         //canvas.drawBitmap(bitmap, null, dstRect, null);
         super.draw(canvas); // 직접 그려도 되고 Sprite의 Draw.(super) 를 불러도 된다.
