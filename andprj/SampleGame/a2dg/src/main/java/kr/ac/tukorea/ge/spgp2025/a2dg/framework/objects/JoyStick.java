@@ -117,6 +117,9 @@ public class JoyStick implements IGameObject {
                 double radius = Math.sqrt(dx * dx + dy * dy);
 
                 angle_radian = (float) Math.atan2(dy, dx);
+                // 맞아! 👌
+                //Math.atan2(dy, dx)는 2차원 좌표에서의 방향(벡터)이 이루는 각도를
+                // 라디안(radian) 단위로 반환해주는 함수야.
 
                 if (radius > move_radius) {
                     dx = (float) (move_radius * Math.cos(angle_radian));
@@ -134,6 +137,7 @@ public class JoyStick implements IGameObject {
                 //Log.d(TAG, "sx="+startX+" sy="+startY+" dx="+dx + " dy=" + dy + " x=" + x + " y=" + y + " cx=" + cx + " cy=" + cy);
                 Log.d(TAG, "angle=" + (int)Math.toDegrees(angle_radian) + "° power=" + String.format("%.2f", power));
                 RectUtil.setRect(thumbRect, cx, cy, thumb_radius);
+
                 break;
 
             case MotionEvent.ACTION_UP:
@@ -141,6 +145,7 @@ public class JoyStick implements IGameObject {
 
                 visible = false;
                 power = 0;
+
                 return true;
                 // ✅ return true
             //"이 터치 이벤트는 내가 처리할 거야!"

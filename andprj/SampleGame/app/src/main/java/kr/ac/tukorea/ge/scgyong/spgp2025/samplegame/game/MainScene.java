@@ -12,8 +12,12 @@ import kr.ac.tukorea.ge.scgyong.spgp2025.samplegame.R;
 
 // MainScene이라는 게임 씬을 정의하고 있습니다.
 // 이 씬은 주로 게임 화면에 표시되는 객체들을 설정하고, 터치 이벤트를 처리하는 역할
+//
+ // GameView에는 View 관련 내용만 남겨두고 GameObject와 관련된 것은 모두 Scene으로 만들어서 분리한다
+
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
+
     private Fighter fighter;
     //  게임에서 주인공이 되는 Fighter 객체입니다. fighter는 조이스틱의 입력을 받아서 움직이는 캐릭터
     private JoyStick joyStick;
@@ -22,6 +26,7 @@ public class MainScene extends Scene {
 
 
     public MainScene() {
+
         Metrics.setGameSize(900, 1600);
         // 게임 화면의 크기를 설정합니다. 화면의 크기는 가로 900px, 세로 1600px로 설정됩니다.
 

@@ -16,6 +16,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 public class Sprite implements IGameObject {
     protected Bitmap bitmap;
     // 실제로 화면에 그릴 이미지
+    //  여기서 Bitmap은 이미지 데이터를 나타내는 클래스
     protected Rect srcRect = null;
     // 비트맵의 어느 부분을 그릴지 설정 (null이면 전체 사용)
     protected final RectF dstRect = new RectF();

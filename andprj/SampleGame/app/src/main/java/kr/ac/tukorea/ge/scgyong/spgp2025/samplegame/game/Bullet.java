@@ -7,6 +7,9 @@ import android.graphics.Paint;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 
+
+// * Git : Bullet을 만들어 발사해 보려 했으나 ConcurrentModificationException이 발생한다
+// -> 자바에서 컬렉션을 순회하는 중에 해당 컬렉션을 동시에 수정하려고 할 때 발생하는 예외
 public class Bullet implements IGameObject {
     private static final float SPEED = 1000f;
     private static final float RADIUS = 30f;

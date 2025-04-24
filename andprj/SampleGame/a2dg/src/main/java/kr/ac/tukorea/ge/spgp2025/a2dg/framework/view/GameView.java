@@ -39,6 +39,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
         this.emptyStackListener = emptyStackListener;
     }
     private ArrayList<Scene> sceneStack = new ArrayList<>();
+    // 여러 종류의 Scene이 있을 예정이므로 재사용 가능한 공통된 기능만 Scene에 두고 특정 확면에 대한 구체적 정보는
+    // MainScene에서 구현한다. GameView는 MainScene으로서가 아니고, Scene으로 바라보아야 한다
+    //
     // 게임 화면을 관리할 Scene 객체들을 스택으로 저장
     // 예를 들어 PauseScene → GameScene → TitleScene 같은 식으로 쌓을 수 있어.
 
@@ -79,17 +82,22 @@ public class GameView extends View implements Choreographer.FrameCallback {
             return null;
         }
         Scene top = sceneStack.remove(last);
-        top.onExit();
+        // 리스트에서 해당 씬을 제거 -> 하지만 메모리 상 존재함
+
+        top.onExit(); // 현재 씬 종료
         if (last >= 1) {
-            sceneStack.get(last - 1).onResume();
+            sceneStack.get(last - 1).onResume(); // 아래 씬 재개
         } else {
-            notifyEmptyStack();
+            notifyEmptyStack(); // 스택 비었을 때 처리
         }
         return top;
     }
+    // 스택이 비었을 때 호출 -> 게임 종료 처리나, 앱 종료 등에 사용 가능
     private void notifyEmptyStack() {
         if (emptyStackListener != null) {
-            emptyStackListener.onEmptyStack();
+            emptyStackListener.onEmptyStack(); // <- 콜백 호출!
+            // GameView가 어떤 일이 끝났을 때 emptyStackListener에게 알려줘!
+            //→ 마치 "야 나 지금 스택 비었어! 이제 뭐할까?" 라고 호출하는 느낌.
         }
     }
 
@@ -97,8 +105,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public void changeScene(Scene scene) {
         int last = sceneStack.size() - 1;
         if (last < 0) return;
-        sceneStack.get(last).onExit();
-        sceneStack.add(scene);
+        sceneStack.get(last).onExit(); // 현재 씬 종료
+        sceneStack.add(scene); // 새 씬 추가, 시작
         scene.onEnter();
     }
 
@@ -158,9 +166,13 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
         Scene scene = sceneStack.get(last);
         boolean handled = scene.onBackPressed();
+        // 현재 스택 맨 위에 있는 Scene에게 먼저 "뒤로가기 눌렸어!"라고 알려줌.
+
         if (handled) return;
+        // 그 Scene이 직접 처리하면 그대로 끝
 
         popScene();
+        // Scene이 처리하지 않으면 → 현재 Scene을 스택에서 제거 (popScene())
     }
 
     // 🌀 프레임 루프 (핵심)

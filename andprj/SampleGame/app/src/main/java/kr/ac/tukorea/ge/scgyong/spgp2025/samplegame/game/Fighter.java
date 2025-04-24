@@ -70,6 +70,10 @@ public class Fighter extends Sprite {
         float distance = SPEED * joyStick.power * GameView.frameTime;
 
         // 옵션 2-1 : 8방향인 경우
+        // -> 360도가 아닌, 8방향만 사용하는 경우, 각도에 8을 곱하고 2pi로 나누어 반올림한 값을 다시
+        // 2pi / 8을 곱하면 된다. 8방향이 아닌 4방향으로 하고자 하면 이 수식의 8 대신 4를 쓰면 되고,
+        // 2도 가능하지만 2는 굳이 조이스틱을 쓸 필요가 없다
+        //
         //final int way = 8;
         //final double TWO_PI = Math.PI * 2;
         //float eightWayAngle = (float) (Math.round(way * joyStick.angle_radian / TWO_PI) * TWO_PI / way);

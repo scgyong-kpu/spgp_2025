@@ -21,5 +21,7 @@ public class MainActivity extends AppCompatActivity {
         // 여기선 SampleGameActivity를 시작하고 싶다는 의도를 만든 거야
         Intent intent = new Intent(this, SampleGameActivity.class);
         startActivity(intent);
+        // 이 코드는 SampleGameActivity라는 새로운 액티비티 인스턴스를 "새로 생성해서" 시작하는 거야.
+        //즉, 이전에 실행된 적이 있더라도 다시 onCreate()부터 호출되면서 새로 초기화돼
     }
 }

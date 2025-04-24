@@ -85,6 +85,8 @@ public class Metrics {
         // invertedMatrix: 그 반대인 화면 좌표 → 게임 좌표 변환 행렬
         //👉 이걸로 터치 좌표를 게임 좌표로 바꿀 수 있어
 
+        // 게임 진행에 필요한 것은 9:16 border 내에서 이루어 지지만, 화면을 비워둘 수는 없으니
+        // 이 영역도 신경 써야한다
         screenRect.set(0, 0, w, h);
         invertedMatrix.mapRect(screenRect);
         Log.d(TAG, "Screen Rect = " + screenRect);

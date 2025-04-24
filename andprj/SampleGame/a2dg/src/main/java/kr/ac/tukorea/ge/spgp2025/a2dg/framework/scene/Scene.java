@@ -14,6 +14,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 // 이 클래스는 게임 객체들의 업데이트, 그리기, 씬 전환 등을 담당합니다.
 public class Scene {
     private static final String TAG = Scene.class.getSimpleName();
+
     protected final ArrayList<IGameObject> gameObjects = new ArrayList<>();
     // IGameObject 인터페이스를 구현하는 게임 객체들을 담는 리스트입니다.
     // 게임 씬 내에 존재하는 모든 게임 객체들을 관리합니다.
@@ -36,6 +37,11 @@ public class Scene {
         int count = gameObjects.size();
 
         // 역순으로 호출하는 이유는 게임 객체들이 리스트에서 제거될 수 있기 때문
+        // ConcurrentModificationException을 해결하는 한 가지 방법. 하지만 이 방법으로 모든게 해결되는 것은
+        // 아니다. delay 시키는 방법도 있고, post runnable 시키는 방법도 있다. 이 중 몇 가지는 객체의 갯수가
+        // 맞지 않게 되는 문제도 발생한다. 거꾸로 카운트의 경우에도 자신을 삭제하거나 이미 지난 인덱스를 삭제하는건
+        // 괜찮지만 아직 루프에 다다르지 않은 것을 삭제할 때는 여전히 문제이다. 간단한 방법으로 이번 프로젝트/
+        // 프레임워크에서 사용하기로 한다.
         for (int i = count - 1; i >= 0; i--) {
             IGameObject gobj = gameObjects.get(i);
             gobj.update();
@@ -46,7 +52,6 @@ public class Scene {
             gobj.draw(canvas);
         }
     }
-
 
     //////////////////////////////////////////////////
     // Scene Stack Functions
@@ -91,6 +96,9 @@ public class Scene {
     }
     public boolean onBackPressed() {
         // 뒤로 가기 버튼이 눌렸을 때 호출되는 메소드입니다. 기본 구현은 false를 반환합니다.
+        //
+         // 특정 Scene에서 Pop이 되지 않게 하려면 Scene.BackPressed를 구현해서 RETURN TRUE를 하면 된다
+
         return false;
     }
 }

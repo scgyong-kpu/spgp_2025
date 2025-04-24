@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
+// GameActivity 코드는 액티비티가 시작될 때 gameView를 화면에 설정하고,
+// 해당 뷰가 정상적으로 이벤트를 받을 수 있는 상태로 만들어주는 흐름
 public class GameActivity extends AppCompatActivity {
 
     private GameView gameView;
@@ -18,24 +20,42 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         gameView = new GameView(this);
         setContentView(gameView);
+        // setContentView()로 액티비티의 루트 뷰로 설정해.
+        //이후 모든 터치 이벤트, 키 이벤트 등은 GameView로 전달될 수 있음.
+        //즉, GameView는 화면을 그릴 수 있고, 사용자와 상호작용할 수 있는 상태야.
 
         setFullScreen();
 
+        // gameView가 갖고 있는 stack이 비면 GameActivity를 finish 할 수 있는 구조 만들기
         gameView.setEmptyStackListener(new GameView.OnEmptyStackListener() {
             @Override
             public void onEmptyStack() {
                 finish();
             }
+            //
+            // emptyStackListener.onEmptyStack(); // <- 콜백 호출!
+            //      GameView가 어떤 일이 끝났을 때 emptyStackListener에게 알려줘!
+            //      → 마치 "야 나 지금 스택 비었어! 이제 뭐할까?" 라고 호출하는 느낌.
+            //
+            // 여기서 onEmptyStack()이 호출되면 → GameActivity는 자기 자신을 finish()로 종료함.
+            //→ 즉, GameView가 자기 일을 다 하면 GameActivity도 함께 종료되는 구조야.
         });
+
         getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
     }
 
+    // deprecated( 중요도가 떨어져 더 이상 사용되지 않고 앞으로는 사라지게 될 (컴퓨터 시스템 기능 등) )
+    // 된 onBackPressed 대신 OnBackPressedCallBack을 사용하는 것으로 변경
     private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
         @Override
         public void handleOnBackPressed() {
             gameView.onBackPressed();
+            // 안드로이드에서 뒤로가기 버튼을 눌렀을 때, gameView.onBackPressed()로 이벤트를 넘김.
+            //
+            //GameView가 씬을 pop하거나 다른 처리 로직을 담당할 수 있음.
         }
     };
 
@@ -57,7 +77,6 @@ public class GameActivity extends AppCompatActivity {
                 insetsController.setSystemBarsBehavior(
                         WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 );
-
                 // hide(...)는 상단바, 하단바 모두 숨김 처리
                 insetsController.hide(WindowInsets.Type.systemBars());
             }
@@ -76,6 +95,5 @@ public class GameActivity extends AppCompatActivity {
 
             gameView.setSystemUiVisibility(flags);
         }
-
     }
 }
