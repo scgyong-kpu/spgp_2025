@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--
+    이건 XML 문서의 루트. Android 문법을 쓰기 위해 네임스페이스를 선언하는 거야
+
+
+    🔹 <application> 태그
+    앱 전체의 속성과 **구성요소(activity 등)**를 정의하는 부분.
+    -->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,9 +19,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SampleGame"
         tools:targetApi="31">
+
+        <!--
+            Package 정리 #1. Framework에 넣지 않을 것들은 app package를 만들어 넣는다.
+
+         🔹 <activity> 태그들
+            각 액티비티는 앱의 한 화면을 나타내는 컴포넌트야.
+
+            .app.SampleGameActivity: 패키지 app에 있는 게임 화면 액티비티
+            exported="false": 다른 앱이 이 액티비티를 시작하지 못하도록 설정한 것
+         -->
         <activity
             android:name=".app.SampleGameActivity"
             android:exported="false" />
+
+        <!--
+        exported="true": 외부에서 이 액티비티를 실행할 수 있음 (여기선 앱 시작 진입점이니까 true)
+        intent-filter: 이 액티비티가 앱 실행 시 처음 열리는 런처 액티비티임을 의미
+        -->
         <activity
             android:name=".app.MainActivity"
             android:exported="true">

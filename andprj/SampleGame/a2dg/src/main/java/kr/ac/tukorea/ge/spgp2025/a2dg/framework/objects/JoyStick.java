@@ -15,6 +15,9 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 //조이스틱을 그리기 (draw)
 //터치 이벤트 처리 (onTouch)
 //**방향(angle)**과 세기(power) 계산
+//
+ //
+ //
 public class JoyStick implements IGameObject {
     private static final String TAG = JoyStick.class.getSimpleName();
 
@@ -56,6 +59,9 @@ public class JoyStick implements IGameObject {
         thumbBitmap = BitmapPool.get(thumbBmpId);
         bgRect = RectUtil.newRectF(x, y, bg_radius);
         thumbRect = RectUtil.newRectF(x, y, thumb_radius);
+
+        // 범용적으로 쓸 수 있는 재사용 가능한 클래스로 만들기
+        // -> BitampPool, RectUtil
     }
 
     @Override

@@ -36,8 +36,10 @@ android {
 }
 
 dependencies {
-
+    // a2dg 모듈을 app 모듈에서 사용하도록 설정
+    // :는 루트(최상위) 프로젝트부터 시작해서 하위 모듈을 지정한다는 뜻
     implementation(project(":a2dg"))
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

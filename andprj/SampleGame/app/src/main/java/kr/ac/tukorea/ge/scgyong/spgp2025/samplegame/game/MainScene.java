@@ -33,6 +33,7 @@ public class MainScene extends Scene {
         GameView.drawsDebugStuffs = BuildConfig.DEBUG;
         // 디버그 모드에서 화면에 디버깅 정보를 표시할지 여부를 설정합니다.
         // BuildConfig.DEBUG는 디버깅 빌드를 사용 중이면 true로 설정됩니다.
+        // -> framework module로 분리되어야하기 때문에, GameView에서 BuildConfig를 참조하지 않도록 한다.
 
         for (int i = 0; i < 5; i++) {
             add(new BouncingCircle());
