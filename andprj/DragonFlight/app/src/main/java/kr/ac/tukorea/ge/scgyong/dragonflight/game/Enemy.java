@@ -23,10 +23,12 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, IL
     };
     public static final int MAX_LEVEL = resIds.length - 1;
     private int level;
+    private int life, maxLife;
     protected RectF collisionRect = new RectF();
     private Enemy(int level, int index) {
         super(resIds[level], 10);
         this.level = level;
+        this.life = this.maxLife = (level + 1) * 10;
         setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
         updateCollisionRect();
         dy = SPEED;
@@ -37,6 +39,7 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, IL
             enemy = new Enemy(level, index);
         } else {
             enemy.level = level;
+            enemy.life = enemy.maxLife = (level + 1) * 10;
             enemy.setImageResourceId(resIds[level]);
             enemy.setPosition(Metrics.width / 10 * (2 * index + 1), -RADIUS, RADIUS);
             enemy.updateCollisionRect();
@@ -46,6 +49,12 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, IL
     public int getScore() {
         return (level + 1) * 100;
     }
+
+    public boolean decreaseLife(int power) {
+        life -= power;
+        return life <= 0;
+    }
+
     @Override
     public void update() {
         super.update();

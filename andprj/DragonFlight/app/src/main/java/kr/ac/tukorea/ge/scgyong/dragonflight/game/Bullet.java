@@ -34,6 +34,10 @@ public class Bullet extends Sprite implements IRecyclable, IBoxCollidable, ILaye
             Scene.top().remove(this);
         }
     }
+
+    public int getPower() {
+        return 10;
+    }
     public RectF getCollisionRect() {
         return dstRect;
     }
