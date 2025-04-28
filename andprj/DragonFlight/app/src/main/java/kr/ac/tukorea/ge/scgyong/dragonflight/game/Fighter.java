@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
@@ -92,7 +91,7 @@ public class Fighter extends Sprite {
     }
 
     private void updateRoll() {
-        boolean wasZero = rollTime == 0; // for debug log
+        //boolean wasZero = rollTime == 0; // for debug log
         int sign = targetX < x ? -1 : x < targetX ? 1 : 0; // roll 을 변경시킬 부호를 정한다
         if (x == targetX) {                         // 비행기가 멈췄을 때
             if (rollTime > 0) sign = -1;         // 오른쪽으로 움직이고 있었다면 감소시킨다
@@ -106,9 +105,9 @@ public class Fighter extends Sprite {
         if (rollTime < -MAX_ROLL_TIME) rollTime = -MAX_ROLL_TIME;    // 최대 MAX_ROLL_TIME 까지만
         else if (rollTime > MAX_ROLL_TIME) rollTime = MAX_ROLL_TIME;
 
-        if (!wasZero || rollTime != 0) {
-            Log.v(TAG, "RollTime = " + rollTime);
-        }
+        //if (!wasZero || rollTime != 0) {
+        //    Log.v(TAG, "RollTime = " + rollTime);
+        //}
 
         int rollIndex = 5 + (int)(rollTime * 5 / MAX_ROLL_TIME);
         srcRect.set(rollIndex * PLANE_SRC_WIDTH, 0, (rollIndex + 1) * PLANE_SRC_WIDTH, PLANE_SRC_WIDTH);
