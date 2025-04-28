@@ -79,6 +79,20 @@ public class Scene {
     }
 
 
+    public String getDebugCounts() {
+        StringBuilder sb = new StringBuilder();
+        for (ArrayList<IGameObject> gameObjects : layers) {
+            if (sb.length() == 0) {
+                sb.append('[');
+            } else {
+                sb.append(',');
+            }
+            sb.append(gameObjects.size());
+        }
+        sb.append(']');
+        return sb.toString();
+    }
+
     //////////////////////////////////////////////////
     // Object Recycling
     protected HashMap<Class, ArrayList<IRecyclable>> recycleBin = new HashMap<>();
