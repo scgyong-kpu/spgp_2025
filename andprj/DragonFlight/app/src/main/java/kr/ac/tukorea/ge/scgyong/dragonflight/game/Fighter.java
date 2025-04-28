@@ -18,7 +18,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 public class Fighter extends Sprite {
     private static final String TAG = Fighter.class.getSimpleName();
     private static final float PLANE_WIDTH = 175f;
-    private static final float PLANE_HEIGHT = PLANE_WIDTH * 80 / 72;
+    private static final int PLANE_SRC_WIDTH = 80;
     private static final float SPEED = 300f;
     private float targetX;
 
@@ -34,26 +34,14 @@ public class Fighter extends Sprite {
     private Bitmap sparkBitmap;
     private static final float MAX_ROLL_TIME = 0.4f;
     private float rollTime;
-    private static final Rect[] rects = new Rect[] {
-            new Rect(  8, 0,   8 + 42, 80),
-            new Rect( 76, 0,  76 + 42, 80),
-            new Rect(140, 0, 140 + 50, 80),
-            new Rect(205, 0, 205 + 56, 80),
-            new Rect(270, 0, 270 + 62, 80),
-            new Rect(334, 0, 334 + 70, 80),
-            new Rect(406, 0, 406 + 62, 80),
-            new Rect(477, 0, 477 + 56, 80),
-            new Rect(549, 0, 549 + 48, 80),
-            new Rect(621, 0, 621 + 42, 80),
-            new Rect(689, 0, 689 + 42, 80),
-    };
+
     public Fighter() {
         super(R.mipmap.fighters);
-        setPosition(Metrics.width / 2, Metrics.height - 200, PLANE_WIDTH, PLANE_HEIGHT);
+        setPosition(Metrics.width / 2, Metrics.height - 200, PLANE_WIDTH, PLANE_WIDTH);
         targetX = x;
 
         sparkBitmap = BitmapPool.get(R.mipmap.laser_spark);
-        srcRect = rects[5];
+        srcRect = new Rect();
     }
 
     @Override
@@ -73,7 +61,7 @@ public class Fighter extends Sprite {
             adjx = Math.max(radius, Math.min(x, Metrics.width - radius));
         }
         if (adjx != x) {
-            setPosition(adjx, y, PLANE_WIDTH, PLANE_HEIGHT);
+            setPosition(adjx, y, PLANE_WIDTH, PLANE_WIDTH);
         }
         fireBullet();
         updateRoll();
@@ -123,7 +111,7 @@ public class Fighter extends Sprite {
         }
 
         int rollIndex = 5 + (int)(rollTime * 5 / MAX_ROLL_TIME);
-        srcRect = rects[rollIndex];
+        srcRect.set(rollIndex * PLANE_SRC_WIDTH, 0, (rollIndex + 1) * PLANE_SRC_WIDTH, PLANE_SRC_WIDTH);
     }
     private void setTargetX(float x) {
         targetX = Math.max(radius, Math.min(x, Metrics.width - radius));
