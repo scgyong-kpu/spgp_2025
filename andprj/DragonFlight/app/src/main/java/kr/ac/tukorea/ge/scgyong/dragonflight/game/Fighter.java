@@ -67,7 +67,7 @@ public class Fighter extends Sprite {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (FIRE_INTERVAL - fireCoolTime > SPARK_DURATION) {
+        if (FIRE_INTERVAL - fireCoolTime < SPARK_DURATION) {
             RectUtil.setRect(sparkRect, x, y - SPARK_OFFSET, SPARK_WIDTH, SPARK_HEIGHT);
             canvas.drawBitmap(sparkBitmap, null, sparkRect, null);
         }
