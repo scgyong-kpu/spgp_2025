@@ -7,13 +7,13 @@ import android.graphics.Paint;
 public class Gauge {
     private final Paint fgPaint = new Paint();
     private final Paint bgPaint = new Paint();
-    public Gauge() {
+    public Gauge(float width) {
         bgPaint.setStyle(Paint.Style.STROKE);
-        bgPaint.setStrokeWidth(0.2f);
+        bgPaint.setStrokeWidth(width);
         bgPaint.setColor(Color.YELLOW);
         bgPaint.setStrokeCap(Paint.Cap.ROUND);
         fgPaint.setStyle(Paint.Style.STROKE);
-        fgPaint.setStrokeWidth(0.1f);
+        fgPaint.setStrokeWidth(width / 2);
         fgPaint.setColor(Color.BLUE);
         fgPaint.setStrokeCap(Paint.Cap.ROUND);
     }
