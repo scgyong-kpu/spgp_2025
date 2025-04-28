@@ -2,6 +2,7 @@ package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
@@ -29,12 +30,26 @@ public class Fighter extends Sprite {
     private static final float SPARK_HEIGHT = SPARK_WIDTH * 3 / 5;
     private RectF sparkRect = new RectF();
     private Bitmap sparkBitmap;
+    private static final Rect[] rects = new Rect[] {
+            new Rect(  8, 0,   8 + 42, 80),
+            new Rect( 76, 0,  76 + 42, 80),
+            new Rect(140, 0, 140 + 50, 80),
+            new Rect(205, 0, 205 + 56, 80),
+            new Rect(270, 0, 270 + 62, 80),
+            new Rect(334, 0, 334 + 70, 80),
+            new Rect(406, 0, 406 + 62, 80),
+            new Rect(477, 0, 477 + 56, 80),
+            new Rect(549, 0, 549 + 48, 80),
+            new Rect(621, 0, 621 + 42, 80),
+            new Rect(689, 0, 689 + 42, 80),
+    };
     public Fighter() {
-        super(R.mipmap.fighter);
+        super(R.mipmap.fighters);
         setPosition(Metrics.width / 2, Metrics.height - 200, PLANE_WIDTH, PLANE_HEIGHT);
         targetX = x;
 
         sparkBitmap = BitmapPool.get(R.mipmap.laser_spark);
+        srcRect = rects[5];
     }
 
     @Override
