@@ -1,5 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 
+import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, IL
     private int level;
     private int life, maxLife;
     protected RectF collisionRect = new RectF();
+    protected Gauge gauge = new Gauge(0.1f, R.color.enemy_gauge_fg, R.color.enemy_gauge_bg);
     public static Enemy get(int level, int index) {
         return Scene.top().getRecyclable(Enemy.class).init(level, index);
     }
@@ -58,6 +60,15 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, IL
         } else {
             updateCollisionRect();
         }
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        float gauge_width = width * 0.7f;
+        float gauge_x = x - gauge_width / 2;
+        float gauge_y = dstRect.bottom;
+        gauge.draw(canvas,gauge_x, gauge_y, gauge_width, (float)life / maxLife);
     }
 
     private void updateCollisionRect() {
