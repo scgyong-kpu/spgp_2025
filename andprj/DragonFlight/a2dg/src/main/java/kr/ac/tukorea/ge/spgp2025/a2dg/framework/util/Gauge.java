@@ -1,8 +1,7 @@
-package kr.ac.tukorea.ge.scgyong.dragonflight.game;
+package kr.ac.tukorea.ge.spgp2025.a2dg.framework.util;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 import androidx.core.content.res.ResourcesCompat;
