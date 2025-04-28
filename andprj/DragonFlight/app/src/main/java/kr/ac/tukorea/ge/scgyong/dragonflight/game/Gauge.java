@@ -17,6 +17,13 @@ public class Gauge {
         fgPaint.setColor(Color.BLUE);
         fgPaint.setStrokeCap(Paint.Cap.ROUND);
     }
+    public void draw(Canvas canvas, float x, float y, float scale, float value) {
+        canvas.save();
+        canvas.translate(x, y);
+        canvas.scale(scale, scale);
+        draw(canvas, value);
+        canvas.restore();
+    }
     public void draw(Canvas canvas, float progress) {
         canvas.drawLine(0, 0, 1.0f, 0, bgPaint);
         if (progress > 0) {

@@ -71,11 +71,7 @@ public class Fighter extends Sprite {
             RectUtil.setRect(sparkRect, x, y - SPARK_OFFSET, SPARK_WIDTH, SPARK_HEIGHT);
             canvas.drawBitmap(sparkBitmap, null, sparkRect, null);
         }
-        canvas.save();
-        canvas.translate(x - radius, y);
-        canvas.scale(width, width);
-        gauge.draw(canvas, fireCoolTime / FIRE_INTERVAL);
-        canvas.restore();
+        gauge.draw(canvas,x - radius, y, width, fireCoolTime / FIRE_INTERVAL);
     }
 
     private void fireBullet() {
