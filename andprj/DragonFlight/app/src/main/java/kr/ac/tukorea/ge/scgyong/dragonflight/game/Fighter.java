@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
@@ -15,6 +16,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Fighter extends Sprite {
+    private static final String TAG = Fighter.class.getSimpleName();
     private static final float PLANE_WIDTH = 175f;
     private static final float PLANE_HEIGHT = PLANE_WIDTH * 80 / 72;
     private static final float SPEED = 300f;
@@ -30,6 +32,8 @@ public class Fighter extends Sprite {
     private static final float SPARK_HEIGHT = SPARK_WIDTH * 3 / 5;
     private RectF sparkRect = new RectF();
     private Bitmap sparkBitmap;
+    private static final float MAX_ROLL_TIME = 0.4f;
+    private float rollTime;
     private static final Rect[] rects = new Rect[] {
             new Rect(  8, 0,   8 + 42, 80),
             new Rect( 76, 0,  76 + 42, 80),
@@ -71,11 +75,8 @@ public class Fighter extends Sprite {
         if (adjx != x) {
             setPosition(adjx, y, PLANE_WIDTH, PLANE_HEIGHT);
         }
-        fireCoolTime -= GameView.frameTime;
-        if (fireCoolTime <= 0) {
-            fireBullet();
-            fireCoolTime = FIRE_INTERVAL;
-        }
+        fireBullet();
+        updateRoll();
     }
 
     @Override
@@ -88,6 +89,11 @@ public class Fighter extends Sprite {
     }
 
     private void fireBullet() {
+        fireCoolTime -= GameView.frameTime;
+        if (fireCoolTime > 0) {
+            return;
+        }
+        fireCoolTime = FIRE_INTERVAL;
         MainScene scene = (MainScene) Scene.top();
         if (scene == null) return;
 
@@ -97,6 +103,25 @@ public class Fighter extends Sprite {
         scene.add(bullet);
     }
 
+    private void updateRoll() {
+        boolean wasZero = rollTime == 0; // for debug log
+        int sign = targetX < x ? -1 : x < targetX ? 1 : 0; // roll 을 변경시킬 부호를 정한다
+        if (x == targetX) {                         // 비행기가 멈췄을 때
+            if (rollTime > 0) sign = -1;         // 오른쪽으로 움직이고 있었다면 감소시킨다
+            else if (rollTime < 0) sign = 1;     // 왼쪽으로 움직이고 있었다면 증가시킨다
+        }
+        rollTime += sign * GameView.frameTime;
+        if (x == targetX) {                           // 비행기가 멈췄을 때
+            if (sign < 0 && rollTime < 0) rollTime = 0; // 감소중이었는데 0 을 지나쳤다면 0으로
+            if (sign > 0 && rollTime > 0) rollTime = 0; // 증가중이었는데 0 을 지나쳤다면 0으로
+        }
+        if (rollTime < -MAX_ROLL_TIME) rollTime = -MAX_ROLL_TIME;    // 최대 MAX_ROLL_TIME 까지만
+        else if (rollTime > MAX_ROLL_TIME) rollTime = MAX_ROLL_TIME;
+
+        if (!wasZero || rollTime != 0) {
+            Log.v(TAG, "RollTime = " + rollTime);
+        }
+    }
     private void setTargetX(float x) {
         targetX = Math.max(radius, Math.min(x, Metrics.width - radius));
     }
