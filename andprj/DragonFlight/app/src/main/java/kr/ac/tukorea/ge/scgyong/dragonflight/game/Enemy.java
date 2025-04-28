@@ -3,13 +3,14 @@ package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
+import java.util.ArrayList;
+
 import kr.ac.tukorea.ge.scgyong.dragonflight.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.AnimSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Gauge;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, ILayerProvider<MainScene.Layer> {
