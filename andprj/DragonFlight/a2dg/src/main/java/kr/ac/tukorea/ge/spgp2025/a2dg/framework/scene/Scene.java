@@ -96,8 +96,14 @@ public class Scene {
 
     public IRecyclable getRecyclable(Class clazz) {
         ArrayList<IRecyclable> bin = recycleBin.get(clazz);
-        if (bin == null) return null;
-        if (bin.size() == 0) return null;
+        if (bin == null || bin.isEmpty()) {
+            try {
+                return (IRecyclable) clazz.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
         // Log.d(TAG, "get(): " + clazz.getSimpleName() + " : " + (bin.size() - 1) + " objects");
         return bin.remove(0);
     }
