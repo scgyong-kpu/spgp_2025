@@ -73,7 +73,13 @@ public class Fighter extends Sprite {
     }
 
     private void fireBullet() {
-        Scene.top().add(Bullet.get(x, y - BULLET_OFFSET));
+        MainScene scene = (MainScene) Scene.top();
+        if (scene == null) return;
+
+        int score = scene.getScore();
+        int power = 10 + score / 1000;
+        Bullet bullet = Bullet.get(x, y - BULLET_OFFSET, power);
+        scene.add(bullet);
     }
 
     private void setTargetX(float x) {

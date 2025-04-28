@@ -35,7 +35,9 @@ public class MainScene extends Scene {
     public void addScore(int amount) {
         score.add(amount);
     }
-
+    public int getScore() {
+        return score.getScore();
+    }
 
     // Overridables
 
