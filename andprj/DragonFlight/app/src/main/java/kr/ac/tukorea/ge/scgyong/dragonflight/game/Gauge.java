@@ -1,20 +1,27 @@
 package kr.ac.tukorea.ge.scgyong.dragonflight.game;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
+import androidx.core.content.res.ResourcesCompat;
+
+import kr.ac.tukorea.ge.scgyong.dragonflight.R;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class Gauge {
     private final Paint fgPaint = new Paint();
     private final Paint bgPaint = new Paint();
     public Gauge(float width) {
+        Resources res = GameView.view.getResources();
         bgPaint.setStyle(Paint.Style.STROKE);
         bgPaint.setStrokeWidth(width);
-        bgPaint.setColor(Color.YELLOW);
+        bgPaint.setColor(ResourcesCompat.getColor(res, R.color.enemy_gauge_bg, null));
         bgPaint.setStrokeCap(Paint.Cap.ROUND);
         fgPaint.setStyle(Paint.Style.STROKE);
         fgPaint.setStrokeWidth(width / 2);
-        fgPaint.setColor(Color.BLUE);
+        fgPaint.setColor(ResourcesCompat.getColor(res, R.color.enemy_gauge_fg, null));
         fgPaint.setStrokeCap(Paint.Cap.ROUND);
     }
     public void draw(Canvas canvas, float x, float y, float scale, float value) {
