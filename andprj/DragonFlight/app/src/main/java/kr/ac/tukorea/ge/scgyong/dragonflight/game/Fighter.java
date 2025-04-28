@@ -29,7 +29,7 @@ public class Fighter extends Sprite {
     private static final float SPARK_HEIGHT = SPARK_WIDTH * 3 / 5;
     private RectF sparkRect = new RectF();
     private Bitmap sparkBitmap;
-
+    private Gauge gauge = new Gauge();
     public Fighter() {
         super(R.mipmap.fighter);
         setPosition(Metrics.width / 2, Metrics.height - 200, PLANE_WIDTH, PLANE_HEIGHT);
@@ -71,6 +71,7 @@ public class Fighter extends Sprite {
             RectUtil.setRect(sparkRect, x, y - SPARK_OFFSET, SPARK_WIDTH, SPARK_HEIGHT);
             canvas.drawBitmap(sparkBitmap, null, sparkRect, null);
         }
+        gauge.draw(canvas);
     }
 
     private void fireBullet() {
