@@ -25,7 +25,7 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, IL
     private int level;
     private int life, maxLife;
     protected RectF collisionRect = new RectF();
-    protected Gauge gauge = new Gauge(0.1f, R.color.enemy_gauge_fg, R.color.enemy_gauge_bg);
+    protected static Gauge gauge = new Gauge(0.1f, R.color.enemy_gauge_fg, R.color.enemy_gauge_bg);
     public static Enemy get(int level, int index) {
         return Scene.top().getRecyclable(Enemy.class).init(level, index);
     }
