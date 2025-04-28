@@ -14,15 +14,15 @@ public class MainScene extends Scene {
     private final Score score;
 
     public enum Layer {
-        bg, enemy, bullet, fighter, ui, controller;
+        bg1, enemy, bullet, fighter, bg2, ui, controller;
         public static final int COUNT = values().length;
     }
     public MainScene() {
         //Metrics.setGameSize(900, 1600); default=900x1600
         initLayers(Layer.COUNT);
 
-        add(Layer.bg, new VertScrollBackground(R.mipmap.bg_city, 20));
-        add(Layer.bg, new VertScrollBackground(R.mipmap.clouds, 40));
+        add(Layer.bg1, new VertScrollBackground(R.mipmap.bg_city, 20));
+        add(Layer.bg2, new VertScrollBackground(R.mipmap.clouds, 40));
 
         this.fighter = new Fighter();
         add(Layer.fighter, fighter);
