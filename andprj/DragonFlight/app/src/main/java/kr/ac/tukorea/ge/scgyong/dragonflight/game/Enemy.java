@@ -33,7 +33,7 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, IL
         this.life = this.maxLife = (level + 1) * 10;
         dy = SPEED;
     }
-    private Enemy() {
+    public Enemy() {
         super(0, 0, 0);
     }
 
