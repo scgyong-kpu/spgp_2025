@@ -9,18 +9,18 @@ public class Gauge {
     private final Paint bgPaint = new Paint();
     public Gauge() {
         bgPaint.setStyle(Paint.Style.STROKE);
-        bgPaint.setStrokeWidth(20f);
+        bgPaint.setStrokeWidth(0.2f);
         bgPaint.setColor(Color.YELLOW);
         bgPaint.setStrokeCap(Paint.Cap.ROUND);
         fgPaint.setStyle(Paint.Style.STROKE);
-        fgPaint.setStrokeWidth(10f);
+        fgPaint.setStrokeWidth(0.1f);
         fgPaint.setColor(Color.BLUE);
         fgPaint.setStrokeCap(Paint.Cap.ROUND);
     }
     public void draw(Canvas canvas, float progress) {
-        canvas.drawLine(100, 500, 200, 500, bgPaint);
+        canvas.drawLine(0, 0, 1.0f, 0, bgPaint);
         if (progress > 0) {
-            canvas.drawLine(100, 500, 100 + progress * 100, 500, fgPaint);
+            canvas.drawLine(0, 0, progress, 0, fgPaint);
         }
     }
 }
