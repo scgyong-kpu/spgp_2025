@@ -1,8 +1,7 @@
-package kr.ac.tukorea.ge.scgyong.dragonflight.game;
+package kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects;
 
 import android.graphics.Canvas;
 
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
