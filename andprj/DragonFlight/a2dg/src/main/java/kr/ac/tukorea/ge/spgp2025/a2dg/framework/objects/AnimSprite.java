@@ -16,7 +16,9 @@ public class AnimSprite extends Sprite {
         super(mipmapId);
         srcRect = new Rect();
         createdOn = System.currentTimeMillis();
-        setFrameInfo(fps, frameCount);
+        if (bitmap != null) {
+            setFrameInfo(fps, frameCount);
+        }
     }
 
     private void setFrameInfo(float fps, int frameCount) {
