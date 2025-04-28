@@ -29,7 +29,7 @@ public class Fighter extends Sprite {
     private static final float SPARK_HEIGHT = SPARK_WIDTH * 3 / 5;
     private RectF sparkRect = new RectF();
     private Bitmap sparkBitmap;
-    private Gauge gauge = new Gauge(0.1f);
+    private Gauge gauge = new Gauge(0.1f, R.color.enemy_gauge_fg, R.color.enemy_gauge_bg);
     public Fighter() {
         super(R.mipmap.fighter);
         setPosition(Metrics.width / 2, Metrics.height - 200, PLANE_WIDTH, PLANE_HEIGHT);
