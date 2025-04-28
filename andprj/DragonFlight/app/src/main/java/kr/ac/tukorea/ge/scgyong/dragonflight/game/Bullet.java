@@ -13,18 +13,18 @@ public class Bullet extends Sprite implements IRecyclable, IBoxCollidable, ILaye
     private static final float BULLET_WIDTH = 68f;
     private static final float BULLET_HEIGHT = BULLET_WIDTH * 40 / 28;
     private static final float SPEED = 2000f;
-    private Bullet(float x, float y) {
+    public Bullet() {
         super(R.mipmap.laser_1);
-        setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
         dy = -SPEED;
     }
+
+    private Bullet init(float x, float y) {
+        setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
+        return this;
+    }
     public static Bullet get(float x, float y) {
-        Bullet bullet = (Bullet) Scene.top().getRecyclable(Bullet.class);
-        if (bullet == null) {
-            bullet = new Bullet(x, y);
-        } else {
-            bullet.setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
-        }
+        Bullet bullet = Scene.top().getRecyclable(Bullet.class);
+        bullet.init(x, y);
         return bullet;
     }
     @Override
