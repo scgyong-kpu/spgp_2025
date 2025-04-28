@@ -71,7 +71,7 @@ public class Fighter extends Sprite {
             RectUtil.setRect(sparkRect, x, y - SPARK_OFFSET, SPARK_WIDTH, SPARK_HEIGHT);
             canvas.drawBitmap(sparkBitmap, null, sparkRect, null);
         }
-        gauge.draw(canvas);
+        gauge.draw(canvas, 0.7f);
     }
 
     private void fireBullet() {

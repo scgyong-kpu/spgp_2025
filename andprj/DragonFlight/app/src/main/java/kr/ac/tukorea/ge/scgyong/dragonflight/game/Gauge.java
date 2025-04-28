@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Gauge {
-    private float value = 1.0f;
     private final Paint fgPaint = new Paint();
     private final Paint bgPaint = new Paint();
     public Gauge() {
@@ -18,10 +17,10 @@ public class Gauge {
         fgPaint.setColor(Color.BLUE);
         fgPaint.setStrokeCap(Paint.Cap.ROUND);
     }
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, float progress) {
         canvas.drawLine(100, 500, 200, 500, bgPaint);
-        if (value > 0) {
-            canvas.drawLine(100, 500, 100 + value * 100, 500, fgPaint);
+        if (progress > 0) {
+            canvas.drawLine(100, 500, 100 + progress * 100, 500, fgPaint);
         }
     }
 }
