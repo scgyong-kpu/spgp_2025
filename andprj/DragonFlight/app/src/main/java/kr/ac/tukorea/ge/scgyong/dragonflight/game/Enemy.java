@@ -38,7 +38,7 @@ public class Enemy extends AnimSprite implements IRecyclable, IBoxCollidable, IL
     }
 
     public static Enemy get(int level, int index) {
-        Enemy enemy = (Enemy) Scene.top().getRecyclable(Enemy.class);
+        Enemy enemy = Scene.top().getRecyclable(Enemy.class);
         enemy.init(level, index);
         return enemy;
     }

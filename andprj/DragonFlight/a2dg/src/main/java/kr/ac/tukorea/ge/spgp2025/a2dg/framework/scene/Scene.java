@@ -94,18 +94,18 @@ public class Scene {
         // Log.d(TAG, "collect(): " + clazz.getSimpleName() + " : " + bin.size() + " objects");
     }
 
-    public IRecyclable getRecyclable(Class clazz) {
+    public <T extends IRecyclable> T getRecyclable(Class<T> clazz) {
         ArrayList<IRecyclable> bin = recycleBin.get(clazz);
         if (bin == null || bin.isEmpty()) {
             try {
-                return (IRecyclable) clazz.newInstance();
+                return clazz.newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
         }
         // Log.d(TAG, "get(): " + clazz.getSimpleName() + " : " + (bin.size() - 1) + " objects");
-        return bin.remove(0);
+        return clazz.cast(bin.remove(0));
     }
 
     //////////////////////////////////////////////////
