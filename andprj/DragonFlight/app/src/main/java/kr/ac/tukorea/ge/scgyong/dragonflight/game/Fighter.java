@@ -121,6 +121,9 @@ public class Fighter extends Sprite {
         if (!wasZero || rollTime != 0) {
             Log.v(TAG, "RollTime = " + rollTime);
         }
+
+        int rollIndex = 5 + (int)(rollTime * 5 / MAX_ROLL_TIME);
+        srcRect = rects[rollIndex];
     }
     private void setTargetX(float x) {
         targetX = Math.max(radius, Math.min(x, Metrics.width - radius));
