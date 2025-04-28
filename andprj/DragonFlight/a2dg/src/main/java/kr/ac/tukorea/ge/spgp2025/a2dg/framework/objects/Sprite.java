@@ -33,6 +33,7 @@ public class Sprite implements IGameObject {
         this.x = x;
         this.y = y;
         this.width = this.height = 2 * radius;
+        this.radius = radius;
         RectUtil.setRect(dstRect, x, y, radius);
 
     }
