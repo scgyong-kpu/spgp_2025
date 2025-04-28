@@ -19,7 +19,7 @@ public class Fighter extends Sprite {
     private static final float SPEED = 300f;
     private float targetX;
 
-    private static final float FIRE_INTERVAL = 0.25f;
+    private static final float FIRE_INTERVAL = 1.25f;
     private float fireCoolTime = FIRE_INTERVAL;
     private static final float BULLET_OFFSET = 80f;
 
@@ -71,7 +71,7 @@ public class Fighter extends Sprite {
             RectUtil.setRect(sparkRect, x, y - SPARK_OFFSET, SPARK_WIDTH, SPARK_HEIGHT);
             canvas.drawBitmap(sparkBitmap, null, sparkRect, null);
         }
-        gauge.draw(canvas, 0.7f);
+        gauge.draw(canvas, fireCoolTime / FIRE_INTERVAL);
     }
 
     private void fireBullet() {
