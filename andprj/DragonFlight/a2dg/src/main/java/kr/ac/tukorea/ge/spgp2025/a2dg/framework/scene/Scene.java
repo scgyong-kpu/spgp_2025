@@ -11,22 +11,50 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Scene {
     private static final String TAG = Scene.class.getSimpleName();
-    protected final ArrayList<IGameObject> gameObjects = new ArrayList<>();
-
+    protected ArrayList<ArrayList<IGameObject>> layers = new ArrayList<>();
     //////////////////////////////////////////////////
     // Game Object Management
-    public void add(IGameObject gameObject) {
+
+    protected void initLayers(int layerCount) {
+        layers.clear();
+        for (int i = 0; i < layerCount; i++) {
+            layers.add(new ArrayList<>());
+        }
+    }
+    public <E extends Enum<E>> void add(E layer, IGameObject gameObject) {
+        int layerIndex = layer.ordinal();
+        ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
         gameObjects.add(gameObject);
-        //Log.d(TAG, gameObjects.size() + " objects in " + this);
     }
 
-    public void remove(IGameObject gobj) {
+    public void add(ILayerProvider<?> gameObject) {
+        Enum<?> e = gameObject.getLayer();
+        int layerIndex = e.ordinal();
+        ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
+        gameObjects.add(gameObject);
+    }
+
+    public <E extends Enum<E>> void remove(E layer, IGameObject gobj) {
+        int layerIndex = layer.ordinal();
+        remove(layerIndex, gobj);
+    }
+
+    public void remove(ILayerProvider<?> gameObject) {
+        Enum<?> e = gameObject.getLayer();
+        int layerIndex = e.ordinal();
+        remove(layerIndex, gameObject);
+    }
+
+    private void remove(int layerIndex, IGameObject gobj) {
+        ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
         gameObjects.remove(gobj);
         if (gobj instanceof IRecyclable) {
             collectRecyclable((IRecyclable) gobj);
@@ -34,8 +62,36 @@ public class Scene {
         }
     }
 
+    public <E extends Enum<E>> ArrayList<IGameObject> objectsAt(E layer) {
+        int layerIndex = layer.ordinal();
+        return layers.get(layerIndex);
+    }
+
     public int count() {
-        return gameObjects.size();
+        int total = 0;
+        for (ArrayList<IGameObject> layer : layers) {
+            total += layer.size();
+        }
+        return total;
+    }
+    public <E extends Enum<E>> int countAt(E layer) {
+        int layerIndex = layer.ordinal();
+        return layers.get(layerIndex).size();
+    }
+
+
+    public String getDebugCounts() {
+        StringBuilder sb = new StringBuilder();
+        for (ArrayList<IGameObject> gameObjects : layers) {
+            if (sb.length() == 0) {
+                sb.append('[');
+            } else {
+                sb.append(',');
+            }
+            sb.append(gameObjects.size());
+        }
+        sb.append(']');
+        return sb.toString();
     }
 
     //////////////////////////////////////////////////
@@ -53,27 +109,40 @@ public class Scene {
         // Log.d(TAG, "collect(): " + clazz.getSimpleName() + " : " + bin.size() + " objects");
     }
 
-    public IRecyclable getRecyclable(Class clazz) {
+    public <T extends IRecyclable> T getRecyclable(Class<T> clazz) {
         ArrayList<IRecyclable> bin = recycleBin.get(clazz);
-        if (bin == null) return null;
-        if (bin.size() == 0) return null;
+        if (bin == null || bin.isEmpty()) {
+            try {
+                return clazz.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
         // Log.d(TAG, "get(): " + clazz.getSimpleName() + " : " + (bin.size() - 1) + " objects");
-        return bin.remove(0);
+        return clazz.cast(bin.remove(0));
     }
 
     //////////////////////////////////////////////////
     // Game Loop Functions
 
     public void update() {
-        int count = gameObjects.size();
-        for (int i = count - 1; i >= 0; i--) {
-            IGameObject gobj = gameObjects.get(i);
-            gobj.update();
+        for (ArrayList<IGameObject> gameObjects : layers) {
+            int count = gameObjects.size();
+            for (int i = count - 1; i >= 0; i--) {
+                IGameObject gobj = gameObjects.get(i);
+                gobj.update();
+            }
         }
     }
     public void draw(Canvas canvas) {
-        for (IGameObject gobj : gameObjects) {
-            gobj.draw(canvas);
+        if (this.clipsRect()) {
+            canvas.clipRect(0, 0, Metrics.width, Metrics.height);
+        }
+        for (ArrayList<IGameObject> gameObjects : layers) {
+            for (IGameObject gobj : gameObjects) {
+                gobj.draw(canvas);
+            }
         }
         if (GameView.drawsDebugStuffs) {
             if (bboxPaint == null) {
@@ -81,10 +150,12 @@ public class Scene {
                 bboxPaint.setStyle(Paint.Style.STROKE);
                 bboxPaint.setColor(Color.RED);
             }
-            for (IGameObject gobj : gameObjects) {
-                if (gobj instanceof IBoxCollidable) {
-                    RectF rect = ((IBoxCollidable) gobj).getCollisionRect();
-                    canvas.drawRect(rect, bboxPaint);
+            for (ArrayList<IGameObject> gameObjects : layers) {
+                for (IGameObject gobj : gameObjects) {
+                    if (gobj instanceof IBoxCollidable) {
+                        RectF rect = ((IBoxCollidable) gobj).getCollisionRect();
+                        canvas.drawRect(rect, bboxPaint);
+                    }
                 }
             }
         }
@@ -125,5 +196,8 @@ public class Scene {
 
     public boolean onBackPressed() {
         return false;
+    }
+    public boolean clipsRect() {
+        return true;
     }
 }

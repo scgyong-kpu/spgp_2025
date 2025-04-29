@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Choreographer;
@@ -231,11 +232,14 @@ public class GameView extends View implements Choreographer.FrameCallback {
         if (fpsPaint == null) {
             fpsPaint = new Paint();
             fpsPaint.setColor(Color.BLUE);
-            fpsPaint.setTextSize(100f);
+            fpsPaint.setTypeface(Typeface.MONOSPACE);
+            fpsPaint.setTextSize(80f);
         }
 
         int fps = (int) (1.0f / frameTime);
         int count = scene != null ? scene.count() : 0;
-        canvas.drawText("FPS: " + fps + " objs: " + count, 100f, 200f, fpsPaint);
+        String countsForLayers = scene != null ? scene.getDebugCounts() : "";
+        canvas.drawText("FPS: " + fps, 80f, 80f, fpsPaint);
+        canvas.drawText(count + " " + countsForLayers, 80f, 160f, fpsPaint);
     }
 }

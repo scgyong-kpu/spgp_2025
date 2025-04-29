@@ -4,15 +4,24 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public class AnimSprite extends Sprite {
-    protected final float fps;
-    protected final int frameCount;
-    protected final int frameWidth, frameHeight;
+    protected float fps;
+    protected int frameCount;
+    protected int frameWidth;
+    protected int frameHeight;
     protected final long createdOn;
     public AnimSprite(int mipmapId, float fps) {
         this(mipmapId, fps, 0);
     }
     public AnimSprite(int mipmapId, float fps, int frameCount) {
         super(mipmapId);
+        srcRect = new Rect();
+        createdOn = System.currentTimeMillis();
+        if (bitmap != null) {
+            setFrameInfo(fps, frameCount);
+        }
+    }
+
+    private void setFrameInfo(float fps, int frameCount) {
         this.fps = fps;
         int imageWidth = bitmap.getWidth();
         int imageHeight = bitmap.getHeight();
@@ -25,8 +34,13 @@ public class AnimSprite extends Sprite {
             this.frameHeight = imageHeight;
             this.frameCount = frameCount;
         }
-        srcRect = new Rect();
-        createdOn = System.currentTimeMillis();
+    }
+    public void setImageResourceId(int mipmapId, float fps) {
+        setImageResourceId(mipmapId, fps, 0);
+    }
+    public void setImageResourceId(int mipmapId, float fps, int frameCount) {
+        super.setImageResourceId(mipmapId);
+        setFrameInfo(fps, frameCount);
     }
 
     @Override
