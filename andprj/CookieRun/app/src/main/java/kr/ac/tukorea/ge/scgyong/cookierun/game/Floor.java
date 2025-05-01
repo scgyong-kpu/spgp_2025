@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class Floor extends MapObject {
     public enum Type {
@@ -34,5 +33,9 @@ public class Floor extends MapObject {
         height = type.height();
         dstRect.set(left, top, left + width, top + height);
         return this;
+    }
+    @Override
+    public MainScene.Layer getLayer() {
+        return MainScene.Layer.floor;
     }
 }
