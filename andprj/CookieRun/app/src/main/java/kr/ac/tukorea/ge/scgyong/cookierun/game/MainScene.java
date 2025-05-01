@@ -23,11 +23,11 @@ public class MainScene extends Scene {
         player = new Player();
         add(Layer.player, player);
 
-        add(Layer.floor, new Floor(Floor.Type.T_10x2, 0, 700));
-        add(Layer.floor, new Floor(Floor.Type.T_2x2, 1000, 700));
-        add(Layer.floor, new Floor(Floor.Type.T_10x2, 1200, 700));
-        add(Layer.floor, new Floor(Floor.Type.T_3x1, 800, 300));
-        add(Layer.floor, new Floor(Floor.Type.T_3x1, 1100, 400));
+        add(Layer.floor, Floor.get(Floor.Type.T_10x2, 0, 700));
+        add(Layer.floor, Floor.get(Floor.Type.T_2x2, 1000, 700));
+        add(Layer.floor, Floor.get(Floor.Type.T_10x2, 1200, 700));
+        add(Layer.floor, Floor.get(Floor.Type.T_3x1, 800, 300));
+        add(Layer.floor, Floor.get(Floor.Type.T_3x1, 1100, 400));
     }
 
     // Overridables
