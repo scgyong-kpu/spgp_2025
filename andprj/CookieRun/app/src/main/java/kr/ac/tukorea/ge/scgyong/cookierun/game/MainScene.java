@@ -8,7 +8,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class MainScene extends Scene {
     public enum Layer {
-        bg, player;
+        bg, floor, player;
         public static final int COUNT = values().length;
     }
     private final Player player;
@@ -22,6 +22,8 @@ public class MainScene extends Scene {
 
         player = new Player();
         add(Layer.player, player);
+
+        add(Layer.floor, new Floor());
     }
 
     // Overridables

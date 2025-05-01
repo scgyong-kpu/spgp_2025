@@ -29,7 +29,7 @@ public class Player extends SheetSprite {
     }
     public Player() {
         super(R.mipmap.cookie_player_sheet, 8);
-        setPosition(200f, 700f, 386, 386f);
+        setPosition(200f, 510f, 386, 386f);
         srcRects = srcRectsArray[state.ordinal()];
     }
     public void jump() {
