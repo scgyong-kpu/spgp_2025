@@ -1,5 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
+import android.view.MotionEvent;
+
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.HorzScrollBackground;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
@@ -9,6 +11,7 @@ public class MainScene extends Scene {
         bg, player;
         public static final int COUNT = values().length;
     }
+    private final Player player;
 
     public MainScene() {
         initLayers(Layer.COUNT);
@@ -17,6 +20,13 @@ public class MainScene extends Scene {
         add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_2, 200f));
         add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_3, 300f));
 
-        add(Layer.player, new Player());
+        player = new Player();
+        add(Layer.player, player);
+    }
+
+    // Overridables
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return player.onTouch(event);
     }
 }
