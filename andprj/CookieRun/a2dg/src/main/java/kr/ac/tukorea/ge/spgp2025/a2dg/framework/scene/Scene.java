@@ -106,7 +106,7 @@ public class Scene {
         }
         //object.onRecycle(); // 객체가 재활용통에 들어가기 전에 정리해야 할 것이 있다면 여기서 한다
         bin.add(object);
-        Log.d(TAG, "collect(): " + clazz.getSimpleName() + " : " + bin.size() + " objects");
+        // Log.d(TAG, "collect(): " + clazz.getSimpleName() + " : " + bin.size() + " objects");
     }
 
     public <T extends IRecyclable> T getRecyclable(Class<T> clazz) {
