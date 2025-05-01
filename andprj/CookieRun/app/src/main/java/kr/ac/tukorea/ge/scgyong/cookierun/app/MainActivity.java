@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.cookierun;
+package kr.ac.tukorea.ge.scgyong.cookierun.app;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import kr.ac.tukorea.ge.scgyong.cookierun.R;
 
 public class MainActivity extends AppCompatActivity {
 
