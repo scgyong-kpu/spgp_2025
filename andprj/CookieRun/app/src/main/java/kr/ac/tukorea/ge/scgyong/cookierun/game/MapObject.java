@@ -9,6 +9,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public abstract class MapObject extends Sprite implements IRecyclable, ILayerProvider<MainScene.Layer> {
+    public static final float SPEED = -200f;
     public MapObject() {
         super(0);
     }
@@ -16,8 +17,7 @@ public abstract class MapObject extends Sprite implements IRecyclable, ILayerPro
 
     @Override
     public void update() {
-        float speed = -200.0f;
-        float dx = speed * GameView.frameTime;
+        float dx = SPEED * GameView.frameTime;
         dstRect.offset(dx, 0);
         if (dstRect.right < 0) {
             //Log.d(TAG, "Removing:" + this);
