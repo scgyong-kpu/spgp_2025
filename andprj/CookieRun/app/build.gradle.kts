@@ -6,6 +6,10 @@ android {
     namespace = "kr.ac.tukorea.ge.scgyong.cookierun"
     compileSdk = 35
 
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "kr.ac.tukorea.ge.scgyong.cookierun"
         minSdk = 24
