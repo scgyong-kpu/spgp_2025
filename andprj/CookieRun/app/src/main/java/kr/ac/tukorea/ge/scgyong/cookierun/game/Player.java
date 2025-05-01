@@ -5,9 +5,8 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.AnimSprite;
 
-public class Player extends AnimSprite {
+public class Player extends SheetSprite {
     public enum State {
         running, jump
     }
@@ -27,6 +26,7 @@ public class Player extends AnimSprite {
     public Player() {
         super(R.mipmap.cookie_player_sheet, 8);
         setPosition(200f, 700f, 200f, 200f);
+        srcRects = srcRectsArray[state.ordinal()];
     }
     public void jump() {
         if (state == State.running) {
@@ -34,15 +34,9 @@ public class Player extends AnimSprite {
         } else {
             state = State.running;
         }
+        srcRects = srcRectsArray[state.ordinal()];
     }
-    @Override
-    public void draw(Canvas canvas) {
-        long now = System.currentTimeMillis();
-        float time = (now - createdOn) / 1000.0f;
-        Rect[] rects = srcRectsArray[state.ordinal()];
-        int frameIndex = Math.round(time * fps) % rects.length;
-        canvas.drawBitmap(bitmap, rects[frameIndex], dstRect, null);
-    }
+
     public boolean onTouch(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             jump();
