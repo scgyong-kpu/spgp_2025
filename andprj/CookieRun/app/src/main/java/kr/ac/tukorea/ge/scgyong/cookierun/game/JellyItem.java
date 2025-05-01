@@ -17,7 +17,8 @@ public class JellyItem extends MapObject {
         width = height = 100;
     }
     public static JellyItem get(int index, float left, float top) {
-        return Scene.top().getRecyclable(JellyItem.class).init(index, left, top);
+        //return Scene.top().getRecyclable(JellyItem.class).init(index, left, top);
+        return new JellyItem().init(index, left, top);
     }
     public JellyItem init(int index, float left, float top) {
         setSrcRect(index);
