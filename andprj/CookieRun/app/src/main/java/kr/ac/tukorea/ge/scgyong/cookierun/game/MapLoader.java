@@ -18,16 +18,21 @@ public class MapLoader implements IGameObject {
 
     @Override
     public void update() {
-        if (random.nextInt(100) == 0) { // 1% 확률
-            Floor floor = Floor.get(Floor.Type.T_2x2, 1600, 700); //Metrics.height - 200);
+        floor_x += -200.0f * GameView.frameTime;
+        while (floor_x < Metrics.width) {
+            int idx = random.nextInt(Floor.Type.COUNT);
+            Floor.Type type = Floor.Type.values()[idx];
+            Floor floor = Floor.get(type, floor_x, 700); //Metrics.height - 200);
             scene.add(floor);
+            floor_x += type.width();
         }
-
-        if (random.nextInt(100) == 0) {
+        item_x += -200.0f * GameView.frameTime;
+        while (item_x < Metrics.width) {
             int idx = random.nextInt(JellyItem.JELLY_COUNT);
             int y = random.nextInt(7) * 100;
-            JellyItem jellyItem = JellyItem.get(idx, 1600, y);
+            JellyItem jellyItem = JellyItem.get(idx, item_x, y);
             scene.add(jellyItem);
+            item_x += 100;
         }
     }
 
