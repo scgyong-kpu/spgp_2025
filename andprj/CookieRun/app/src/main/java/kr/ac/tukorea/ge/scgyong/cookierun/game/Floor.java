@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class Floor extends MapObject {
     public enum Type {
@@ -25,8 +26,8 @@ public class Floor extends MapObject {
     }
     public Floor() {}
     public static Floor get(Type type, float left, float top) {
-        //return Scene.top().getRecyclable(Floor.class).init(type, left, top);
-        return new Floor().init(type, left, top);
+        return Scene.top().getRecyclable(Floor.class).init(type, left, top);
+//        return new Floor().init(type, left, top);
     }
 
     private Floor init(Type type, float left, float top) {
