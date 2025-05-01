@@ -4,6 +4,7 @@ import android.graphics.Rect;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class JellyItem extends MapObject {
     public static final int JELLY_COUNT = 60;
@@ -13,8 +14,15 @@ public class JellyItem extends MapObject {
     public JellyItem() {
         bitmap = BitmapPool.get(R.mipmap.jelly);
         srcRect = new Rect();
-        setSrcRect(0);
-        setPosition(1600, 600, 100, 100);
+        width = height = 100;
+    }
+    public static JellyItem get(int index, float left, float top) {
+        return Scene.top().getRecyclable(JellyItem.class).init(index, left, top);
+    }
+    public JellyItem init(int index, float left, float top) {
+        setSrcRect(index);
+        dstRect.set(left, top, left + width, top + height);
+        return this;
     }
     private void setSrcRect(int index) {
         int x = index % ITEMS_IN_A_ROW;
