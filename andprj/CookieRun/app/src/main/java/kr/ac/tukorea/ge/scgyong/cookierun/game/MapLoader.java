@@ -20,19 +20,28 @@ public class MapLoader implements IGameObject {
     public void update() {
         floor_x += -200.0f * GameView.frameTime;
         while (floor_x < Metrics.width) {
-            int idx = random.nextInt(Floor.Type.COUNT);
-            Floor.Type type = Floor.Type.values()[idx];
+            Floor.Type type = random.nextBoolean() ? Floor.Type.T_10x2 : Floor.Type.T_2x2;
             Floor floor = Floor.get(type, floor_x, 700); //Metrics.height - 200);
             scene.add(floor);
             floor_x += floor.getWidth();
         }
         item_x += -200.0f * GameView.frameTime;
         while (item_x < Metrics.width) {
-            int idx = random.nextInt(JellyItem.JELLY_COUNT);
-            int y = random.nextInt(7) * 100;
-            JellyItem jellyItem = JellyItem.get(idx, item_x, y);
-            scene.add(jellyItem);
-            item_x += jellyItem.getWidth();
+            int y = (random.nextInt(6) + 1) * 100;
+            int count = 3;
+            if (y < 500) {
+                Floor floor = Floor.get(Floor.Type.T_3x1, item_x, y+100);
+                scene.add(floor);
+            } else {
+                count = random.nextInt(5) + 1;
+            }
+            for (int i = 0; i < count; i++) {
+                int idx = random.nextInt(JellyItem.JELLY_COUNT);
+                int y2 = y - random.nextInt(3) * 100;
+                JellyItem jellyItem = JellyItem.get(idx, item_x, y2);
+                scene.add(jellyItem);
+                item_x += jellyItem.getWidth();
+            }
         }
     }
 
