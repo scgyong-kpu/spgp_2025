@@ -19,9 +19,9 @@ public class Player extends SheetSprite {
         Rect[] rects = new Rect[indices.length];
         for (int i = 0; i < indices.length; i++) {
             int idx = indices[i];
-            int l = 72 + (idx % 100) * 272;
-            int t = 132 + (idx / 100) * 272;
-            rects[i] = new Rect(l, t, l + 140, t + 140);
+            int l = 2 + (idx % 100) * 272;
+            int t = 2 + (idx / 100) * 272;
+            rects[i] = new Rect(l, t, l + 270, t + 270);
         }
         return rects;
     }
