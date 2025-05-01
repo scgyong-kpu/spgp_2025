@@ -24,7 +24,7 @@ public class MapLoader implements IGameObject {
             Floor.Type type = Floor.Type.values()[idx];
             Floor floor = Floor.get(type, floor_x, 700); //Metrics.height - 200);
             scene.add(floor);
-            floor_x += type.width();
+            floor_x += floor.getWidth();
         }
         item_x += -200.0f * GameView.frameTime;
         while (item_x < Metrics.width) {
@@ -32,7 +32,7 @@ public class MapLoader implements IGameObject {
             int y = random.nextInt(7) * 100;
             JellyItem jellyItem = JellyItem.get(idx, item_x, y);
             scene.add(jellyItem);
-            item_x += 100;
+            item_x += jellyItem.getWidth();
         }
     }
 
