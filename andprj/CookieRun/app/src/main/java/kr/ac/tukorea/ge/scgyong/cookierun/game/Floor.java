@@ -24,7 +24,8 @@ public class Floor extends MapObject {
     }
     public Floor() {}
     public static Floor get(Type type, float left, float top) {
-        return Scene.top().getRecyclable(Floor.class).init(type, left, top);
+        //return Scene.top().getRecyclable(Floor.class).init(type, left, top);
+        return new Floor().init(type, left, top);
     }
 
     private Floor init(Type type, float left, float top) {
