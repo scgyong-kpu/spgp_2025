@@ -2,6 +2,8 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
 import android.view.MotionEvent;
 
+import java.util.Random;
+
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.HorzScrollBackground;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
@@ -29,7 +31,12 @@ public class MainScene extends Scene {
         add(Layer.floor, Floor.get(Floor.Type.T_3x1, 800, 300));
         add(Layer.floor, Floor.get(Floor.Type.T_3x1, 1100, 400));
 
-        add(Layer.item, JellyItem.get(37, 900, 300));
+        Random r = new Random();
+        for (int i = 0, x = 10; i < JellyItem.JELLY_COUNT; i++, x += 100) {
+            int jellyIndex = r.nextInt(JellyItem.JELLY_COUNT);
+            int y = r.nextInt(7) * 100;
+            add(JellyItem.get(jellyIndex, x, y));
+        }
     }
 
     // Overridables
