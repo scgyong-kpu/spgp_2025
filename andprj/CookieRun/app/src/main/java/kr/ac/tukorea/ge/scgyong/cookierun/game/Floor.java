@@ -8,6 +8,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 public class Floor extends MapObject {
     public enum Type {
         T_10x2, T_2x2, T_3x1;
+        public static final int COUNT = values().length;
+
         Bitmap bitmap() { return BitmapPool.get(resId()); }
         int resId() { return resIds[this.ordinal()]; }
         int width() { return sizes[this.ordinal()][0]; }

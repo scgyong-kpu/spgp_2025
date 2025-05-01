@@ -10,7 +10,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class MainScene extends Scene {
     public enum Layer {
-        bg, floor, item, player;
+        bg, floor, item, player, controller;
         public static final int COUNT = values().length;
     }
     private final Player player;
@@ -25,18 +25,7 @@ public class MainScene extends Scene {
         player = new Player();
         add(Layer.player, player);
 
-        add(Layer.floor, Floor.get(Floor.Type.T_10x2, 0, 700));
-        add(Layer.floor, Floor.get(Floor.Type.T_2x2, 1000, 700));
-        add(Layer.floor, Floor.get(Floor.Type.T_10x2, 1200, 700));
-        add(Layer.floor, Floor.get(Floor.Type.T_3x1, 800, 300));
-        add(Layer.floor, Floor.get(Floor.Type.T_3x1, 1100, 400));
-
-        Random r = new Random();
-        for (int i = 0, x = 10; i < JellyItem.JELLY_COUNT; i++, x += 100) {
-            int jellyIndex = r.nextInt(JellyItem.JELLY_COUNT);
-            int y = r.nextInt(7) * 100;
-            add(JellyItem.get(jellyIndex, x, y));
-        }
+        add(Layer.controller, new MapLoader(this));
     }
 
     // Overridables
