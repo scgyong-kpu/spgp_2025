@@ -12,17 +12,19 @@ public class Player extends SheetSprite {
     }
     protected State state = State.running;
     protected static Rect[][] srcRectsArray = {
-            new Rect[] {
-                    new Rect(72 + 0 * 272, 404, 72+140 + 0 * 272, 404+140),
-                    new Rect(72 + 1 * 272, 404, 72+140 + 1 * 272, 404+140),
-                    new Rect(72 + 2 * 272, 404, 72+140 + 2 * 272, 404+140),
-                    new Rect(72 + 3 * 272, 404, 72+140 + 3 * 272, 404+140)
-            },
-            new Rect[] {
-                    new Rect(72 + 7 * 272, 132, 72+140 + 7 * 272, 132+140),
-                    new Rect(72 + 8 * 272, 132, 72+140 + 8 * 272, 132+140),
-            },
+            makeRects(100, 101, 102, 103), // State.running
+            makeRects(7, 8),               // State.jump
     };
+    protected static Rect[] makeRects(int... indices) {
+        Rect[] rects = new Rect[indices.length];
+        for (int i = 0; i < indices.length; i++) {
+            int idx = indices[i];
+            int l = 72 + (idx % 100) * 272;
+            int t = 132 + (idx / 100) * 272;
+            rects[i] = new Rect(l, t, l + 140, t + 140);
+        }
+        return rects;
+    }
     public Player() {
         super(R.mipmap.cookie_player_sheet, 8);
         setPosition(200f, 700f, 200f, 200f);
