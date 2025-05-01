@@ -8,12 +8,14 @@ import kr.ac.tukorea.ge.scgyong.cookierun.R;
 
 public class Player extends SheetSprite {
     public enum State {
-        running, jump
+        running, jump, doubleJump, falling
     }
     protected State state = State.running;
     protected static Rect[][] srcRectsArray = {
             makeRects(100, 101, 102, 103), // State.running
             makeRects(7, 8),               // State.jump
+            makeRects(1, 2, 3, 4),         // State.doubleJump
+            makeRects(0),                  // State.falling
     };
     protected static Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
@@ -31,12 +33,12 @@ public class Player extends SheetSprite {
         srcRects = srcRectsArray[state.ordinal()];
     }
     public void jump() {
-        if (state == State.running) {
-            state = State.jump;
-        } else {
-            state = State.running;
+        int ord = state.ordinal() + 1;
+        if (ord == State.values().length) {
+            ord = 0;
         }
-        srcRects = srcRectsArray[state.ordinal()];
+        state = State.values()[ord]; // int 로부터 enum 만들기
+        srcRects = srcRectsArray[ord];
     }
 
     public boolean onTouch(MotionEvent event) {
