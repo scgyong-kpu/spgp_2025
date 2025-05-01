@@ -3,6 +3,7 @@ package kr.ac.tukorea.ge.scgyong.cookierun.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +21,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            startActivity(new Intent(this, CookieRunActivity.class));
-        }
-        return false;
+    public void onBtnStartGame(View view) {
+        startGame(1);
+    }
+
+    private void startGame(int stage) {
+        Intent intent = new Intent(this, CookieRunActivity.class);
+        startActivity(intent);
     }
 }
