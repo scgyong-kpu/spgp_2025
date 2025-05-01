@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":a2dg"))
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
