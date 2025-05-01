@@ -28,6 +28,8 @@ public class MainScene extends Scene {
         add(Layer.floor, Floor.get(Floor.Type.T_10x2, 1200, 700));
         add(Layer.floor, Floor.get(Floor.Type.T_3x1, 800, 300));
         add(Layer.floor, Floor.get(Floor.Type.T_3x1, 1100, 400));
+
+        add(Layer.item, new JellyItem());
     }
 
     // Overridables
