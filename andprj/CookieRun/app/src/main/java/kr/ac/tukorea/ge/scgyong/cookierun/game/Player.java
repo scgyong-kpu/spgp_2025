@@ -5,12 +5,17 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class Player extends SheetSprite {
     public enum State {
         running, jump, doubleJump, falling
     }
     protected State state = State.running;
+    private final float ground;
+    private float jumpSpeed;
+    private static final float JUMP_POWER = 900f;
+    private static final float GRAVITY = 1700f;
     protected static Rect[][] srcRectsArray = {
             makeRects(100, 101, 102, 103), // State.running
             makeRects(7, 8),               // State.jump
@@ -31,14 +36,30 @@ public class Player extends SheetSprite {
         super(R.mipmap.cookie_player_sheet, 8);
         setPosition(200f, 510f, 386, 386f);
         srcRects = srcRectsArray[state.ordinal()];
+        ground = y;
     }
-    public void jump() {
-        int ord = state.ordinal() + 1;
-        if (ord == State.values().length) {
-            ord = 0;
+
+    @Override
+    public void update() {
+        if (state == State.jump) {
+            float dy = jumpSpeed * GameView.frameTime;
+            jumpSpeed += GRAVITY * GameView.frameTime;
+            if (y + dy >= ground) {
+                dy = ground - y;
+                state = State.running;
+                srcRects = srcRectsArray[state.ordinal()];
+            }
+            y += dy;
+            setPosition(x, y, width, height);
         }
-        state = State.values()[ord]; // int 로부터 enum 만들기
-        srcRects = srcRectsArray[ord];
+    }
+
+    public void jump() {
+        if (state == State.running) {
+            state = State.jump;
+            jumpSpeed = -JUMP_POWER;
+            srcRects = srcRectsArray[state.ordinal()];
+        }
     }
 
     public boolean onTouch(MotionEvent event) {
