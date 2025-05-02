@@ -63,8 +63,8 @@ public class Player extends SheetSprite {
             jumpSpeed = -JUMP_POWER;
             setState(State.jump);
         } else if (state == State.jump) {
-            //jumpSpeed = -JUMP_POWER;
-            jumpSpeed -= JUMP_POWER;
+            jumpSpeed = -JUMP_POWER;
+            //jumpSpeed -= JUMP_POWER;
             setState(State.doubleJump);
         }
     }
