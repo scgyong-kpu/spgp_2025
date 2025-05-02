@@ -1,0 +1,37 @@
+package kr.ac.tukorea.ge.scgyong.cookierun.game;
+
+import android.graphics.Canvas;
+
+import java.util.ArrayList;
+
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
+
+public class CollisionChecker implements IGameObject {
+    private final MainScene scene;
+    private final Player player;
+
+    public CollisionChecker(MainScene mainScene, Player player) {
+        this.scene = mainScene;
+        this.player = player;
+    }
+
+    @Override
+    public void update() {
+        ArrayList<IGameObject> items = scene.objectsAt(MainScene.Layer.item);
+        for (int i = items.size() - 1; i >= 0; i--) {
+            IGameObject gobj = items.get(i);
+            if (!(gobj instanceof JellyItem)) {
+                continue;
+            }
+            JellyItem item = (JellyItem) gobj;
+            if (CollisionHelper.collides(player, item)) {
+                scene.remove(item);
+            }
+        }
+    }
+
+    @Override
+    public void draw(Canvas canvas) {}
+}

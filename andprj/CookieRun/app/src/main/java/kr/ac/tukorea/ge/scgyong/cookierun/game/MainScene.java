@@ -26,6 +26,7 @@ public class MainScene extends Scene {
         add(Layer.player, player);
 
         add(Layer.controller, new MapLoader(this));
+        add(Layer.controller, new CollisionChecker(this, player));
     }
 
     // Overridables
