@@ -40,7 +40,15 @@ public class MainScene extends Scene {
     public void onEnter() {
         Sound.playMusic(R.raw.main);
     }
+    @Override
+    public void onPause() {
+        Sound.pauseMusic();
+    }
 
+    @Override
+    public void onResume() {
+        Sound.resumeMusic();
+    }
     @Override
     public void onExit() {
         Sound.stopMusic();
