@@ -16,6 +16,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
     protected State state = State.running;
     private final float ground;
     private float jumpSpeed;
+    private RectF collisionRect = new RectF();
     private static final float JUMP_POWER = 900f;
     private static final float GRAVITY = 1700f;
     protected static Rect[][] srcRectsArray = {
@@ -23,6 +24,12 @@ public class Player extends SheetSprite implements IBoxCollidable {
             makeRects(7, 8),               // State.jump
             makeRects(1, 2, 3, 4),         // State.doubleJump
             makeRects(0),                  // State.falling
+    };
+    protected static float[][] edgeInsetRatios = {
+            { 0.3f, 0.5f, 0.3f, 0.0f }, // State.running
+            { 0.3f, 0.6f, 0.3f, 0.0f }, // State.jump
+            { 0.3f, 0.6f, 0.3f, 0.0f }, // State.doubleJump
+            { 0.3f, 0.5f, 0.3f, 0.0f }, // State.falling
     };
     protected static Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
@@ -52,12 +59,23 @@ public class Player extends SheetSprite implements IBoxCollidable {
             }
             y += dy;
             setPosition(x, y, width, height);
+            updateCollisionRect();
         }
+    }
+
+    private void updateCollisionRect() {
+        float[] insets = edgeInsetRatios[state.ordinal()];
+        collisionRect.set(
+                dstRect.left + width * insets[0],
+                dstRect.top + height * insets[1],
+                dstRect.right - width * insets[2],
+                dstRect.bottom - height * insets[3]);
     }
 
     private void setState(State state) {
         this.state = state;
         srcRects = srcRectsArray[state.ordinal()];
+        updateCollisionRect();
     }
 
     public void jump() {
@@ -72,7 +90,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
     }
     @Override
     public RectF getCollisionRect() {
-        return dstRect;
+        return collisionRect;
     }
 
     public boolean onTouch(MotionEvent event) {
