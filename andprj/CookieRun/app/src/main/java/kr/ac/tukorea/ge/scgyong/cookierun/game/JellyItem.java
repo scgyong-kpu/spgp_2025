@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
@@ -15,6 +16,7 @@ public class JellyItem extends MapObject {
         bitmap = BitmapPool.get(R.mipmap.jelly);
         srcRect = new Rect();
         width = height = 100;
+        collisionRect = new RectF();
     }
     public static JellyItem get(int index, float left, float top) {
         return Scene.top().getRecyclable(JellyItem.class).init(index, left, top);
@@ -32,6 +34,18 @@ public class JellyItem extends MapObject {
         int top = y * (SIZE + BORDER) + BORDER;
         srcRect.set(left, top, left + SIZE, top + SIZE);
     }
+
+    @Override
+    public void update() {
+        super.update();
+        updateCollisionRect(0.15f);
+    }
+
+    @Override
+    public RectF getCollisionRect() {
+        return collisionRect;
+    }
+
     @Override
     public MainScene.Layer getLayer() {
         return MainScene.Layer.item;
