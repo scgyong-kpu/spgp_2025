@@ -2,12 +2,14 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
-public class Player extends SheetSprite {
+public class Player extends SheetSprite implements IBoxCollidable {
     public enum State {
         running, jump, doubleJump, falling
     }
@@ -67,6 +69,10 @@ public class Player extends SheetSprite {
             //jumpSpeed -= JUMP_POWER;
             setState(State.doubleJump);
         }
+    }
+    @Override
+    public RectF getCollisionRect() {
+        return dstRect;
     }
 
     public boolean onTouch(MotionEvent event) {

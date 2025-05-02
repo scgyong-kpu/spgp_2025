@@ -1,14 +1,16 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
+import android.graphics.RectF;
 import android.util.Log;
 
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
-public abstract class MapObject extends Sprite implements IRecyclable, ILayerProvider<MainScene.Layer> {
+public abstract class MapObject extends Sprite implements IRecyclable, IBoxCollidable, ILayerProvider<MainScene.Layer> {
     public static final float SPEED = -200f;
     public MapObject() {
         super(0);
@@ -41,6 +43,10 @@ public abstract class MapObject extends Sprite implements IRecyclable, ILayerPro
             return;
         }
         scene.remove(this);
+    }
+    @Override
+    public RectF getCollisionRect() {
+        return dstRect;
     }
     @Override
     public void onRecycle() {
