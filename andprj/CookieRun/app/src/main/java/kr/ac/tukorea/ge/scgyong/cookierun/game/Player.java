@@ -46,7 +46,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
     }
     public Player() {
         super(R.mipmap.cookie_player_sheet, 8);
-        setPosition(200f, 510f, 386, 386f);
+        setPosition(200f, 200f, 386, 386f);
         setState(State.running);
     }
 
