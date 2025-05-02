@@ -6,6 +6,7 @@ import java.util.Random;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.HorzScrollBackground;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class MainScene extends Scene {
@@ -33,5 +34,15 @@ public class MainScene extends Scene {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return player.onTouch(event);
+    }
+
+    @Override
+    public void onEnter() {
+        Sound.playMusic(R.raw.main);
+    }
+
+    @Override
+    public void onExit() {
+        Sound.stopMusic();
     }
 }
