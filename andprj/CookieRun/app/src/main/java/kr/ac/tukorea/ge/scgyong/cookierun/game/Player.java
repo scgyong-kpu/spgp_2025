@@ -35,7 +35,7 @@ public class Player extends SheetSprite {
     public Player() {
         super(R.mipmap.cookie_player_sheet, 8);
         setPosition(200f, 510f, 386, 386f);
-        srcRects = srcRectsArray[state.ordinal()];
+        setState(State.running);
         ground = y;
     }
 
@@ -46,19 +46,22 @@ public class Player extends SheetSprite {
             jumpSpeed += GRAVITY * GameView.frameTime;
             if (y + dy >= ground) {
                 dy = ground - y;
-                state = State.running;
-                srcRects = srcRectsArray[state.ordinal()];
+                setState(State.running);
             }
             y += dy;
             setPosition(x, y, width, height);
         }
     }
 
+    private void setState(State state) {
+        this.state = state;
+        srcRects = srcRectsArray[state.ordinal()];
+    }
+
     public void jump() {
         if (state == State.running) {
-            state = State.jump;
             jumpSpeed = -JUMP_POWER;
-            srcRects = srcRectsArray[state.ordinal()];
+            setState(State.jump);
         }
     }
 
