@@ -55,6 +55,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
         switch (state) {
         case jump:
         case doubleJump:
+        case falling:
             float dy = jumpSpeed * GameView.frameTime;
             jumpSpeed += GRAVITY * GameView.frameTime;
             if (jumpSpeed >= 0) { // 낙하하고 있다면 발밑에 땅이 있는지 확인한다
@@ -68,6 +69,16 @@ public class Player extends SheetSprite implements IBoxCollidable {
             y += dy;
             setPosition(x, y, width, height);
             updateCollisionRect();
+            break;
+        case running:
+            float foot = collisionRect.bottom;
+            float floor = findNearestFloorTop(foot);
+            if (foot < floor) {
+                // 달리는 중에 발밑 floor 좌표가 발보다 아래에 있다면 떨어지자
+                setState(State.falling);
+                jumpSpeed = 0; // 자유낙하이므로 속도가 0 부터 시작한다.
+            }
+            break;
         }
     }
     private float findNearestFloorTop(float foot) {
