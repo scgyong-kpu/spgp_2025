@@ -41,7 +41,7 @@ public class Player extends SheetSprite {
 
     @Override
     public void update() {
-        if (state == State.jump) {
+        if (state == State.jump || state == State.doubleJump) {
             float dy = jumpSpeed * GameView.frameTime;
             jumpSpeed += GRAVITY * GameView.frameTime;
             if (y + dy >= ground) {
@@ -62,6 +62,10 @@ public class Player extends SheetSprite {
         if (state == State.running) {
             jumpSpeed = -JUMP_POWER;
             setState(State.jump);
+        } else if (state == State.jump) {
+            //jumpSpeed = -JUMP_POWER;
+            jumpSpeed -= JUMP_POWER;
+            setState(State.doubleJump);
         }
     }
 
