@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ITouchable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Button extends Sprite implements ITouchable {
     private static final String TAG = Button.class.getSimpleName();
@@ -12,7 +13,12 @@ public class Button extends Sprite implements ITouchable {
     }
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        Log.d(TAG, "Button.onTouch(" + System.identityHashCode(this) + ", " + e.getAction() + ", " + e.getX() + ", " + e.getY());
+        float[] pts = Metrics.fromScreen(e.getX(), e.getY());
+        float x = pts[0], y = pts[1];
+        if (!dstRect.contains(x, y)) {
+            return false;
+        }
+        Log.d(TAG, "onTouch: " + this + ", " + e.getAction() + ", " + (int)x + ", " + (int)y);
         return false;
     }
 }
