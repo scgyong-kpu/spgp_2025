@@ -16,7 +16,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Player extends SheetSprite implements IBoxCollidable {
     public enum State {
-        running, jump, doubleJump, falling
+        running, jump, doubleJump, falling, slide
     }
     protected State state = State.running;
     private float jumpSpeed;
@@ -28,12 +28,14 @@ public class Player extends SheetSprite implements IBoxCollidable {
             makeRects(7, 8),               // State.jump
             makeRects(1, 2, 3, 4),         // State.doubleJump
             makeRects(0),                  // State.falling
+            makeRects(9, 10),              // State.slide
     };
     protected static float[][] edgeInsetRatios = {
             { 0.3f, 0.5f, 0.3f, 0.0f }, // State.running
             { 0.3f, 0.6f, 0.3f, 0.0f }, // State.jump
             { 0.3f, 0.6f, 0.3f, 0.0f }, // State.doubleJump
             { 0.3f, 0.5f, 0.3f, 0.0f }, // State.falling
+            { 0.2f, 0.75f, 0.2f, 0.0f }, // State.slide
     };
     protected static Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
@@ -72,6 +74,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
             updateCollisionRect();
             break;
         case running:
+        case slide:
             float foot = collisionRect.bottom;
             float floor = findNearestFloorTop(foot);
             if (foot < floor) {
@@ -139,6 +142,16 @@ public class Player extends SheetSprite implements IBoxCollidable {
             jumpSpeed = -JUMP_POWER;
             //jumpSpeed -= JUMP_POWER;
             setState(State.doubleJump);
+        }
+    }
+    public void slide(boolean startsSlide) {
+        if (state == State.running && startsSlide) {
+            setState(State.slide);
+            return;
+        }
+        if (state == State.slide && !startsSlide) {
+            setState(State.running);
+            //return;
         }
     }
     public void fall() {
