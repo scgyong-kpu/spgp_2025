@@ -11,7 +11,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class MainScene extends Scene {
     public enum Layer {
-        bg, floor, item, player, ui, touch, controller;
+        bg, floor, item, obstacle, player, ui, touch, controller;
         public static final int COUNT = values().length;
     }
     private final Player player;

@@ -58,6 +58,9 @@ public class Sprite implements IGameObject {
     public float getHeight() {
         return height;
     }
+    public float getPropotionalHeight(float width) {
+        return width / bitmap.getWidth() * bitmap.getHeight();
+    }
     @Override
     public void update() {
         float timedDx = dx * GameView.frameTime;

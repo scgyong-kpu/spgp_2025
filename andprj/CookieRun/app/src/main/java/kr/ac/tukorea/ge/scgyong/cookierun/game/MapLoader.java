@@ -35,6 +35,11 @@ public class MapLoader implements IGameObject {
             } else {
                 count = random.nextInt(5) + 1;
             }
+            if (y <= 300) {
+                int index = 0; // 현재 버전에서는 사용하지 않는다. random.nextInt(Obstacle.COUNT);
+                Obstacle obstacle = Obstacle.get(item_x, 600);
+                scene.add(obstacle);
+            }
             for (int i = 0; i < count; i++) {
                 int idx = random.nextInt(JellyItem.JELLY_COUNT);
                 int y2 = y - random.nextInt(3) * 100;
