@@ -1,5 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
@@ -14,7 +15,7 @@ public class MainScene extends Scene {
         public static final int COUNT = values().length;
     }
     private final Player player;
-
+    private static final String TAG = MainScene.class.getSimpleName();
     public MainScene() {
         initLayers(Layer.COUNT);
 
@@ -25,9 +26,27 @@ public class MainScene extends Scene {
         player = new Player();
         add(Layer.player, player);
 
-        add(Layer.touch, new Button(R.mipmap.btn_slide_n, 150f, 800f, 200f, 75f ));
-        add(Layer.touch, new Button(R.mipmap.btn_jump_n, 1450f, 770f, 200f, 75f ));
-        add(Layer.touch, new Button(R.mipmap.btn_fall_n, 1450f, 850f, 200f, 75f ));
+        add(Layer.touch, new Button(R.mipmap.btn_slide_n, 150f, 800f, 200f, 75f, new Button.OnTouchListener() {
+            @Override
+            public boolean onTouch(boolean pressed) {
+                Log.d(TAG, "Button: Slide - pressed:" + pressed);
+                return true;
+            }
+        }));
+        add(Layer.touch, new Button(R.mipmap.btn_jump_n, 1450f, 770f, 200f, 75f, new Button.OnTouchListener() {
+            @Override
+            public boolean onTouch(boolean pressed) {
+                Log.d(TAG, "Button: Jump");
+                return false;
+            }
+        }));
+        add(Layer.touch, new Button(R.mipmap.btn_fall_n, 1450f, 850f, 200f, 75f, new Button.OnTouchListener() {
+            @Override
+            public boolean onTouch(boolean pressed) {
+                Log.d(TAG, "Button: Fall");
+                return false;
+            }
+        }));
 
         add(Layer.controller, new MapLoader(this));
         add(Layer.controller, new CollisionChecker(this, player));
