@@ -144,9 +144,9 @@ public class Player extends SheetSprite implements IBoxCollidable {
     public void fall() {
         if (state != State.running) return;
         float foot = collisionRect.bottom;
-        Floor floor = findNearestFloor(foot + 0.1f);
+        Floor floor = findNearestFloor(foot);
         if (floor == null) return;
-        //if (!floor.canPass()) return;
+        if (!floor.canPass()) return;
         y += 0.1f; // 아래로 아주 약간 내려준다.
         dstRect.offset(0, 0.1f); // y 좌표와 dstRect 를 함께 내려준다.
         setState(State.falling); // collisinRect 는 이곳에서 update 되므로 추가작업하지 않아도 된다.
