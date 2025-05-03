@@ -35,8 +35,8 @@ public class MainScene extends Scene {
 
     // Overridables
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return player.onTouch(event);
+    protected int getTouchLayerIndex() {
+        return Layer.touch.ordinal();
     }
 
     @Override
