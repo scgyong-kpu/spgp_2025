@@ -9,12 +9,23 @@ public class AnimObstacle extends Obstacle {
         return Scene.top().getRecyclable(AnimObstacle.class).init(type, left, top);
     }
 
-    protected static int[] RES_IDS = {
-            R.mipmap.epn01_tm01_jp1up_03,
-            R.mipmap.epn01_tm01_jp2up_03,
+    private static final int[][] RES_ID_ARRAYS = new int[][] {
+            new int[] {
+                    R.mipmap.epn01_tm01_jp1up_01,
+                    R.mipmap.epn01_tm01_jp1up_02,
+                    R.mipmap.epn01_tm01_jp1up_03,
+                    R.mipmap.epn01_tm01_jp1up_04,
+            },
+            new int[]{
+                    R.mipmap.epn01_tm01_jp2up_01,
+                    R.mipmap.epn01_tm01_jp2up_02,
+                    R.mipmap.epn01_tm01_jp2up_03,
+                    R.mipmap.epn01_tm01_jp2up_04,
+                    R.mipmap.epn01_tm01_jp2up_05,
+            },
     };
     private Obstacle init(int type, float left, float top) {
-        bitmap = BitmapPool.get(RES_IDS[type]);
+        bitmap = BitmapPool.get(RES_ID_ARRAYS[type][0]);
         setObstaclePosition(left, top);
         return this;
     }
