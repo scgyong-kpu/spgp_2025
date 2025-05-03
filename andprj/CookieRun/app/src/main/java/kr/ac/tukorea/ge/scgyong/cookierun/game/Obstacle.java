@@ -5,6 +5,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class Obstacle extends MapObject {
+
+    protected static final float IMAGE_SIZE_RATIO = 1.25f;
     public Obstacle() {
         super(MainScene.Layer.obstacle);
     }
@@ -15,9 +17,15 @@ public class Obstacle extends MapObject {
 
     private Obstacle init(float left, float top) {
         bitmap = BitmapPool.get(R.mipmap.epn01_tm01_jp1a);
-        float w = 63 * 1.25f, h = 99 * 1.25f;
-        float hw = w / 2;
-        dstRect.set(left + 50 - hw, top + 100 - h, left + 50 + hw, top + 100);
+        setObstaclePosition(left, top);
         return this;
+    }
+
+    protected void setObstaclePosition(float left, float top) {
+        float cx = left + 50, bottom = top + 100;
+        float half_w = bitmap.getWidth() * IMAGE_SIZE_RATIO / 2;
+        float h = bitmap.getHeight() * IMAGE_SIZE_RATIO;
+        dstRect.set(cx - half_w, bottom - h, cx + half_w, bottom);
+        //Log.d("Obs", "dstRect="+dstRect);
     }
 }
