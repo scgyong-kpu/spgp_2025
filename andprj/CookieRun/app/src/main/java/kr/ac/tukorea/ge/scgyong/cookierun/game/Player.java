@@ -2,6 +2,7 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -83,8 +84,15 @@ public class Player extends SheetSprite implements IBoxCollidable {
     }
     private float findNearestFloorTop(float foot) {
         // 플레이어 발의 y 좌표에서 아래쪽으로 가장 가까운 floor 의 좌표를 찾는다.
+        Floor platform = findNearestFloor(foot);
+        if (platform == null) return Metrics.height;
+        return platform.getCollisionRect().top;
+    }
+    private Floor findNearestFloor(float foot) {
+        // 플레이어 발의 y 좌표에서 아래쪽으로 가장 가까운 floor 를 찾는다.
+        Floor nearest = null;
         MainScene scene = (MainScene) Scene.top();
-        if (scene == null) return Metrics.height;
+        if (scene == null) return null;
         ArrayList<IGameObject> floors = scene.objectsAt(MainScene.Layer.floor);
         float top = Metrics.height; // 못 찾으면 디폴트 값은 화면 아래이다.
         for (IGameObject obj: floors) {
@@ -102,10 +110,11 @@ public class Player extends SheetSprite implements IBoxCollidable {
             if (top > rect.top) {
                 // 더 가까운 것을 찾았다.
                 top = rect.top;
+                nearest = floor;
             }
             //Log.d(TAG, "top=" + top + " gotcha:" + floor);
         }
-        return top;
+        return nearest;
     }
     private void updateCollisionRect() {
         float[] insets = edgeInsetRatios[state.ordinal()];
@@ -131,6 +140,17 @@ public class Player extends SheetSprite implements IBoxCollidable {
             //jumpSpeed -= JUMP_POWER;
             setState(State.doubleJump);
         }
+    }
+    public void fall() {
+        if (state != State.running) return;
+        float foot = collisionRect.bottom;
+        Floor floor = findNearestFloor(foot + 0.1f);
+        if (floor == null) return;
+        //if (!floor.canPass()) return;
+        y += 0.1f; // 아래로 아주 약간 내려준다.
+        dstRect.offset(0, 0.1f); // y 좌표와 dstRect 를 함께 내려준다.
+        setState(State.falling); // collisinRect 는 이곳에서 update 되므로 추가작업하지 않아도 된다.
+        jumpSpeed = 0;
     }
     @Override
     public RectF getCollisionRect() {
