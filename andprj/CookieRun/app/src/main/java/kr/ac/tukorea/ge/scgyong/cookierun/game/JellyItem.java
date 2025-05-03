@@ -13,6 +13,7 @@ public class JellyItem extends MapObject {
     private static final int SIZE = 66;
     private static final int BORDER = 2;
     public JellyItem() {
+        super(MainScene.Layer.item);
         bitmap = BitmapPool.get(R.mipmap.jelly);
         srcRect = new Rect();
         width = height = 100;
@@ -44,10 +45,5 @@ public class JellyItem extends MapObject {
     @Override
     public RectF getCollisionRect() {
         return collisionRect;
-    }
-
-    @Override
-    public MainScene.Layer getLayer() {
-        return MainScene.Layer.item;
     }
 }

@@ -10,11 +10,13 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
-public abstract class MapObject extends Sprite implements IRecyclable, IBoxCollidable, ILayerProvider<MainScene.Layer> {
+public class MapObject extends Sprite implements IRecyclable, IBoxCollidable, ILayerProvider<MainScene.Layer> {
     public static final float SPEED = -200f;
+    private final MainScene.Layer layer;
     protected RectF collisionRect;
-    public MapObject() {
+    public MapObject(MainScene.Layer layer) {
         super(0);
+        this.layer = layer;
     }
     private static final String TAG = MapObject.class.getSimpleName();
 
@@ -39,7 +41,9 @@ public abstract class MapObject extends Sprite implements IRecyclable, IBoxColli
                 dstRect.bottom - height * bottom);
     }
 
-    // abstract public MainScene.Layer getLayer();
+    public MainScene.Layer getLayer() {
+        return layer;
+    }
     public void addToScene() {
         Scene scene = Scene.top();
         if (scene == null) {
