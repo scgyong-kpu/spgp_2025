@@ -14,14 +14,12 @@ public class AnimObstacle extends Obstacle {
     private float time = 0;
     private static final int[][] RES_ID_ARRAYS = new int[][] {
             new int[] {
-                    R.mipmap.trans_00p,
                     R.mipmap.epn01_tm01_jp1up_01,
                     R.mipmap.epn01_tm01_jp1up_02,
                     R.mipmap.epn01_tm01_jp1up_03,
                     R.mipmap.epn01_tm01_jp1up_04,
             },
             new int[]{
-                    R.mipmap.trans_00p,
                     R.mipmap.epn01_tm01_jp2up_01,
                     R.mipmap.epn01_tm01_jp2up_02,
                     R.mipmap.epn01_tm01_jp2up_03,
@@ -32,9 +30,9 @@ public class AnimObstacle extends Obstacle {
     private Obstacle init(int type, float left, float top) {
         resIndex = type;
         time = 0;
-        bitmap = BitmapPool.get(RES_ID_ARRAYS[resIndex][1]);
-        setObstaclePosition(left, top);
         bitmap = BitmapPool.get(RES_ID_ARRAYS[resIndex][0]);
+        setObstaclePosition(left, top);
+        bitmap = BitmapPool.get(R.mipmap.trans_00p);
         return this;
     }
 
