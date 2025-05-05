@@ -9,6 +9,7 @@ public class Obstacle extends MapObject {
     protected static final float IMAGE_SIZE_RATIO = 1.25f;
     public Obstacle() {
         super(MainScene.Layer.obstacle);
+        setImageResourceId(R.mipmap.epn01_tm01_jp1a);
     }
 
     public static Obstacle get(float left, float top) {
@@ -16,7 +17,6 @@ public class Obstacle extends MapObject {
     }
 
     private Obstacle init(float left, float top) {
-        bitmap = BitmapPool.get(R.mipmap.epn01_tm01_jp1a);
         setObstaclePosition(left, top);
         return this;
     }
