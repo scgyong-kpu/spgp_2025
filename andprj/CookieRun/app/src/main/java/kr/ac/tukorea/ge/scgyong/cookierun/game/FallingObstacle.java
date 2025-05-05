@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
 import android.animation.ValueAnimator;
+import android.view.animation.BounceInterpolator;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
@@ -26,6 +27,7 @@ public class FallingObstacle extends Obstacle {
         ValueAnimator animator = ValueAnimator.ofFloat(start, end);
         animator.setDuration(2000);
         animator.setStartDelay(1000);
+        animator.setInterpolator(new BounceInterpolator());
         animator.addUpdateListener(animation -> {
             float value = (float) animation.getAnimatedValue();
             dstRect.offsetTo(dstRect.left, value);
