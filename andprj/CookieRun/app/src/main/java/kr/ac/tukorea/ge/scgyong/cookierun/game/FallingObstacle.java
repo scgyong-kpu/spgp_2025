@@ -50,4 +50,10 @@ public class FallingObstacle extends Obstacle {
         dstRect.offsetTo(dstRect.left, value);
         Log.v(TAG, "Animated Value = " + value + " obj=" + this);
     };
+
+    @Override
+    public void onRecycle() {
+        super.onRecycle();
+        animator.end();
+    }
 }
