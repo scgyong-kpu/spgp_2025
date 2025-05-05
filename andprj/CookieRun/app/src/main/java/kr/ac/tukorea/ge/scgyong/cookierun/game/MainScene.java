@@ -19,9 +19,9 @@ public class MainScene extends Scene {
     public MainScene() {
         initLayers(Layer.COUNT);
 
-        add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_1, 100f));
-        add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_2, 200f));
-        add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_3, 300f));
+        add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_1, -50));
+        add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_2, -100f));
+        add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_3, -150f));
 
         player = new Player();
         add(Layer.player, player);
