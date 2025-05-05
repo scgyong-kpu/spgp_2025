@@ -1,10 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
 import android.animation.ValueAnimator;
-import android.util.Log;
 import android.view.animation.BounceInterpolator;
-
-import java.util.function.Consumer;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
@@ -39,7 +36,7 @@ public class FallingObstacle extends Obstacle {
         if (animator != null) return;
         // 모든 FallingObstacle 객체가 동일하게 적용받는 항목은 이곳에 적는다
         animator = new ValueAnimator();
-        animator.setDuration(12000);
+        animator.setDuration(2000);
         animator.setStartDelay(1000);
         animator.setInterpolator(new BounceInterpolator());
         animator.addUpdateListener(animListener);
@@ -48,7 +45,7 @@ public class FallingObstacle extends Obstacle {
     private final ValueAnimator.AnimatorUpdateListener animListener = (ValueAnimator anim) -> {
         float value = (float) anim.getAnimatedValue();
         dstRect.offsetTo(dstRect.left, value);
-        Log.v(TAG, "Animated Value = " + value + " obj=" + this);
+        //Log.v(TAG, "Animated Value = " + value + " obj=" + this);
     };
 
     @Override
