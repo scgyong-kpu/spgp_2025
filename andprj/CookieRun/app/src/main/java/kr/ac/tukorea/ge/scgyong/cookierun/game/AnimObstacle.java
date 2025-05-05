@@ -31,10 +31,10 @@ public class AnimObstacle extends Obstacle {
     };
     private Obstacle init(int type, float left, float top) {
         resIndex = type;
-        int defResId = RES_ID_ARRAYS[resIndex][0];
         time = 0;
-        bitmap = BitmapPool.get(defResId);
+        bitmap = BitmapPool.get(RES_ID_ARRAYS[resIndex][1]);
         setObstaclePosition(left, top);
+        bitmap = BitmapPool.get(RES_ID_ARRAYS[resIndex][0]);
         return this;
     }
 
