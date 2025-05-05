@@ -3,8 +3,6 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game;
 import android.animation.ValueAnimator;
 import android.view.animation.BounceInterpolator;
 
-import androidx.annotation.NonNull;
-
 import java.util.function.Consumer;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
@@ -46,11 +44,8 @@ public class FallingObstacle extends Obstacle {
         animator.addUpdateListener(animListener);
     }
 
-    private final ValueAnimator.AnimatorUpdateListener animListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(@NonNull ValueAnimator anim) {
-            float value = (float) anim.getAnimatedValue();
-            dstRect.offsetTo(dstRect.left, value);
-        }
+    private final ValueAnimator.AnimatorUpdateListener animListener = (ValueAnimator anim) -> {
+        float value = (float) anim.getAnimatedValue();
+        dstRect.offsetTo(dstRect.left, value);
     };
 }
