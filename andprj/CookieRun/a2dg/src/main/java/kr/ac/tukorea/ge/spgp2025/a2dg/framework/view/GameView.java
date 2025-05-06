@@ -204,6 +204,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     public void destroyGame() {
         popAllScenes();
+        view = null;
     }
 
     private Paint borderPaint, gridPaint, fpsPaint;

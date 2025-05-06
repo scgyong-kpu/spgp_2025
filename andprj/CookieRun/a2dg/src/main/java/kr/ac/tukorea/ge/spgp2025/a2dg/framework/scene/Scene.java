@@ -13,6 +13,7 @@ import java.util.HashMap;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ITouchable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
@@ -177,7 +178,34 @@ public class Scene {
 
     //////////////////////////////////////////////////
     // Overridables
+
+    protected int getTouchLayerIndex() {
+        return -1;
+    }
+    protected ITouchable capturingTouchable;
     public boolean onTouchEvent(MotionEvent event) {
+        int touchLayer = getTouchLayerIndex();
+        if (touchLayer < 0) return false;
+        if (capturingTouchable != null) {
+            boolean processed = capturingTouchable.onTouchEvent(event);
+            if (!processed || event.getAction() == MotionEvent.ACTION_UP) {
+                Log.d(TAG, "Capture End: " + capturingTouchable);
+                capturingTouchable = null;
+            }
+            return processed;
+        }
+        ArrayList<IGameObject> gameObjects = layers.get(touchLayer);
+        for (IGameObject gobj : gameObjects) {
+            if (!(gobj instanceof ITouchable)) {
+                continue;
+            }
+            boolean processed = ((ITouchable) gobj).onTouchEvent(event);
+            if (processed) {
+                capturingTouchable = (ITouchable) gobj;
+                Log.d(TAG, "Capture Start: " + capturingTouchable);
+                return true;
+            }
+        }
         return false;
     }
 
