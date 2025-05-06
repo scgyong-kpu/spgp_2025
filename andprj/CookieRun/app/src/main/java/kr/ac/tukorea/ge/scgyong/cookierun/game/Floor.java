@@ -24,7 +24,10 @@ public class Floor extends MapObject {
                 { 1000, 200 }, { 200, 200 }, { 300, 100 }
         };
     }
-    public Floor() {}
+    protected Type type;
+    public Floor() {
+        super(MainScene.Layer.floor);
+    }
     public static Floor get(Type type, float left, float top) {
         return Scene.top().getRecyclable(Floor.class).init(type, left, top);
 //        return new Floor().init(type, left, top);
@@ -35,10 +38,10 @@ public class Floor extends MapObject {
         width = type.width();
         height = type.height();
         dstRect.set(left, top, left + width, top + height);
+        this.type = type;
         return this;
     }
-    @Override
-    public MainScene.Layer getLayer() {
-        return MainScene.Layer.floor;
+    public boolean canPass() {
+        return type == Type.T_3x1;
     }
 }
