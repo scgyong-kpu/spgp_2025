@@ -11,16 +11,18 @@ import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Player extends SheetSprite implements IBoxCollidable {
     public enum State {
-        running, jump, doubleJump, falling, slide
+        running, jump, doubleJump, falling, slide, hurt
     }
     protected State state = State.running;
     private float jumpSpeed;
     private final RectF collisionRect = new RectF();
+    private Obstacle obstacle;
     private static final float JUMP_POWER = 900f;
     private static final float GRAVITY = 1700f;
     protected static Rect[][] srcRectsArray = {
@@ -29,6 +31,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
             makeRects(1, 2, 3, 4),         // State.doubleJump
             makeRects(0),                  // State.falling
             makeRects(9, 10),              // State.slide
+            makeRects(503, 504),           // State.hurt
     };
     protected static float[][] edgeInsetRatios = {
             { 0.3f, 0.5f, 0.3f, 0.0f }, // State.running
@@ -36,6 +39,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
             { 0.3f, 0.6f, 0.3f, 0.0f }, // State.doubleJump
             { 0.3f, 0.5f, 0.3f, 0.0f }, // State.falling
             { 0.2f, 0.75f, 0.2f, 0.0f }, // State.slide
+            { 0.3f, 0.50f, 0.4f, 0.0f }, // State.hurt
     };
     protected static Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
@@ -81,6 +85,12 @@ public class Player extends SheetSprite implements IBoxCollidable {
                 // 달리는 중에 발밑 floor 좌표가 발보다 아래에 있다면 떨어지자
                 setState(State.falling);
                 jumpSpeed = 0; // 자유낙하이므로 속도가 0 부터 시작한다.
+            }
+            break;
+        case hurt:
+            if (!CollisionHelper.collides(this, obstacle)) {
+                setState(State.running);
+                obstacle = null;
             }
             break;
         }
@@ -169,11 +179,9 @@ public class Player extends SheetSprite implements IBoxCollidable {
     public RectF getCollisionRect() {
         return collisionRect;
     }
-
-    public boolean onTouch(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            jump();
-        }
-        return false;
+    public void hurt(Obstacle obstacle) {
+        if (state == State.hurt) return;
+        setState(State.hurt);
+        this.obstacle = obstacle;
     }
 }

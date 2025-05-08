@@ -30,6 +30,13 @@ public class CollisionChecker implements IGameObject {
                 scene.remove(item);
             }
         }
+        ArrayList<IGameObject> obstacles = scene.objectsAt(MainScene.Layer.obstacle);
+        for (int i = obstacles.size() - 1; i >= 0; i--) {
+            Obstacle obstacle = (Obstacle) obstacles.get(i);
+            if (CollisionHelper.collides(player, obstacle)) {
+                player.hurt(obstacle);
+            }
+        }
     }
 
     @Override
