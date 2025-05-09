@@ -84,6 +84,11 @@ public class MapLoader implements IGameObject {
             scene.add(mapObject);
             return;
         }
+        mapObject = ObstacleFactory.get(tile, left, top);
+        if (mapObject != null) {
+            scene.add(mapObject);
+            return;
+        }
     }
 
     private char getAt(int col, int row) {
