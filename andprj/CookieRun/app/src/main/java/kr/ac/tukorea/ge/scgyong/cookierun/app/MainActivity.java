@@ -13,13 +13,11 @@ import java.io.InputStream;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.scgyong.cookierun.databinding.ActivityMainBinding;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.Player;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding ui;
     private int stage, cookieIndex;
-    private static final int[] COOKIE_IDS = {
-            107566, 107567, 107568, 107571, 107583,
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private void startGame() {
         Intent intent = new Intent(this, CookieRunActivity.class);
         intent.putExtra(CookieRunActivity.KEY_STAGE, stage);
-        intent.putExtra(CookieRunActivity.KEY_COOKIE_ID, COOKIE_IDS[cookieIndex]);
+        intent.putExtra(CookieRunActivity.KEY_COOKIE_ID, Player.COOKIE_IDS[cookieIndex]);
         startActivity(intent);
     }
 
@@ -55,18 +53,23 @@ public class MainActivity extends AppCompatActivity {
     private void setCookieIndex(int index) {
         this.cookieIndex = index;
         try {
-            int cookieId = COOKIE_IDS[index];
+            int cookieId = Player.COOKIE_IDS[index];
             AssetManager assets = getAssets();
             String fileName = "cookies/" + cookieId + "_icon.png";
             InputStream is = assets.open(fileName);
             Bitmap bmp = BitmapFactory.decodeStream(is);
             ui.cookieImageView.setImageBitmap(bmp);
+
+            Player.CookieInfo cookieInfo = Player.cookieInfoMap.get(cookieId);
+            if (cookieInfo != null) {
+                ui.cookieNameTextView.setText(cookieInfo.name);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         ui.prevCookieButton.setEnabled(index > 0);
-        ui.nextCookieButton.setEnabled(index < COOKIE_IDS.length - 1);
+        ui.nextCookieButton.setEnabled(index < Player.COOKIE_IDS.length - 1);
     }
     public void onBtnPrevious(View view) {
         setStage(stage - 1);

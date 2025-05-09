@@ -4,10 +4,10 @@ import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
@@ -26,9 +26,32 @@ public class Player extends SheetSprite implements IBoxCollidable {
     private float jumpSpeed;
     private final RectF collisionRect = new RectF();
     private Obstacle obstacle;
-    private static final float JUMP_POWER = 900f;
+    //private static final float JUMP_POWER = 900f;
     private static final float GRAVITY = 1700f;
     private int imageSize = 0;
+    public static class CookieInfo {
+        public String name;
+        public float jumpPower, scoreRate;
+        public CookieInfo(String name, float jumpPower, float scoreRate) {
+            this.name = name;
+            this.jumpPower = jumpPower;
+            this.scoreRate = scoreRate;
+        }
+    }
+    public static final int[] COOKIE_IDS = {
+            107566, 107567, 107568, 107571, 107583,
+    };
+    public static final HashMap<Integer, CookieInfo> cookieInfoMap;
+    static {
+        cookieInfoMap = new HashMap<>();
+        cookieInfoMap.put(107566, new CookieInfo("Brave Cookie", 900f, 1.0f));
+        cookieInfoMap.put(107567, new CookieInfo("Bright Cookie", 800f, 1.2f));
+        cookieInfoMap.put(107568, new CookieInfo("Strawberry Cookie", 700f, 1.0f));
+        cookieInfoMap.put(107571, new CookieInfo("Buttercream Choco Cookie", 1200f, 1.0f));
+        cookieInfoMap.put(107583, new CookieInfo("Ch17 Cookie", 1500f, 1.0f));
+    }
+    private final CookieInfo cookieInfo;
+
     protected Rect[][] srcRectsArray;
     private void makeSourceRects() {
         srcRectsArray = new Rect[][] {
@@ -48,8 +71,6 @@ public class Player extends SheetSprite implements IBoxCollidable {
             { 0.2f, 0.75f, 0.2f, 0.0f }, // State.slide
             { 0.3f, 0.50f, 0.4f, 0.0f }, // State.hurt
     };
-    // 클래스 로딩될때 정해지던 크기가
-    // 객체 생성시 정해지는 것으로 바뀌었다. imageSize 에 의해서도 달라진다.
     protected Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
         for (int i = 0; i < indices.length; i++) {
@@ -61,23 +82,22 @@ public class Player extends SheetSprite implements IBoxCollidable {
         return rects;
     }
     public Player(int cookieId) {
-        // 생성자에서 cookieId 를 전달받는다
         super(0, 8);
         loadSheetFromAsset(cookieId);
+        cookieInfo = cookieInfoMap.get(cookieId);
         setPosition(200f, 200f, 386, 386f);
         setState(State.running);
     }
     private void loadSheetFromAsset(int cookieId) {
         AssetManager assets = GameView.view.getContext().getAssets();
         String filename = "cookies/" + cookieId + "_sheet.png";
-        // sheet 를 asset 으로부터 읽기를 시도한다.
         try {
             InputStream is = assets.open(filename);
             bitmap = BitmapFactory.decodeStream(is);
             imageSize = (bitmap.getWidth() - 2) / 11 - 2;
             // 쿠키마다 이미지 한 장에 할애된 크기가 다르다. 가로로 11장이 있으므로
             // 구분선 2px 를 제외하고 한장당의 이미지 크기를 구한다.
-            Log.d(TAG, "File=" + filename + " imageSize=" + imageSize);
+            //Log.d(TAG, "File=" + filename + " imageSize=" + imageSize);
             makeSourceRects();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -172,10 +192,12 @@ public class Player extends SheetSprite implements IBoxCollidable {
 
     public void jump() {
         if (state == State.running) {
-            jumpSpeed = -JUMP_POWER;
+            //jumpSpeed = -JUMP_POWER;
+            jumpSpeed = -cookieInfo.jumpPower;
             setState(State.jump);
         } else if (state == State.jump) {
-            jumpSpeed = -JUMP_POWER;
+            //jumpSpeed = -JUMP_POWER;
+            jumpSpeed = -cookieInfo.jumpPower;
             //jumpSpeed -= JUMP_POWER;
             setState(State.doubleJump);
         }
