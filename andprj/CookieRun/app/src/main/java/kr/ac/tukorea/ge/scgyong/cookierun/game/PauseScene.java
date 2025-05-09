@@ -39,4 +39,10 @@ public class PauseScene extends Scene {
     protected int getTouchLayerIndex() {
         return Layer.touch.ordinal();
     }
+
+    // Overridables
+    @Override
+    public boolean isTransparent() {
+        return true;
+    }
 }
