@@ -15,6 +15,7 @@ public class PauseScene extends Scene {
     public PauseScene() {
         initLayers(Layer.values().length);
         float w = Metrics.width, h = Metrics.height;
+        add(Layer.bg, new Sprite(R.mipmap.trans_50b, w/2, h/2, w, h));
         add(Layer.bg, new Sprite(R.mipmap.bg_city_landscape, w/2, h/2, 1200f, 675f));
         add(Layer.title, new Sprite(R.mipmap.cookie_run_title, w/2, h/2, 369f, 136f) {
             @Override
@@ -30,6 +31,13 @@ public class PauseScene extends Scene {
             @Override
             public boolean onTouch(boolean pressed) {
                 pop();
+                return false;
+            }
+        }));
+        add(Layer.touch, new Button(R.mipmap.btn_exit_n, 800f, 550f, 267f, 100f, new Button.OnTouchListener() {
+            @Override
+            public boolean onTouch(boolean pressed) {
+                popAll();
                 return false;
             }
         }));
