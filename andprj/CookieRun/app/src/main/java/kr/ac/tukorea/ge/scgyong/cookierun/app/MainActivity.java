@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startGame() {
         Intent intent = new Intent(this, CookieRunActivity.class);
-        intent.putExtra("stage", stage);
+        intent.putExtra(CookieRunActivity.KEY_STAGE, stage);
         startActivity(intent);
     }
 

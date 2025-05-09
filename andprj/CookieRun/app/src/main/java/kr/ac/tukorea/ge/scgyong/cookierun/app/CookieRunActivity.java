@@ -12,12 +12,14 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class CookieRunActivity extends GameActivity {
 
+    public static final String KEY_STAGE = "stage";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         GameView.drawsDebugStuffs = BuildConfig.DEBUG;
         Metrics.setGameSize(1600, 900);
         super.onCreate(savedInstanceState);
-        int stage = getIntent().getIntExtra("stage", 1);
+        int stage = getIntent().getIntExtra(KEY_STAGE, 1);
         Log.d(CookieRunActivity.class.getSimpleName(), "Stage = " + stage);
         //new MainScene().push();
         new Scene().push();
