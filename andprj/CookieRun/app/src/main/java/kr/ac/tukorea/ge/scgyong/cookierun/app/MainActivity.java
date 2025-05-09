@@ -17,7 +17,9 @@ import kr.ac.tukorea.ge.scgyong.cookierun.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding ui;
     private int stage, cookieIndex;
-    private static final int[] COOKIE_IDS = { 107566, 107567 };
+    private static final int[] COOKIE_IDS = {
+            107566, 107567, 107568, 107571, 107583,
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
