@@ -67,32 +67,26 @@ public class MapLoader implements IGameObject {
     }
     private void createColumn() {
         for (int row = 0; row < STAGE_HEIGHT; row++) {
-            int tile = getAt(index, row); // 알아내서
+            char tile = getAt(index, row); // 알아내서
             float y = 100 * row;
             createObject(tile, x, y); // 생성한다
         }
     }
-    private void createObject(int tile, float left, float top) {
-        // 젤리 타일인 경우
-        if ('1' <= tile && tile <= '9') {
-            JellyItem item = JellyItem.get(tile - '1', left, top);
-            scene.add(MainScene.Layer.item, item);
+    private void createObject(char tile, float left, float top) {
+        MapObject mapObject;
+        mapObject = JellyItem.get(tile, left, top);
+        if (mapObject != null) {
+            scene.add(mapObject);
             return;
         }
-
-        // 플랫폼 타일인 경우.
-        if (tile == 'O' || tile == 'P' || tile == 'Q') {
-            Floor.Type ptype =
-                    tile == 'O' ? Floor.Type.T_10x2 :
-                    tile == 'P' ? Floor.Type.T_2x2 :
-                                 Floor.Type.T_3x1;
-            Floor floor = Floor.get(ptype, left, top);
-            scene.add(MainScene.Layer.floor, floor);
+        mapObject = Floor.get(tile, left, top);
+        if (mapObject != null) {
+            scene.add(mapObject);
             return;
         }
     }
 
-    private int getAt(int col, int row) {
+    private char getAt(int col, int row) {
         if (col >= stage_width) return 0; // Stage Ends
 //        int idx = row * STAGE_WIDTH + col;
 //        if (idx >= STAGES[0].length) return 0;

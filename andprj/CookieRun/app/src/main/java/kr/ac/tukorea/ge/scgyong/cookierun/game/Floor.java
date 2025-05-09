@@ -32,6 +32,14 @@ public class Floor extends MapObject {
         return Scene.top().getRecyclable(Floor.class).init(type, left, top);
 //        return new Floor().init(type, left, top);
     }
+    public static Floor get(char type, float left, float top) {
+        switch (type) {
+            case 'O': return get(Type.T_10x2, left, top);
+            case 'P': return get(Type.T_2x2, left, top);
+            case 'Q': return get(Type.T_3x1, left, top);
+        }
+        return null;
+    }
 
     private Floor init(Type type, float left, float top) {
         bitmap = type.bitmap();

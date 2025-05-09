@@ -23,6 +23,10 @@ public class JellyItem extends MapObject {
         return Scene.top().getRecyclable(JellyItem.class).init(index, left, top);
         //return new JellyItem().init(index, left, top);
     }
+    public static JellyItem get(char mapChar, float left, float top) {
+        if (mapChar < '1' || mapChar >= '9') return null;
+        return get(mapChar - '1', left, top);
+    }
     public JellyItem init(int index, float left, float top) {
         setSrcRect(index);
         dstRect.set(left, top, left + width, top + height);
