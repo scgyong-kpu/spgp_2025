@@ -53,7 +53,7 @@ public class MainScene extends Scene {
         add(Layer.touch, new Button(R.mipmap.btn_pause, 1500f, 100f, 100f, 100f, new Button.OnTouchListener() {
             @Override
             public boolean onTouch(boolean pressed) {
-                new PauseScene().push();
+                new PauseScene().change();
                 return false;
             }
         }));
