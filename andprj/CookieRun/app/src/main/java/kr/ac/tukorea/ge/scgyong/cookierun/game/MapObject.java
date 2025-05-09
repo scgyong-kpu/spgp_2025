@@ -60,6 +60,10 @@ public class MapObject extends Sprite implements IRecyclable, IBoxCollidable, IL
         }
         scene.remove(this);
     }
+    public void pause() {
+    }
+    public void resume() {
+    }
     @Override
     public RectF getCollisionRect() {
         return dstRect;

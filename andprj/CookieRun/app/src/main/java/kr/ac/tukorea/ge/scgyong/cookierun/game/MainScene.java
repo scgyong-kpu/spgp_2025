@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Button;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.HorzScrollBackground;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
@@ -62,6 +63,17 @@ public class MainScene extends Scene {
         add(Layer.controller, new CollisionChecker(this, player));
     }
 
+    private void pauseAnimations() {
+        for (IGameObject obj : objectsAt(Layer.obstacle)) {
+            ((MapObject)obj).pause();
+        }
+    }
+    private void resumeAnimations() {
+        for (IGameObject obj : objectsAt(Layer.obstacle)) {
+            ((MapObject)obj).resume();
+        }
+    }
+
     // Overridables
     @Override
     protected int getTouchLayerIndex() {
@@ -75,10 +87,12 @@ public class MainScene extends Scene {
     @Override
     public void onPause() {
         Sound.pauseMusic();
+        pauseAnimations();
     }
 
     @Override
     public void onResume() {
+        resumeAnimations();
         Sound.resumeMusic();
     }
     @Override

@@ -53,4 +53,14 @@ public class FallingObstacle extends Obstacle {
         super.onRecycle();
         animator.end();
     }
+
+    @Override
+    public void pause() {
+        animator.pause();
+    }
+
+    @Override
+    public void resume() {
+        animator.resume();
+    }
 }
