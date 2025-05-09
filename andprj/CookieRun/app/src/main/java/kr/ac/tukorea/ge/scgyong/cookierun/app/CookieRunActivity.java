@@ -13,6 +13,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 public class CookieRunActivity extends GameActivity {
 
     public static final String KEY_STAGE = "stage";
+    public static final String KEY_COOKIE_ID = "cookieId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +21,9 @@ public class CookieRunActivity extends GameActivity {
         Metrics.setGameSize(1600, 900);
         super.onCreate(savedInstanceState);
         int stage = getIntent().getIntExtra(KEY_STAGE, 1);
-        Log.d(CookieRunActivity.class.getSimpleName(), "Stage = " + stage);
-        new MainScene(stage).push();
-        //new Scene().push();
+        int cookieId = getIntent().getIntExtra(KEY_COOKIE_ID, 107566);
+        Log.d(CookieRunActivity.class.getSimpleName(), "Stage = " + stage + " cookieId = " + cookieId);
+        //new MainScene(stage).push();
+        new Scene().push();
     }
 }
