@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
 import android.animation.ValueAnimator;
+import android.graphics.RectF;
 import android.view.animation.BounceInterpolator;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
@@ -47,6 +48,11 @@ public class FallingObstacle extends Obstacle {
         dstRect.offsetTo(dstRect.left, value);
         //Log.v(TAG, "Animated Value = " + value + " obj=" + this);
     };
+
+    @Override
+    public RectF getCollisionRect() {
+        return dstRect;
+    }
 
     @Override
     public void onRecycle() {
