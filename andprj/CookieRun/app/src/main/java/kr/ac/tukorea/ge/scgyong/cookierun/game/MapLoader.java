@@ -72,22 +72,19 @@ public class MapLoader implements IGameObject {
             createObject(tile, x, y); // 생성한다
         }
     }
+    protected interface MapObjectCreator {
+        MapObject get(char tile, float left, float top);
+    }
+    protected static MapObjectCreator[] mapCreators = {
+            JellyItem::get, Floor::get, ObstacleFactory::get,
+    };
     private void createObject(char tile, float left, float top) {
-        MapObject mapObject;
-        mapObject = JellyItem.get(tile, left, top);
-        if (mapObject != null) {
-            scene.add(mapObject);
-            return;
-        }
-        mapObject = Floor.get(tile, left, top);
-        if (mapObject != null) {
-            scene.add(mapObject);
-            return;
-        }
-        mapObject = ObstacleFactory.get(tile, left, top);
-        if (mapObject != null) {
-            scene.add(mapObject);
-            return;
+        for (MapObjectCreator creator: mapCreators) {
+            MapObject mapObject = creator.get(tile, left, top);
+            if (mapObject != null) {
+                scene.add(mapObject);
+                return;
+            }
         }
     }
 
