@@ -1,7 +1,13 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
+import android.util.JsonReader;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
@@ -14,8 +20,19 @@ public class MapLoader implements IGameObject {
     private float floor_x, item_x;
     public MapLoader(MainScene mainScene) {
         this.scene = mainScene;
+        loadStage(GameView.view.getContext(), 1);
     }
-
+    private void loadStage(Context context, int stage) {
+        AssetManager assets = context.getAssets();
+        try {
+            String file = String.format("stage_%02d.tmj", stage);
+            InputStream is = assets.open(file);
+            InputStreamReader jsr = new InputStreamReader(is);
+            JsonReader jr = new JsonReader(jsr);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public void update() {
         floor_x += MapObject.SPEED * GameView.frameTime;
