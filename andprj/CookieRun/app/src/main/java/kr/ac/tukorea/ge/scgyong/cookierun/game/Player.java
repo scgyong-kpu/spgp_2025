@@ -1,13 +1,14 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
+import android.content.res.AssetManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
-import android.view.MotionEvent;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
-import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
@@ -16,6 +17,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Player extends SheetSprite implements IBoxCollidable {
+    private static final String TAG = Player.class.getSimpleName();
+
     public enum State {
         running, jump, doubleJump, falling, slide, hurt
     }
@@ -25,14 +28,18 @@ public class Player extends SheetSprite implements IBoxCollidable {
     private Obstacle obstacle;
     private static final float JUMP_POWER = 900f;
     private static final float GRAVITY = 1700f;
-    protected static Rect[][] srcRectsArray = {
-            makeRects(100, 101, 102, 103), // State.running
-            makeRects(7, 8),               // State.jump
-            makeRects(1, 2, 3, 4),         // State.doubleJump
-            makeRects(0),                  // State.falling
-            makeRects(9, 10),              // State.slide
-            makeRects(503, 504),           // State.hurt
-    };
+    private int imageSize = 0;
+    protected Rect[][] srcRectsArray;
+    private void makeSourceRects() {
+        srcRectsArray = new Rect[][] {
+                makeRects(100, 101, 102, 103), // State.running
+                makeRects(7, 8),               // State.jump
+                makeRects(1, 2, 3, 4),         // State.doubleJump
+                makeRects(0),                  // State.falling
+                makeRects(9, 10),              // State.slide
+                makeRects(503, 504),           // State.hurt
+        };
+    }
     protected static float[][] edgeInsetRatios = {
             { 0.3f, 0.5f, 0.3f, 0.0f }, // State.running
             { 0.3f, 0.6f, 0.3f, 0.0f }, // State.jump
@@ -41,22 +48,41 @@ public class Player extends SheetSprite implements IBoxCollidable {
             { 0.2f, 0.75f, 0.2f, 0.0f }, // State.slide
             { 0.3f, 0.50f, 0.4f, 0.0f }, // State.hurt
     };
-    protected static Rect[] makeRects(int... indices) {
+    // 클래스 로딩될때 정해지던 크기가
+    // 객체 생성시 정해지는 것으로 바뀌었다. imageSize 에 의해서도 달라진다.
+    protected Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
         for (int i = 0; i < indices.length; i++) {
             int idx = indices[i];
-            int l = 2 + (idx % 100) * 272;
-            int t = 2 + (idx / 100) * 272;
-            rects[i] = new Rect(l, t, l + 270, t + 270);
+            int l = 2 + (idx % 100) * (imageSize + 2);
+            int t = 2 + (idx / 100) * (imageSize + 2);
+            rects[i] = new Rect(l, t, l + imageSize, t + imageSize);
         }
         return rects;
     }
-    public Player() {
-        super(R.mipmap.cookie_player_sheet, 8);
+    public Player(int cookieId) {
+        // 생성자에서 cookieId 를 전달받는다
+        super(0, 8);
+        loadSheetFromAsset(cookieId);
         setPosition(200f, 200f, 386, 386f);
         setState(State.running);
     }
-
+    private void loadSheetFromAsset(int cookieId) {
+        AssetManager assets = GameView.view.getContext().getAssets();
+        String filename = "cookies/" + cookieId + "_sheet.png";
+        // sheet 를 asset 으로부터 읽기를 시도한다.
+        try {
+            InputStream is = assets.open(filename);
+            bitmap = BitmapFactory.decodeStream(is);
+            imageSize = (bitmap.getWidth() - 2) / 11 - 2;
+            // 쿠키마다 이미지 한 장에 할애된 크기가 다르다. 가로로 11장이 있으므로
+            // 구분선 2px 를 제외하고 한장당의 이미지 크기를 구한다.
+            Log.d(TAG, "File=" + filename + " imageSize=" + imageSize);
+            makeSourceRects();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public void update() {
         switch (state) {

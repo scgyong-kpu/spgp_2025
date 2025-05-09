@@ -1,8 +1,5 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
-import android.util.Log;
-import android.view.MotionEvent;
-
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Button;
@@ -17,14 +14,14 @@ public class MainScene extends Scene {
     }
     private final Player player;
     private static final String TAG = MainScene.class.getSimpleName();
-    public MainScene(int stage) {
+    public MainScene(int stage, int cookieId) {
         initLayers(Layer.COUNT);
 
         add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_1, -50));
         add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_2, -100f));
         add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_3, -150f));
 
-        player = new Player();
+        player = new Player(cookieId);
         add(Layer.player, player);
 
         add(Layer.touch, new Button(R.mipmap.btn_slide_n, 150f, 800f, 200f, 75f, new Button.OnTouchListener() {

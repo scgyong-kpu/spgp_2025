@@ -23,7 +23,7 @@ public class CookieRunActivity extends GameActivity {
         int stage = getIntent().getIntExtra(KEY_STAGE, 1);
         int cookieId = getIntent().getIntExtra(KEY_COOKIE_ID, 107566);
         Log.d(CookieRunActivity.class.getSimpleName(), "Stage = " + stage + " cookieId = " + cookieId);
-        //new MainScene(stage).push();
-        new Scene().push();
+        new MainScene(stage, cookieId).push();
+//        new Scene().push();
     }
 }
