@@ -1,5 +1,8 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Button;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
@@ -37,7 +40,18 @@ public class PauseScene extends Scene {
         add(Layer.touch, new Button(R.mipmap.btn_exit_n, 800f, 550f, 267f, 100f, new Button.OnTouchListener() {
             @Override
             public boolean onTouch(boolean pressed) {
-                popAll();
+                new AlertDialog.Builder(GameView.view.getContext())
+                        .setTitle("Confirm")
+                        .setMessage("Do you really want to exit the game?")
+                        .setNegativeButton("No", null)
+                        .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                popAll();
+                            }
+                        })
+                        .create()
+                        .show();
                 return false;
             }
         }));
