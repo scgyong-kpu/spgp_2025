@@ -50,6 +50,13 @@ public class MainScene extends Scene {
                 return false;
             }
         }));
+        add(Layer.touch, new Button(R.mipmap.btn_pause, 1500f, 100f, 100f, 100f, new Button.OnTouchListener() {
+            @Override
+            public boolean onTouch(boolean pressed) {
+                new PauseScene().push();
+                return false;
+            }
+        }));
 
         add(Layer.controller, new MapLoader(this, stage));
         add(Layer.controller, new CollisionChecker(this, player));
