@@ -16,7 +16,7 @@ public class MainScene extends Scene {
     }
     private final Player player;
     private static final String TAG = MainScene.class.getSimpleName();
-    public MainScene() {
+    public MainScene(int stage) {
         initLayers(Layer.COUNT);
 
         add(Layer.bg, new HorzScrollBackground(R.mipmap.cookie_run_bg_1, -50));
@@ -51,7 +51,7 @@ public class MainScene extends Scene {
             }
         }));
 
-        add(Layer.controller, new MapLoader(this));
+        add(Layer.controller, new MapLoader(this, stage));
         add(Layer.controller, new CollisionChecker(this, player));
     }
 

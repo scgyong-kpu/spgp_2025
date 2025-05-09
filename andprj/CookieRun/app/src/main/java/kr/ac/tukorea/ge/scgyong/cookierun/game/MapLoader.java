@@ -21,9 +21,9 @@ public class MapLoader implements IGameObject {
     private final Random random = new Random();
     private float x;
     private int index;
-    public MapLoader(MainScene mainScene) {
+    public MapLoader(MainScene mainScene, int stage) {
         this.scene = mainScene;
-        loadStage(GameView.view.getContext(), 1);
+        loadStage(GameView.view.getContext(), stage);
     }
     private int stage_width, page_width;
     private ArrayList<String> lines = new ArrayList<>();

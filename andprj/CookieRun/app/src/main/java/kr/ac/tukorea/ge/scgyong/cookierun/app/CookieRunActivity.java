@@ -21,7 +21,7 @@ public class CookieRunActivity extends GameActivity {
         super.onCreate(savedInstanceState);
         int stage = getIntent().getIntExtra(KEY_STAGE, 1);
         Log.d(CookieRunActivity.class.getSimpleName(), "Stage = " + stage);
-        //new MainScene().push();
-        new Scene().push();
+        new MainScene(stage).push();
+        //new Scene().push();
     }
 }
