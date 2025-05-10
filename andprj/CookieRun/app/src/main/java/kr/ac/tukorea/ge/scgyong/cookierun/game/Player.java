@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.JsonReader;
+import android.util.Log;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,6 +34,8 @@ public class Player extends SheetSprite implements IBoxCollidable {
     private Obstacle obstacle;
     //private static final float JUMP_POWER = 900f;
     private static final float GRAVITY = 1700f;
+    private static final float NORMAL_COOKIE_DST_SIZE = 386;
+
     private int imageSize = 0;
     public static class CookieInfo {
         public int id;
@@ -123,7 +126,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
         super(0, 8);
         loadSheetFromAsset(cookieId);
         cookieInfo = cookieInfoMap.get(cookieId);
-        setPosition(200f, 200f, 386, 386f);
+        setPosition(200f, 200f, NORMAL_COOKIE_DST_SIZE, NORMAL_COOKIE_DST_SIZE);
         setState(State.running);
     }
     private void loadSheetFromAsset(int cookieId) {
@@ -141,8 +144,10 @@ public class Player extends SheetSprite implements IBoxCollidable {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public void update() {
+        float foot = collisionRect.bottom;
         switch (state) {
         case jump:
         case doubleJump:
@@ -150,22 +155,20 @@ public class Player extends SheetSprite implements IBoxCollidable {
             float dy = jumpSpeed * GameView.frameTime;
             jumpSpeed += GRAVITY * GameView.frameTime;
             if (jumpSpeed >= 0) { // 낙하하고 있다면 발밑에 땅이 있는지 확인한다
-                float foot = collisionRect.bottom;
                 float floor = findNearestFloorTop(foot);
                 if (foot + dy >= floor) {
                     dy = floor - foot;
                     setState(State.running);
                 }
             }
-            y += dy;
-            setPosition(x, y, width, height);
-            updateCollisionRect();
+            foot += dy;
+            setCookiePosition(foot);
             break;
         case running:
         case slide:
-            float foot = collisionRect.bottom;
             float floor = findNearestFloorTop(foot);
             if (foot < floor) {
+                Log.v(TAG, "foot=" + foot + " floor=" + floor + " magSpeed=" + magSpeed);
                 // 달리는 중에 발밑 floor 좌표가 발보다 아래에 있다면 떨어지자
                 setState(State.falling);
                 jumpSpeed = 0; // 자유낙하이므로 속도가 0 부터 시작한다.
@@ -177,6 +180,19 @@ public class Player extends SheetSprite implements IBoxCollidable {
                 obstacle = null;
             }
             break;
+        }
+        if (magSpeed != 0) {
+            scale += GameView.frameTime * magSpeed;
+            if (magSpeed < 0 && scale <= SCALE_NORMAL) {
+                magSpeed = 0;
+                scale = SCALE_NORMAL;
+            } else if (magSpeed > 0 && scale >= SCALE_MAGNIFIED) {
+                magSpeed = 0;
+                scale = SCALE_MAGNIFIED;
+            }
+            //Log.i(TAG, "dstR.bot=" + dstRect.bottom + " colR.bot=" + collisionRect.bottom);
+            width = height = NORMAL_COOKIE_DST_SIZE * scale;
+            setCookiePosition(foot);
         }
     }
     private float findNearestFloorTop(float foot) {
@@ -212,6 +228,11 @@ public class Player extends SheetSprite implements IBoxCollidable {
             //Log.d(TAG, "top=" + top + " gotcha:" + floor);
         }
         return nearest;
+    }
+    private void setCookiePosition(float foot) {
+        float hw = width / 2;
+        dstRect.set(x - hw, foot - height, x + hw, foot);
+        updateCollisionRect();
     }
     private void updateCollisionRect() {
         float[] insets = edgeInsetRatios[state.ordinal()];
@@ -263,6 +284,16 @@ public class Player extends SheetSprite implements IBoxCollidable {
         setState(State.falling); // collisinRect 는 이곳에서 update 되므로 추가작업하지 않아도 된다.
         jumpSpeed = 0;
     }
+
+    private static final float SCALE_NORMAL = 1.0f;
+    private static final float SCALE_MAGNIFIED = 2.0f;
+    private float scale = 1.0f, magSpeed = 0;
+    public void magnify(boolean enlarges) {
+//        magSpeed = enlarges ? 1.0f : -1.0f;
+        magSpeed = scale == 1.0f ? 1.0f : -1.0f;
+        Log.d(TAG, "Scale="+scale+" magSpeed="+magSpeed);
+    }
+
     @Override
     public RectF getCollisionRect() {
         return collisionRect;

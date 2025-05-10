@@ -12,7 +12,7 @@ public class JellyItem extends MapObject {
     private static final int ITEMS_IN_A_ROW = 30;
     private static final int SIZE = 66;
     private static final int BORDER = 2;
-    private int soundResId;
+    public int index;
     private static final int[] SOUND_IDS = {
             R.raw.jelly,
             R.raw.jelly_alphabet,
@@ -33,13 +33,16 @@ public class JellyItem extends MapObject {
         //return new JellyItem().init(index, left, top);
     }
     public static JellyItem get(char mapChar, float left, float top) {
+        if (mapChar == '@') {
+            return get(26, left, top); // 26=계란모양
+        }
         if (mapChar < '1' || mapChar >= '9') return null;
         return get(mapChar - '1', left, top);
     }
     public JellyItem init(int index, float left, float top) {
+        this.index = index;
         setSrcRect(index);
         dstRect.set(left, top, left + width, top + height);
-        soundResId = SOUND_IDS[index % SOUND_IDS.length];
         return this;
     }
     private void setSrcRect(int index) {
@@ -62,6 +65,6 @@ public class JellyItem extends MapObject {
     }
 
     public int getSoundResId() {
-        return soundResId;
+        return SOUND_IDS[index % SOUND_IDS.length];
     }
 }

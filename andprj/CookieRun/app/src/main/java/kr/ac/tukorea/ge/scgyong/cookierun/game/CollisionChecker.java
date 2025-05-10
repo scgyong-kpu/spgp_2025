@@ -29,6 +29,9 @@ public class CollisionChecker implements IGameObject {
             JellyItem item = (JellyItem) gobj;
             if (CollisionHelper.collides(player, item)) {
                 Sound.playEffect(item.getSoundResId());
+                if (item.index == 26) {
+                    player.magnify(true);
+                }
                 scene.remove(item);
             }
         }
