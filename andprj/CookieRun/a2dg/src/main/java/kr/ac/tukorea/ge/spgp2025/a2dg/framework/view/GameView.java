@@ -99,7 +99,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         int last = sceneStack.size() - 1;
         if (last < 0) return;
         sceneStack.get(last).onExit();
-        sceneStack.add(scene);
+        sceneStack.set(last, scene);
         scene.onEnter();
     }
     public Scene getTopScene() {
@@ -126,14 +126,22 @@ public class GameView extends View implements Choreographer.FrameCallback {
         if (drawsDebugStuffs) {
             drawDebugBackground(canvas);
         }
-        Scene scene = getTopScene();
-        if (scene != null) {
-            scene.draw(canvas);
+        int topSceneIndex = sceneStack.size() - 1;
+        if (topSceneIndex >= 0) {
+            draw(canvas, topSceneIndex);
         }
         canvas.restore();
         if (drawsDebugStuffs) {
-            drawDebugInfo(canvas, scene);
+            drawDebugInfo(canvas);
         }
+    }
+
+    private void draw(Canvas canvas, int sceneIndex) {
+        Scene scene = sceneStack.get(sceneIndex);
+        if (scene.isTransparent()) {
+            draw(canvas, sceneIndex - 1);
+        }
+        scene.draw(canvas);
     }
 
     @Override
@@ -229,7 +237,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             canvas.drawLine(0, y, Metrics.width, y, gridPaint);
         }
     }
-    private void drawDebugInfo(Canvas canvas, Scene scene) {
+    private void drawDebugInfo(Canvas canvas) {
         if (fpsPaint == null) {
             fpsPaint = new Paint();
             fpsPaint.setColor(Color.BLUE);
@@ -237,6 +245,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
             fpsPaint.setTextSize(80f);
         }
 
+        int topSceneIndex = sceneStack.size() - 1;
+        Scene scene = topSceneIndex >= 0 ? sceneStack.get(topSceneIndex) : null;
         int fps = (int) (1.0f / frameTime);
         int count = scene != null ? scene.count() : 0;
         String countsForLayers = scene != null ? scene.getDebugCounts() : "";

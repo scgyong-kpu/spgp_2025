@@ -1,6 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
 import android.animation.ValueAnimator;
+import android.graphics.RectF;
 import android.view.animation.BounceInterpolator;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
@@ -49,8 +50,23 @@ public class FallingObstacle extends Obstacle {
     };
 
     @Override
+    public RectF getCollisionRect() {
+        return dstRect;
+    }
+
+    @Override
     public void onRecycle() {
         super.onRecycle();
         animator.end();
+    }
+
+    @Override
+    public void pause() {
+        animator.pause();
+    }
+
+    @Override
+    public void resume() {
+        animator.resume();
     }
 }

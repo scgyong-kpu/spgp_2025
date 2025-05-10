@@ -1,9 +1,7 @@
-package kr.ac.tukorea.ge.scgyong.cookierun.game;
+package kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.AnimSprite;
 
 public class SheetSprite extends AnimSprite {
     protected Rect[] srcRects;
