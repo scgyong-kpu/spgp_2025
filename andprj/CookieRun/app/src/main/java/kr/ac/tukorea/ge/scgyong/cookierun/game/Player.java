@@ -12,8 +12,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
@@ -230,11 +232,13 @@ public class Player extends SheetSprite implements IBoxCollidable {
         if (state == State.running) {
             //jumpSpeed = -JUMP_POWER;
             jumpSpeed = -cookieInfo.jumpPower;
+            Sound.playEffect(R.raw.jump1);
             setState(State.jump);
         } else if (state == State.jump) {
             //jumpSpeed = -JUMP_POWER;
             jumpSpeed = -cookieInfo.jumpPower;
             //jumpSpeed -= JUMP_POWER;
+            Sound.playEffect(R.raw.jump2);
             setState(State.doubleJump);
         }
     }
