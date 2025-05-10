@@ -12,6 +12,15 @@ public class JellyItem extends MapObject {
     private static final int ITEMS_IN_A_ROW = 30;
     private static final int SIZE = 66;
     private static final int BORDER = 2;
+    private int soundResId;
+    private static final int[] SOUND_IDS = {
+            R.raw.jelly,
+            R.raw.jelly_alphabet,
+            R.raw.jelly_item,
+            R.raw.jelly_gold,
+            R.raw.jelly_coin,
+            R.raw.jelly_big_coin,
+    };
     public JellyItem() {
         super(MainScene.Layer.item);
         bitmap = BitmapPool.get(R.mipmap.jelly);
@@ -30,6 +39,7 @@ public class JellyItem extends MapObject {
     public JellyItem init(int index, float left, float top) {
         setSrcRect(index);
         dstRect.set(left, top, left + width, top + height);
+        soundResId = SOUND_IDS[index % SOUND_IDS.length];
         return this;
     }
     private void setSrcRect(int index) {
@@ -52,6 +62,6 @@ public class JellyItem extends MapObject {
     }
 
     public int getSoundResId() {
-        return R.raw.jelly;
+        return soundResId;
     }
 }
