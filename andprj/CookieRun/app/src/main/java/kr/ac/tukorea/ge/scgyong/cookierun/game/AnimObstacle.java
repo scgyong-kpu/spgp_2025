@@ -27,12 +27,17 @@ public class AnimObstacle extends Obstacle {
                     R.mipmap.epn01_tm01_jp2up_05,
             },
     };
+    private static final float[][] COLLISION_INSETS_ARRAYS = {
+            { 0.2f, 0.6f, 0.2f, 0.0f },
+            { 0.2f, 0.4f, 0.2f, 0.0f },
+    };
     private Obstacle init(int type, float left, float top) {
         resIndex = type;
         time = 0;
         setImageResourceId(RES_ID_ARRAYS[resIndex][0]);
         setObstaclePosition(left, top);
         setImageResourceId(R.mipmap.trans_00p);
+        collisionInsets = COLLISION_INSETS_ARRAYS[resIndex];
         return this;
     }
 

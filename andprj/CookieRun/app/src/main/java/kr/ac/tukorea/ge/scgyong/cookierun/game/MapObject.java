@@ -33,7 +33,7 @@ public class MapObject extends Sprite implements IRecyclable, IBoxCollidable, IL
         updateCollisionRect(inset, inset, inset, inset);
     }
 
-    private void updateCollisionRect(float left, float top, float right, float bottom) {
+    protected void updateCollisionRect(float left, float top, float right, float bottom) {
         collisionRect.set(
                 dstRect.left + width * left,
                 dstRect.top + height * top,
@@ -59,6 +59,10 @@ public class MapObject extends Sprite implements IRecyclable, IBoxCollidable, IL
             return;
         }
         scene.remove(this);
+    }
+    public void pause() {
+    }
+    public void resume() {
     }
     @Override
     public RectF getCollisionRect() {

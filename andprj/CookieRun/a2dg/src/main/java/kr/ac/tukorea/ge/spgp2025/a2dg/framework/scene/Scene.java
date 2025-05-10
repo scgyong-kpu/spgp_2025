@@ -166,6 +166,9 @@ public class Scene {
     //////////////////////////////////////////////////
     // Scene Stack Functions
 
+    public void change() {
+        GameView.view.changeScene(this);
+    }
     public void push() {
         GameView.view.pushScene(this);
     }
@@ -175,10 +178,15 @@ public class Scene {
     public static Scene top() {
         return GameView.view.getTopScene();
     }
+    public static void popAll() {
+        GameView.view.popAllScenes();
+    }
 
     //////////////////////////////////////////////////
     // Overridables
-
+    public boolean isTransparent() {
+        return false;
+    }
     protected int getTouchLayerIndex() {
         return -1;
     }

@@ -12,6 +12,15 @@ public class JellyItem extends MapObject {
     private static final int ITEMS_IN_A_ROW = 30;
     private static final int SIZE = 66;
     private static final int BORDER = 2;
+    public int index;
+    private static final int[] SOUND_IDS = {
+            R.raw.jelly,
+            R.raw.jelly_alphabet,
+            R.raw.jelly_item,
+            R.raw.jelly_gold,
+            R.raw.jelly_coin,
+            R.raw.jelly_big_coin,
+    };
     public JellyItem() {
         super(MainScene.Layer.item);
         bitmap = BitmapPool.get(R.mipmap.jelly);
@@ -23,7 +32,15 @@ public class JellyItem extends MapObject {
         return Scene.top().getRecyclable(JellyItem.class).init(index, left, top);
         //return new JellyItem().init(index, left, top);
     }
+    public static JellyItem get(char mapChar, float left, float top) {
+        if (mapChar == '@') {
+            return get(26, left, top); // 26=계란모양
+        }
+        if (mapChar < '1' || mapChar >= '9') return null;
+        return get(mapChar - '1', left, top);
+    }
     public JellyItem init(int index, float left, float top) {
+        this.index = index;
         setSrcRect(index);
         dstRect.set(left, top, left + width, top + height);
         return this;
@@ -45,5 +62,9 @@ public class JellyItem extends MapObject {
     @Override
     public RectF getCollisionRect() {
         return collisionRect;
+    }
+
+    public int getSoundResId() {
+        return SOUND_IDS[index % SOUND_IDS.length];
     }
 }

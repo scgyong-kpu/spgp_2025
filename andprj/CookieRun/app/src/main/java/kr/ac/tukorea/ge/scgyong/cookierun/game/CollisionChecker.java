@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
 
 public class CollisionChecker implements IGameObject {
@@ -27,7 +28,18 @@ public class CollisionChecker implements IGameObject {
             }
             JellyItem item = (JellyItem) gobj;
             if (CollisionHelper.collides(player, item)) {
+                Sound.playEffect(item.getSoundResId());
+                if (item.index == 26) {
+                    player.magnify(true);
+                }
                 scene.remove(item);
+            }
+        }
+        ArrayList<IGameObject> obstacles = scene.objectsAt(MainScene.Layer.obstacle);
+        for (int i = obstacles.size() - 1; i >= 0; i--) {
+            Obstacle obstacle = (Obstacle) obstacles.get(i);
+            if (CollisionHelper.collides(player, obstacle)) {
+                player.hurt(obstacle);
             }
         }
     }
