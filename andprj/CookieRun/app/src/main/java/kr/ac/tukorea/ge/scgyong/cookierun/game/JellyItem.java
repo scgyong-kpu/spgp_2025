@@ -50,4 +50,8 @@ public class JellyItem extends MapObject {
     public RectF getCollisionRect() {
         return collisionRect;
     }
+
+    public int getSoundResId() {
+        return R.raw.jelly;
+    }
 }

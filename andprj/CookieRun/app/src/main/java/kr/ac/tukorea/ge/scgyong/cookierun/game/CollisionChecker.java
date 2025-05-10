@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
 
 public class CollisionChecker implements IGameObject {
@@ -27,6 +28,7 @@ public class CollisionChecker implements IGameObject {
             }
             JellyItem item = (JellyItem) gobj;
             if (CollisionHelper.collides(player, item)) {
+                Sound.playEffect(item.getSoundResId());
                 scene.remove(item);
             }
         }
