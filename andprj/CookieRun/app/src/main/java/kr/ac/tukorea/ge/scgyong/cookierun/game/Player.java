@@ -269,6 +269,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
     }
     public void hurt(Obstacle obstacle) {
         if (state == State.hurt) return;
+        Sound.playEffect(R.raw.hurt);
         setState(State.hurt);
         this.obstacle = obstacle;
     }
