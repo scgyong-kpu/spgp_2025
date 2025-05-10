@@ -72,6 +72,14 @@ public class MainScene extends Scene {
     }
 
     // Overridables
+
+
+    @Override
+    public boolean onBackPressed() {
+        new PauseScene().push();
+        return true;
+    }
+
     @Override
     protected int getTouchLayerIndex() {
         return Layer.touch.ordinal();
