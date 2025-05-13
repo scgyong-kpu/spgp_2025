@@ -1,12 +1,17 @@
 package kr.ac.tukorea.ge.and.scgyong.smoothingpath;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -35,6 +40,27 @@ public class PathView extends View {
         Log.d(TAG, "Points count=" + points.size());
 
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onDraw(@NonNull Canvas canvas) {
+        int count = points.size();
+        if (count == 0) return;
+
+        PointF first = points.get(0);
+        Path path = new Path();
+        path.moveTo(first.x, first.y);
+
+        for (int i = 1; i < count; i++) {
+            PointF pt = points.get(i);
+            path.lineTo(pt.x, pt.y);
+        }
+
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(2.0f);
+        canvas.drawPath(path, paint);
     }
 }
 
