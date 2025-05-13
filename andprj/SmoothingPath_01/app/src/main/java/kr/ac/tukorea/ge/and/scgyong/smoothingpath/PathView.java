@@ -18,13 +18,17 @@ import java.util.ArrayList;
 
 public class PathView extends View {
     private static final String TAG = PathView.class.getSimpleName();
+    private Path path;
+    private Paint paint = new Paint();
 
     public PathView(Context context) {
         super(context);
+        initPaint();
     }
 
     public PathView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        initPaint();
     }
 
     private ArrayList<PointF> points = new ArrayList<>();
@@ -37,6 +41,7 @@ public class PathView extends View {
         float x = event.getX();
         float y = event.getY();
         points.add(new PointF(x, y));
+        buildPath();
         Log.d(TAG, "Points count=" + points.size());
         invalidate();
 
@@ -48,25 +53,34 @@ public class PathView extends View {
         int count = points.size();
         if (count == 0) return;
 
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(2.0f);
-
-        PointF first = points.get(0);
         if (count == 1) {
+            PointF first = points.get(0);
             canvas.drawCircle(first.x, first.y, 5.0f, paint);
             return;
         }
-        Path path = new Path();
+
+        canvas.drawPath(path, paint);
+    }
+
+    private void initPaint() {
+        paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(2.0f);
+    }
+
+    private void buildPath() {
+        int count = points.size();
+        if (count <= 1) return;
+
+        path = new Path();
+        PointF first = points.get(0);
         path.moveTo(first.x, first.y);
 
         for (int i = 1; i < count; i++) {
             PointF pt = points.get(i);
             path.lineTo(pt.x, pt.y);
         }
-
-        canvas.drawPath(path, paint);
     }
 }
 
