@@ -48,7 +48,16 @@ public class PathView extends View {
         int count = points.size();
         if (count == 0) return;
 
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(2.0f);
+
         PointF first = points.get(0);
+        if (count == 1) {
+            canvas.drawCircle(first.x, first.y, 5.0f, paint);
+            return;
+        }
         Path path = new Path();
         path.moveTo(first.x, first.y);
 
@@ -57,10 +66,6 @@ public class PathView extends View {
             path.lineTo(pt.x, pt.y);
         }
 
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(2.0f);
         canvas.drawPath(path, paint);
     }
 }
