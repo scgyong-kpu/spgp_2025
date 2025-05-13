@@ -22,9 +22,24 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_main);
         ui = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(ui.getRoot());
+
+        ui.pathView.setCallback(pathViewCallback);
+        updatePointCount(0);
     }
+    private PathView.CallBack pathViewCallback = new PathView.CallBack() {
+        @Override
+        public void onPathChanged(int count) {
+            updatePointCount(count);
+        }
+    };
 
     public void onBtnClear(View view) {
         ui.pathView.clearPoints();
+        updatePointCount(0);
+    }
+
+    public void updatePointCount(int count) {
+        String text = getString(R.string.point_count_fmt, count);
+        ui.countTextView.setText(text);
     }
 }

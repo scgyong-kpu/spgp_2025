@@ -17,6 +17,16 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class PathView extends View {
+    public interface CallBack {
+        public void onPathChanged(int count);
+    }
+
+    public void setCallback(CallBack callback) {
+        this.callback = callback;
+    }
+
+    private CallBack callback;
+
     private static final String TAG = PathView.class.getSimpleName();
     private Path path;
     private Paint paint = new Paint();
@@ -42,6 +52,9 @@ public class PathView extends View {
         float y = event.getY();
         points.add(new PointF(x, y));
         buildPath();
+        if (callback != null) {
+            callback.onPathChanged(points.size());
+        }
         Log.d(TAG, "Points count=" + points.size());
         invalidate();
 
@@ -86,6 +99,10 @@ public class PathView extends View {
     public void clearPoints() {
         points.clear();
         invalidate();
+    }
+
+    public int getPointCount() {
+        return points.size();
     }
 }
 
