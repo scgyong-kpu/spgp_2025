@@ -38,6 +38,7 @@ public class PathView extends View {
         float y = event.getY();
         points.add(new PointF(x, y));
         Log.d(TAG, "Points count=" + points.size());
+        invalidate();
 
         return super.onTouchEvent(event);
     }
