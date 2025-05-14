@@ -79,4 +79,9 @@ public class PathView extends View {
             path.lineTo(pt.x, pt.y);
         }
     }
+
+    public void clearPoints() {
+        points.clear();
+        invalidate();
+    }
 }
