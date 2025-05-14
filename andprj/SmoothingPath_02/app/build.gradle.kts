@@ -6,6 +6,10 @@ android {
     namespace = "kr.ac.tukorea.ge.and.scgyong.smoothingpath"
     compileSdk = 35
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "kr.ac.tukorea.ge.and.scgyong.smoothingpath"
         minSdk = 24
