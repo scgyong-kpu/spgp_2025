@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 public class PathView extends View {
     private boolean closesPath;
     private Bitmap bitmap;
+    private PointF planePos = new PointF();
 
     public void closePath(boolean closes) {
         this.closesPath = closes;
@@ -30,13 +32,20 @@ public class PathView extends View {
     }
 
     public void startPathAnimation() {
-        ValueAnimator animator = ValueAnimator.ofFloat(1.4f, 7.2f);
+        PathMeasure pm = new PathMeasure(path, closesPath);
+        float length = pm.getLength();
+        ValueAnimator animator = ValueAnimator.ofFloat(0, length);
         animator.setDuration(1200);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(@NonNull ValueAnimator animation) {
                 float value = (Float) animation.getAnimatedValue();
-                Log.d(TAG, "Anim: " + value);
+                float[] pos = new float[2];
+                float[] tan = new float[2];
+                pm.getPosTan(value, pos, tan);
+                planePos.set(pos[0], pos[1]);
+                invalidate();
+                Log.d(TAG, "Anim: " + value + " x=" + pos[0] + " y=" + pos[1]);
             }
         });
 //        animator.addUpdateListener(animation -> {
@@ -83,6 +92,9 @@ public class PathView extends View {
         float x = event.getX();
         float y = event.getY();
         points.add(new PointF(x, y));
+        if (points.size() == 1) {
+            planePos.set(x, y);
+        }
         //activity.updatePointsCount()
         if (callback != null) {
             callback.onPointsCountChange(points.size());
@@ -100,12 +112,12 @@ public class PathView extends View {
             return;
         }
 
-        PointF first = points.get(0);
-        float px = first.x - bitmap.getWidth() / 2.0f;
-        float py = first.y - bitmap.getHeight() / 2.0f;
+        float px = planePos.x - bitmap.getWidth() / 2.0f;
+        float py = planePos.y - bitmap.getHeight() / 2.0f;
         canvas.drawBitmap(bitmap, px, py, null);
 
         if (count == 1) {
+            PointF first = points.get(0);
             canvas.drawCircle(first.x, first.y, 5.0f, paint);
             return;
         }
