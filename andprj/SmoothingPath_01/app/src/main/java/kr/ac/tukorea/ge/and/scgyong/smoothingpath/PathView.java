@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -36,6 +37,7 @@ public class PathView extends View {
     private static final String TAG = PathView.class.getSimpleName();
     private Path path;
     private Paint paint = new Paint();
+    private PointF planePos = new PointF();
 
     public PathView(Context context) {
         super(context);
@@ -48,22 +50,24 @@ public class PathView extends View {
     }
 
     public void startPathAnimation() {
-        ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.5f);
+        PathMeasure pm = new PathMeasure(path, closesPath);
+        float length = pm.getLength();
+        ValueAnimator animator = ValueAnimator.ofFloat(0.0f, length);
         animator.setDuration(1200);
-        animator.addUpdateListener(animationListener);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
+                float value = (Float) animation.getAnimatedValue();
+                float[] pos = new float[2];
+                float[] tan = new float[2];
+                pm.getPosTan(value, pos, tan);
+                planePos.set(pos[0], pos[1]);
+                invalidate();
+                Log.d(TAG, "Anim value = " + value + " x=" + pos[0] + " y=" + pos[1]);
+            }
+        });
         animator.start();
     }
-    private ValueAnimator.AnimatorUpdateListener animationListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(@NonNull ValueAnimator animation) {
-            float value = (Float) animation.getAnimatedValue();
-            Log.d(TAG, "Anim value = " + value);
-        }
-    };
-//    private ValueAnimator.AnimatorUpdateListener animationListener = animation -> {
-//
-//    };
-
 
     private ArrayList<PointF> points = new ArrayList<>();
     @Override
@@ -75,6 +79,9 @@ public class PathView extends View {
         float x = event.getX();
         float y = event.getY();
         points.add(new PointF(x, y));
+        if (points.size() == 1) {
+            planePos.set(x, y);
+        }
         buildPath();
         if (callback != null) {
             callback.onPathChanged(points.size());
@@ -90,12 +97,12 @@ public class PathView extends View {
         int count = points.size();
         if (count == 0) return;
 
-        PointF first = points.get(0);
-        float px = first.x - bitmap.getWidth() / 2.0f;
-        float py = first.y - bitmap.getHeight() / 2.0f;
+        float px = planePos.x - bitmap.getWidth() / 2.0f;
+        float py = planePos.y - bitmap.getHeight() / 2.0f;
         canvas.drawBitmap(bitmap, px, py, null);
 
         if (count == 1) {
+            PointF first = points.get(0);
             canvas.drawCircle(first.x, first.y, 5.0f, paint);
             return;
         }
