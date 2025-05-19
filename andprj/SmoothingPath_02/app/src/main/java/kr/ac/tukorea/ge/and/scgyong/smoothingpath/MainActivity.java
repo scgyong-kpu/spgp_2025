@@ -42,4 +42,8 @@ public class MainActivity extends AppCompatActivity {
     public void onCheckClosed(View view) {
         ui.pathView.closePath(ui.closedCheckbox.isChecked());
     }
+
+    public void onBtnStartAnimation(View view) {
+        ui.pathView.startPathAnimation();
+    }
 }
