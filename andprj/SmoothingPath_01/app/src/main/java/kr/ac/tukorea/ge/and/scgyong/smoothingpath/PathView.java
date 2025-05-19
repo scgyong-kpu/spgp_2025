@@ -38,6 +38,7 @@ public class PathView extends View {
     private Path path;
     private Paint paint = new Paint();
     private PointF planePos = new PointF();
+    private float planeAngle;
 
     public PathView(Context context) {
         super(context);
@@ -62,6 +63,7 @@ public class PathView extends View {
                 float[] tan = new float[2];
                 pm.getPosTan(value, pos, tan);
                 planePos.set(pos[0], pos[1]);
+                planeAngle = (float) (Math.toDegrees(Math.atan2(tan[1], tan[0])) + 90);
                 invalidate();
                 Log.d(TAG, "Anim value = " + value + " x=" + pos[0] + " y=" + pos[1]);
             }
@@ -100,7 +102,11 @@ public class PathView extends View {
 
         float px = planePos.x - bitmap.getWidth() / 2.0f;
         float py = planePos.y - bitmap.getHeight() / 2.0f;
+
+        canvas.save();
+        canvas.rotate(planeAngle, planePos.x, planePos.y);
         canvas.drawBitmap(bitmap, px, py, null);
+        canvas.restore();
 
         if (count == 1) {
             PointF first = points.get(0);
