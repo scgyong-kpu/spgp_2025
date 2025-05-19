@@ -33,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public void onBtnClear(View view) {
+    public void onCheckClosed(View view) {
+        ui.pathView.closePath(ui.closedCheckbox.isChecked());
+    }
+
+        public void onBtnClear(View view) {
         ui.pathView.clearPoints();
         updatePointCount(0);
     }
