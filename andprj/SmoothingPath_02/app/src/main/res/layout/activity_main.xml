@@ -13,19 +13,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+        <TextView
+            android:id="@+id/countTextView"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:textSize="20sp"
+            android:text="Count: 0"
+            />
+        <CheckBox
+            android:id="@+id/closedCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Closed"
+            android:onClick="onCheckClosed"
+            />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Clear"
             android:onClick="onBtnClear"
-            />
-        <TextView
-            android:id="@+id/countTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
-            android:textSize="20sp"
-            android:text="Count: 0"
             />
     </LinearLayout>
 

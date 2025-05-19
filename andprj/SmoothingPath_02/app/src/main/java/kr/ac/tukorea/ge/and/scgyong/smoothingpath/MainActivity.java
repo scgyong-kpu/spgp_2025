@@ -38,4 +38,8 @@ public class MainActivity extends AppCompatActivity {
         String text = getString(R.string.points_count_fmt, count);
         ui.countTextView.setText(text);
     }
+
+    public void onCheckClosed(View view) {
+        ui.pathView.closePath(ui.closedCheckbox.isChecked());
+    }
 }

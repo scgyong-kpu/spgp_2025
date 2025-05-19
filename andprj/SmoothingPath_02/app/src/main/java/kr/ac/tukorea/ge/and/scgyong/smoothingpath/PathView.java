@@ -17,6 +17,14 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class PathView extends View {
+    private boolean closesPath;
+
+    public void closePath(boolean closes) {
+        this.closesPath = closes;
+        buildPath();
+        invalidate();
+    }
+
     public interface Callback {
         public void onPointsCountChange(int count);
     }
@@ -90,6 +98,9 @@ public class PathView extends View {
         for (int i = 1; i < count; i++) {
             PointF pt = points.get(i);
             path.lineTo(pt.x, pt.y);
+        }
+        if (closesPath) {
+            path.close();
         }
     }
 
