@@ -1,6 +1,8 @@
 package kr.ac.tukorea.ge.and.scgyong.smoothingpath;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 
 public class PathView extends View {
     private boolean closesPath;
+    private Bitmap bitmap;
 
     public interface CallBack {
         public void onPathChanged(int count);
@@ -35,12 +38,12 @@ public class PathView extends View {
 
     public PathView(Context context) {
         super(context);
-        initPaint();
+        init();
     }
 
     public PathView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initPaint();
+        init();
     }
 
     private ArrayList<PointF> points = new ArrayList<>();
@@ -68,8 +71,12 @@ public class PathView extends View {
         int count = points.size();
         if (count == 0) return;
 
+        PointF first = points.get(0);
+        float px = first.x - bitmap.getWidth() / 2.0f;
+        float py = first.y - bitmap.getHeight() / 2.0f;
+        canvas.drawBitmap(bitmap, px, py, null);
+
         if (count == 1) {
-            PointF first = points.get(0);
             canvas.drawCircle(first.x, first.y, 5.0f, paint);
             return;
         }
@@ -77,11 +84,13 @@ public class PathView extends View {
         canvas.drawPath(path, paint);
     }
 
-    private void initPaint() {
+    private void init() {
         paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(2.0f);
+
+        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.plane_240);
     }
 
     private void buildPath() {
