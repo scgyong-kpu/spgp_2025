@@ -73,7 +73,7 @@ public class PathView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        if (action != MotionEvent.ACTION_DOWN) {
+        if (action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_MOVE) {
             return false;
         }
         float x = event.getX();
@@ -89,7 +89,8 @@ public class PathView extends View {
         Log.d(TAG, "Points count=" + points.size());
         invalidate();
 
-        return super.onTouchEvent(event);
+        return true;
+        //return super.onTouchEvent(event);
     }
 
     @Override
