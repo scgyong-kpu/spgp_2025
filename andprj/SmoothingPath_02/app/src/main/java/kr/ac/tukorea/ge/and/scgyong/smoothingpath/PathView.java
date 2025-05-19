@@ -24,6 +24,7 @@ public class PathView extends View {
     private boolean closesPath;
     private Bitmap bitmap;
     private PointF planePos = new PointF();
+    private float planeAngleInDegree;
 
     public void closePath(boolean closes) {
         this.closesPath = closes;
@@ -44,6 +45,7 @@ public class PathView extends View {
                 float[] tan = new float[2];
                 pm.getPosTan(value, pos, tan);
                 planePos.set(pos[0], pos[1]);
+                planeAngleInDegree = (float) (Math.toDegrees(Math.atan2(tan[1], tan[0])) + 90);
                 invalidate();
                 Log.d(TAG, "Anim: " + value + " x=" + pos[0] + " y=" + pos[1]);
             }
@@ -118,7 +120,10 @@ public class PathView extends View {
 
         float px = planePos.x - bitmap.getWidth() / 2.0f;
         float py = planePos.y - bitmap.getHeight() / 2.0f;
+        canvas.save();
+        canvas.rotate(planeAngleInDegree, planePos.x, planePos.y);
         canvas.drawBitmap(bitmap, px, py, null);
+        canvas.restore();
 
         if (count == 1) {
             PointF first = points.get(0);
