@@ -46,6 +46,10 @@ public class PathView extends View {
         init();
     }
 
+    public void startPathAnimation() {
+
+    }
+
     private ArrayList<PointF> points = new ArrayList<>();
     @Override
     public boolean onTouchEvent(MotionEvent event) {

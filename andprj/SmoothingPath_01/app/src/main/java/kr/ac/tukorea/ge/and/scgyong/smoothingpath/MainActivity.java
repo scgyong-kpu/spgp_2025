@@ -37,9 +37,13 @@ public class MainActivity extends AppCompatActivity {
         ui.pathView.closePath(ui.closedCheckbox.isChecked());
     }
 
-        public void onBtnClear(View view) {
+    public void onBtnClear(View view) {
         ui.pathView.clearPoints();
         updatePointCount(0);
+    }
+
+    public void onBtnStartAnimation(View view) {
+        ui.pathView.startPathAnimation();
     }
 
     public void updatePointCount(int count) {
