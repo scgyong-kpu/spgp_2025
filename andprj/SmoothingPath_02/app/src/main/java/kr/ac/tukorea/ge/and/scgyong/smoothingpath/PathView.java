@@ -35,7 +35,7 @@ public class PathView extends View {
         PathMeasure pm = new PathMeasure(path, closesPath);
         float length = pm.getLength();
         ValueAnimator animator = ValueAnimator.ofFloat(0, length);
-        animator.setDuration(1200);
+        animator.setDuration((long)length);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(@NonNull ValueAnimator animation) {
