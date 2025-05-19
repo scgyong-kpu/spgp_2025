@@ -1,5 +1,6 @@
 package kr.ac.tukorea.ge.and.scgyong.smoothingpath;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -47,8 +48,22 @@ public class PathView extends View {
     }
 
     public void startPathAnimation() {
-
+        ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.5f);
+        animator.setDuration(1200);
+        animator.addUpdateListener(animationListener);
+        animator.start();
     }
+    private ValueAnimator.AnimatorUpdateListener animationListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(@NonNull ValueAnimator animation) {
+            float value = (Float) animation.getAnimatedValue();
+            Log.d(TAG, "Anim value = " + value);
+        }
+    };
+//    private ValueAnimator.AnimatorUpdateListener animationListener = animation -> {
+//
+//    };
+
 
     private ArrayList<PointF> points = new ArrayList<>();
     @Override
