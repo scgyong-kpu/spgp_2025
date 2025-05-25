@@ -103,8 +103,9 @@ public class TiledBackground implements IGameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        int sx = 0;
-        float dx = 0;
+
+            int sx = 0;
+            float dx = 0;
             while (dx < Metrics.width) {
                 int tileNo = layer.tileAt(sx, 0);
                 tileset.getRect(srcRect, tileNo);
