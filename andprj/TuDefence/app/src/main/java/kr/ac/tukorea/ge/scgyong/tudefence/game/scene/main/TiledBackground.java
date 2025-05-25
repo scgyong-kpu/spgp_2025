@@ -36,6 +36,20 @@ public class TiledBackground implements IGameObject {
     private final RectF dstRect = new RectF();
     private float scrollX, scrollY;
 
+    public void scrollTo(float x, float y) {
+        scrollX = x;
+        scrollY = y;
+    }
+    public boolean doesWrap() {
+        return wraps;
+    }
+
+    public void setWraps(boolean wraps) {
+        this.wraps = wraps;
+    }
+
+    private boolean wraps;
+
     public TiledBackground(String mapAssetFile, float tileWidth, float tileHeight) {
         map = loadMap(mapAssetFile);
         assetPath = getDirectory(mapAssetFile);
@@ -45,8 +59,7 @@ public class TiledBackground implements IGameObject {
         setActiveTileset(0);
         setActiveLayer(0);
 
-        scrollX = 120;
-        scrollY = 150;
+        setWraps(true);
     }
 
     private TiledMap loadMap(String fileName) {
@@ -109,15 +122,27 @@ public class TiledBackground implements IGameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        float start_dx = -(scrollX % tileWidth);
-        int start_sx = (int) (scrollX / tileWidth);
-        float start_dy = -(scrollY % tileHeight);
-        int sy = (int) (scrollY / tileHeight);
+        float scroll_x = scrollX, scroll_y = scrollY;
+        if (wraps) {
+            float fullWidth = map.getWidth() * tileWidth;
+            scroll_x %= fullWidth;
+            if (scroll_x < 0) scroll_x += fullWidth;
+
+            float fullHeight = map.getHeight() * tileHeight;
+            scroll_y %= fullHeight;
+            if (scroll_y < 0) scroll_y += fullHeight;
+        }
+        int layer_width = (int) layer.getWidth();
+        int layer_height = (int) layer.getHeight();
+        float start_dx = -(scroll_x % tileWidth);
+        int start_sx = (int) (scroll_x / tileWidth);
+        float start_dy = -(scroll_y % tileHeight);
+        int sy = (int) (scroll_y / tileHeight);
         float dy = start_dy;
         while (dy < Metrics.height) {
             int sx = start_sx;
             float dx = start_dx;
-            for (; dx < Metrics.width; dx += tileWidth, sx += 1) {
+            for (; dx < Metrics.width; dx += tileWidth, sx = (sx+1) % layer_width) {
                 int tileNo = layer.tileAt(sx, sy);
                 if (tileNo < 0) {
                     continue;
@@ -126,7 +151,7 @@ public class TiledBackground implements IGameObject {
                 dstRect.set(dx, dy, dx + tileWidth, dy + tileHeight);
                 canvas.drawBitmap(bitmap, srcRect, dstRect, null);
             }
-            sy += 1;
+            sy = (sy + 1) % layer_height;
             dy += tileHeight;
         }
     }
