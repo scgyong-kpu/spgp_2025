@@ -63,4 +63,8 @@ public class Layer {
     public long getY() { return y; }
     @JsonProperty("y")
     public void setY(long value) { this.y = value; }
+
+    public int tileAt(int x, int y) {
+        return (int) data[(int) (y * width + x)];
+    }
 }
