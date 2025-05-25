@@ -20,11 +20,13 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 public class TiledBackground implements IGameObject {
     private static final String TAG = TiledBackground.class.getSimpleName();
     private final TiledMap map;
+    private final String assetPath;
     private Tileset tileset;
     private Layer layer;
 
     public TiledBackground(String mapAssetFile) {
         map = loadMap(mapAssetFile);
+        assetPath = getDirectory(mapAssetFile);
         Log.d(TAG, "Map file " + mapAssetFile + " has " + map.getLayers().length + " layer(s) and " + map.getTilesets().length + " tileset(s).");
         setActiveTileset(0);
         setActiveLayer(0);
@@ -53,6 +55,13 @@ public class TiledBackground implements IGameObject {
         reader.close();
         inputStream.close();
         return builder.toString();
+    }
+    private static String getDirectory(String assetFilename) {
+        int slash = assetFilename.lastIndexOf('/');
+        if (slash < 0) {
+            return "./";
+        }
+        return assetFilename.substring(0, slash + 1);
     }
 
     private void setActiveTileset(int index) {
