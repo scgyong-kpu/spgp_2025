@@ -1,4 +1,4 @@
-package io.quicktype;
+package kr.ac.tukorea.ge.scgyong.tudefence.game.map;
 
 import com.fasterxml.jackson.annotation.*;
 

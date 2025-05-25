@@ -12,7 +12,7 @@
 //
 //     Welcome data = Converter.fromJsonString(jsonString);
 
-package io.quicktype;
+package kr.ac.tukorea.ge.scgyong.tudefence.game.map;
 
 import java.io.IOException;
 import com.fasterxml.jackson.databind.*;
