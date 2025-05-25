@@ -6,6 +6,10 @@ android {
     namespace = "kr.ac.tukorea.ge.scgyong.tudefence"
     compileSdk = 35
 
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "kr.ac.tukorea.ge.scgyong.tudefence"
         minSdk = 24
