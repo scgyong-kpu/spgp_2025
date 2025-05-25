@@ -65,6 +65,8 @@ public class Layer {
     public void setY(long value) { this.y = value; }
 
     public int tileAt(int x, int y) {
+        if (x >= width) return -1;
+        if (y >= height) return -1;
         return (int) data[(int) (y * width + x)];
     }
 }
