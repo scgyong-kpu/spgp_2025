@@ -2,13 +2,17 @@ package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.AbstractList;
 
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Converter;
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Layer;
@@ -23,6 +27,8 @@ public class TiledBackground implements IGameObject {
     private final String assetPath;
     private Tileset tileset;
     private Layer layer;
+    private Bitmap bitmap;
+    private RectF dstRect = new RectF();
 
     public TiledBackground(String mapAssetFile) {
         map = loadMap(mapAssetFile);
@@ -56,6 +62,16 @@ public class TiledBackground implements IGameObject {
         inputStream.close();
         return builder.toString();
     }
+    private Bitmap loadBitmapAsset(String fileName) {
+        Context context = GameView.view.getContext();
+        AssetManager assets = context.getAssets();
+        try {
+            InputStream inputStream = assets.open(fileName);
+            return BitmapFactory.decodeStream(inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private static String getDirectory(String assetFilename) {
         int slash = assetFilename.lastIndexOf('/');
         if (slash < 0) {
@@ -66,6 +82,12 @@ public class TiledBackground implements IGameObject {
 
     private void setActiveTileset(int index) {
         tileset = map.getTilesets()[index];
+        String file = assetPath + tileset.getImage();
+        bitmap = loadBitmapAsset(file);
+        // 임시 크기
+        float w = bitmap.getWidth();
+        float h = bitmap.getHeight();
+        dstRect.set(0, 0, w / h * 1800, 1800);
     }
 
 
@@ -78,5 +100,6 @@ public class TiledBackground implements IGameObject {
 
     @Override
     public void draw(Canvas canvas) {
+        canvas.drawBitmap(bitmap, null, dstRect, null);
     }
 }
