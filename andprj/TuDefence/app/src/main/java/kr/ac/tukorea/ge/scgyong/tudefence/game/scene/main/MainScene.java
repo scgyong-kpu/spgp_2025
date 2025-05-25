@@ -8,6 +8,6 @@ public class MainScene extends Scene {
     }
     public MainScene() {
         initLayers(Layer.values().length);
-        add(Layer.bg, new TiledBackground("map/desert.tmj", 300, 300));
+        add(Layer.bg, new TiledBackground("map/desert.tmj", 100, 100));
     }
 }
