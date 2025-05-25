@@ -11,17 +11,23 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Converter;
+import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Layer;
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.TiledMap;
+import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Tileset;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class TiledBackground implements IGameObject {
     private static final String TAG = TiledBackground.class.getSimpleName();
     private final TiledMap map;
+    private Tileset tileset;
+    private Layer layer;
 
     public TiledBackground(String mapAssetFile) {
         map = loadMap(mapAssetFile);
         Log.d(TAG, "Map file " + mapAssetFile + " has " + map.getLayers().length + " layer(s) and " + map.getTilesets().length + " tileset(s).");
+        setActiveTileset(0);
+        setActiveLayer(0);
     }
 
     private TiledMap loadMap(String fileName) {
@@ -47,6 +53,15 @@ public class TiledBackground implements IGameObject {
         reader.close();
         inputStream.close();
         return builder.toString();
+    }
+
+    private void setActiveTileset(int index) {
+        tileset = map.getTilesets()[index];
+    }
+
+
+    private void setActiveLayer(int index) {
+        layer = map.getLayers()[index];
     }
     @Override
     public void update() {
