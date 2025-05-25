@@ -30,7 +30,8 @@ public class TiledBackground implements IGameObject {
     private Tileset tileset;
     private Layer layer;
     private Bitmap bitmap;
-    private final float tileWidth, tileHeight;
+    private float tileWidth;
+    private float tileHeight;
 
     private final Rect srcRect = new Rect();
     private final RectF dstRect = new RectF();
@@ -104,20 +105,52 @@ public class TiledBackground implements IGameObject {
         return assetFilename.substring(0, slash + 1);
     }
 
-    private void setActiveTileset(int index) {
+    public void setActiveTileset(int index) {
         tileset = map.getTilesets()[index];
         String file = assetPath + tileset.getImage();
         bitmap = loadBitmapAsset(file);
     }
 
 
-    private void setActiveLayer(int index) {
+    public void setActiveLayer(int index) {
         layer = map.getLayers()[index];
     }
+
+    public void setTileSize(float width, float height) {
+        this.tileWidth = width;
+        this.tileHeight = height;
+    }
+    public Tileset getActiveTileset() {
+        return tileset;
+    }
+    public Layer getActiveLayer() {
+        return layer;
+    }
+
+    public float getFullWidth() {
+        return map.getWidth() * tileWidth;
+    }
+    public float getFullHeight() {
+        return map.getHeight() * tileHeight;
+    }
+
+    float speed = 50f;
     @Override
     public void update() {
         scrollX += 110f * GameView.frameTime;
         scrollY += 50f * GameView.frameTime;
+
+        float size = tileWidth + speed * GameView.frameTime;
+        if (size < 100) {
+            size = 100;
+            speed = 50f;
+        }
+        if (size > 200) {
+            size = 200;
+            speed = -50f;
+        }
+        tileWidth = size;
+        tileHeight = size;
     }
 
     @Override
@@ -144,6 +177,7 @@ public class TiledBackground implements IGameObject {
             float dx = start_dx;
             for (; dx < Metrics.width; dx += tileWidth, sx = (sx+1) % layer_width) {
                 int tileNo = layer.tileAt(sx, sy);
+                //Log.v(TAG, "sx=" + sx + " sy=" + sy + " tile=" + tileNo);
                 if (tileNo < 0) {
                     continue;
                 }
@@ -151,8 +185,10 @@ public class TiledBackground implements IGameObject {
                 dstRect.set(dx, dy, dx + tileWidth, dy + tileHeight);
                 canvas.drawBitmap(bitmap, srcRect, dstRect, null);
             }
+            //Log.d(TAG, "--- sy = " + sy + " ---");
             sy = (sy + 1) % layer_height;
             dy += tileHeight;
         }
+        //Log.i(TAG, "------------------------------");
     }
 }
