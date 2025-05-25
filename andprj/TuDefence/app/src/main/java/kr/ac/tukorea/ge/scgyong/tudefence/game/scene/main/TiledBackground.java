@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -28,11 +29,16 @@ public class TiledBackground implements IGameObject {
     private Tileset tileset;
     private Layer layer;
     private Bitmap bitmap;
-    private RectF dstRect = new RectF();
+    private final float tileWidth, tileHeight;
 
-    public TiledBackground(String mapAssetFile) {
+    private final Rect srcRect = new Rect();
+    private final RectF dstRect = new RectF();
+
+    public TiledBackground(String mapAssetFile, float tileWidth, float tileHeight) {
         map = loadMap(mapAssetFile);
         assetPath = getDirectory(mapAssetFile);
+        this.tileWidth = tileWidth;
+        this.tileHeight = tileHeight;
         Log.d(TAG, "Map file " + mapAssetFile + " has " + map.getLayers().length + " layer(s) and " + map.getTilesets().length + " tileset(s).");
         setActiveTileset(0);
         setActiveLayer(0);
@@ -84,10 +90,6 @@ public class TiledBackground implements IGameObject {
         tileset = map.getTilesets()[index];
         String file = assetPath + tileset.getImage();
         bitmap = loadBitmapAsset(file);
-        // 임시 크기
-        float w = bitmap.getWidth();
-        float h = bitmap.getHeight();
-        dstRect.set(0, 0, w / h * 1800, 1800);
     }
 
 
@@ -100,6 +102,8 @@ public class TiledBackground implements IGameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, null, dstRect, null);
+        srcRect.set(1, 1, 33, 33);
+        dstRect.set(0, 0, tileWidth, tileHeight);
+        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 }
