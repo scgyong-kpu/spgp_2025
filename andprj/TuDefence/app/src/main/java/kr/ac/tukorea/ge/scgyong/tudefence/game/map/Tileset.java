@@ -14,7 +14,6 @@ public class Tileset {
     private long tilecount;
     private long tileheight;
     private long tilewidth;
-    private Wangset[] wangsets;
 
     @JsonProperty("columns")
     public long getColumns() { return columns; }
@@ -70,9 +69,4 @@ public class Tileset {
     public long getTilewidth() { return tilewidth; }
     @JsonProperty("tilewidth")
     public void setTilewidth(long value) { this.tilewidth = value; }
-
-    @JsonProperty("wangsets")
-    public Wangset[] getWangsets() { return wangsets; }
-    @JsonProperty("wangsets")
-    public void setWangsets(Wangset[] value) { this.wangsets = value; }
 }

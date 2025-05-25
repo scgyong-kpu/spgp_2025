@@ -2,7 +2,7 @@ package kr.ac.tukorea.ge.scgyong.tudefence.game.map;
 
 import com.fasterxml.jackson.annotation.*;
 
-public class Welcome {
+public class TiledMap {
     private long compressionlevel;
     private long height;
     private boolean infinite;
