@@ -60,7 +60,7 @@ public class TiledBackground implements IGameObject {
         setActiveTileset(0);
         setActiveLayer(0);
 
-        setWraps(true);
+        //setWraps(true);
     }
 
     private TiledMap loadMap(String fileName) {
@@ -134,23 +134,8 @@ public class TiledBackground implements IGameObject {
         return map.getHeight() * tileHeight;
     }
 
-    float speed = 50f;
     @Override
     public void update() {
-        scrollX += 110f * GameView.frameTime;
-        scrollY += 50f * GameView.frameTime;
-
-        float size = tileWidth + speed * GameView.frameTime;
-        if (size < 100) {
-            size = 100;
-            speed = 50f;
-        }
-        if (size > 200) {
-            size = 200;
-            speed = -50f;
-        }
-        tileWidth = size;
-        tileHeight = size;
     }
 
     @Override
