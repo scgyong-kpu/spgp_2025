@@ -21,6 +21,7 @@ import kr.ac.tukorea.ge.scgyong.tudefence.game.map.TiledMap;
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Tileset;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class TiledBackground implements IGameObject {
     private static final String TAG = TiledBackground.class.getSimpleName();
@@ -102,8 +103,15 @@ public class TiledBackground implements IGameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        tileset.getRect(srcRect, 3);
-        dstRect.set(0, 0, tileWidth, tileHeight);
-        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+        int tileNo = 1;
+        float x = 0;
+        while (x < Metrics.width) {
+            tileset.getRect(srcRect, tileNo);
+            dstRect.set(x, 0, x + tileWidth, tileHeight);
+            canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+
+            x += tileWidth;
+            tileNo += 1;
+        }
     }
 }
