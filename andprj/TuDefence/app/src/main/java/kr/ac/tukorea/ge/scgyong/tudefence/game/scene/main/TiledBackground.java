@@ -102,7 +102,7 @@ public class TiledBackground implements IGameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        srcRect.set(34, 1, 66, 33);
+        tileset.getRect(srcRect, 3);
         dstRect.set(0, 0, tileWidth, tileHeight);
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }

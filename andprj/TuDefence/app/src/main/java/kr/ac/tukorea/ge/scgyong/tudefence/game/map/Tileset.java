@@ -1,5 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.map;
 
+import android.graphics.Rect;
+
 import com.fasterxml.jackson.annotation.*;
 
 public class Tileset {
@@ -69,4 +71,13 @@ public class Tileset {
     public long getTilewidth() { return tilewidth; }
     @JsonProperty("tilewidth")
     public void setTilewidth(long value) { this.tilewidth = value; }
+
+    public void getRect(Rect rect, int tileNo) {
+        int x = (int) ((tileNo - 1) % columns);
+        int y = (int) ((tileNo - 1) / columns);
+        rect.left = (int) (x * (tilewidth + spacing) + margin);
+        rect.top = (int) (y * (tileheight + spacing) + margin);
+        rect.right = (int) (rect.left + tilewidth);
+        rect.bottom = (int) (rect.top + tileheight);
+    }
 }
