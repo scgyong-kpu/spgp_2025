@@ -14,6 +14,6 @@ public class Fly extends SheetSprite {
             new Rect(size, 0, 2 * size, size),
         };
 
-        dstRect.set(1000, 100, 1200, 300);
+        setPosition(0, 0, 200, 200);
     }
 }

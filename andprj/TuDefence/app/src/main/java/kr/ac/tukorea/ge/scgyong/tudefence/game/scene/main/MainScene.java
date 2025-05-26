@@ -9,6 +9,8 @@ public class MainScene extends Scene {
     public MainScene() {
         initLayers(Layer.values().length);
         add(Layer.bg, new TiledBackground("map/desert.tmj", 100, 100));
-        add(Layer.enemy, new Fly());
+        Fly fly = new Fly();
+        fly.setPosition(2000, 1000);
+        add(Layer.enemy, fly);
     }
 }
