@@ -9,6 +9,8 @@ import android.graphics.Rect;
 
 import androidx.core.graphics.PathParser;
 
+import java.util.Random;
+
 import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.SheetSprite;
@@ -45,11 +47,13 @@ public class Fly extends SheetSprite implements IRecyclable {
         srcRects = rects_array[type.ordinal()];
         setPosition(0, 0, size, size);
         distance = 0;
+        dx = dy = 0;
         this.speed = speed;
         update();
         return this;
     }
 
+    private static final Random rand = new Random();
     private static final PathMeasure pm;
     private static final float pathLength;
     private static final Path path;
@@ -86,6 +90,7 @@ public class Fly extends SheetSprite implements IRecyclable {
 
     private static Rect[][] rects_array;
     private float distance, speed, angle;
+    private float dx, dy;
     private final float[] pos = new float[2];
     private final float[] tan = new float[2];
 
@@ -96,9 +101,18 @@ public class Fly extends SheetSprite implements IRecyclable {
             Scene.top().remove(MainScene.Layer.enemy, this);
             return;
         }
+        float maxDiff = width / 5;
+        dx += (2 * maxDiff * rand.nextFloat() - maxDiff) * GameView.frameTime;
+        if (dx < -maxDiff) dx = -maxDiff;
+        else if (dx > maxDiff) dx = maxDiff;
+        dy += (2 * maxDiff * rand.nextFloat() - maxDiff) * GameView.frameTime;
+        if (dy < -maxDiff) dy = -maxDiff;
+        else if (dy > maxDiff) dy = maxDiff;
+
+        setPosition(pos[0] + dx, pos[1] + dy);
+
         pm.getPosTan(distance, pos, tan);
         angle = (float) Math.toDegrees(Math.atan2(tan[1], tan[0]));
-        setPosition(pos[0], pos[1]);
     }
 
     @Override
