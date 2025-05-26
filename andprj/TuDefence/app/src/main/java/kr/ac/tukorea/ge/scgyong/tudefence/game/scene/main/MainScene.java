@@ -15,7 +15,7 @@ public class MainScene extends Scene {
         Random random = new Random();
         for (int i = 0; i < 5; i++) {
             Fly.Type type = Fly.Type.values()[i];
-            Fly fly = new Fly(type);
+            Fly fly = Fly.get(type);
             float x = random.nextFloat() * Metrics.width;
             float y = random.nextFloat() * Metrics.height;
             fly.setPosition(x, y);
