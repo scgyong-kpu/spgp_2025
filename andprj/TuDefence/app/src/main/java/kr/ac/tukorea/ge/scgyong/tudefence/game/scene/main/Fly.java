@@ -43,9 +43,8 @@ public class Fly extends SheetSprite implements IRecyclable {
         srcRects = rects_array[type.ordinal()];
         setPosition(0, 0, size, size);
         distance = 0;
-        this.speed = 0;
-        update();
         this.speed = speed;
+        update();
         return this;
     }
 
@@ -55,19 +54,15 @@ public class Fly extends SheetSprite implements IRecyclable {
     private static final Paint paint;
     static {
         path = new Path();
-        path.moveTo(0, 1800);
-        path.lineTo(500, 1300);
-        path.lineTo(100, 500);
-        path.lineTo(700, 0);
-        path.lineTo(1300, 500);
-        path.lineTo(900, 1300);
-        path.lineTo(1600, 1800);
-        path.lineTo(2300, 1300);
-        path.lineTo(1900, 500);
-        path.lineTo(2500, 0);
-        path.lineTo(3100, 500);
-        path.lineTo(2700, 1300);
-        path.lineTo(3200, 1800);
+        path.moveTo(-120f, 1828f);
+        path.cubicTo(288f, 1788f, 644f, 1724f, 808f, 1388f);
+        path.cubicTo(972f, 1052f, 88f, 1292f, 256f, 988f);
+        path.cubicTo(424f, 684f, 1064f, 68f, 1268f, 264f);
+        path.cubicTo(1472f, 460f, 1200f, 1664f, 1712f, 1476f);
+        path.cubicTo(2224f, 1288f, 1952f, 536f, 2208f, 356f);
+        path.cubicTo(2464f, 176f, 2824f, 132f, 3040f, 388f);
+        path.cubicTo(3256f, 644f, 2952f, 1592f, 3272f, 1932f);
+
 
         pm = new PathMeasure(path, false);
         pathLength = pm.getLength();
