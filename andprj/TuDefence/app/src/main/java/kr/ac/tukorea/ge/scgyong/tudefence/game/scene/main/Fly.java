@@ -85,7 +85,7 @@ public class Fly extends SheetSprite implements IRecyclable {
     }
 
     private static Rect[][] rects_array;
-    private float distance, speed;
+    private float distance, speed, angle;
     private final float[] pos = new float[2];
     private final float[] tan = new float[2];
 
@@ -97,7 +97,16 @@ public class Fly extends SheetSprite implements IRecyclable {
             return;
         }
         pm.getPosTan(distance, pos, tan);
+        angle = (float) Math.toDegrees(Math.atan2(tan[1], tan[0]));
         setPosition(pos[0], pos[1]);
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.save();
+        canvas.rotate(angle, x, y);
+        super.draw(canvas);
+        canvas.restore();
     }
 
     @Override
