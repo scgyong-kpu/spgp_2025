@@ -14,7 +14,7 @@ public class MainScene extends Scene {
         add(Layer.bg, new TiledBackground("map/desert.tmj", 100, 100));
         Random random = new Random();
         for (int i = 0; i < 5; i++) {
-            Fly fly = new Fly();
+            Fly fly = new Fly(i);
             float x = random.nextFloat() * Metrics.width;
             float y = random.nextFloat() * Metrics.height;
             fly.setPosition(x, y);
