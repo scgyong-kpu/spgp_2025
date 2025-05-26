@@ -31,21 +31,22 @@ public class Fly extends SheetSprite implements IRecyclable {
         }
         setPosition(0, 0, 200, 200);
     }
-    public static Fly get(Type type, float size) {
-        return Scene.top().getRecyclable(Fly.class).init(type, size);
+    public static Fly get(Type type, float size, float speed) {
+        return Scene.top().getRecyclable(Fly.class).init(type, size, speed);
     }
-    public Fly init(Type type, float size) {
+    public Fly init(Type type, float size, float speed) {
         srcRects = rects_array[type.ordinal()];
         setPosition(0, 0, size, size);
         distance = 0;
+        this.speed = speed;
         return this;
     }
     private static Rect[][] rects_array;
-    private float distance;
+    private float distance, speed;
 
     @Override
     public void update() {
-        distance += 200 * GameView.frameTime;
+        distance += speed * GameView.frameTime;
         if (distance > Metrics.width) {
             Scene.top().remove(MainScene.Layer.enemy, this);
             return;
