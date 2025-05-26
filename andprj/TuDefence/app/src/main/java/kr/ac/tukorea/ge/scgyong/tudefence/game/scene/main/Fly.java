@@ -56,9 +56,17 @@ public class Fly extends SheetSprite implements IRecyclable {
     static {
         path = new Path();
         path.moveTo(0, 1800);
+        path.lineTo(500, 1300);
+        path.lineTo(100, 500);
         path.lineTo(700, 0);
+        path.lineTo(1300, 500);
+        path.lineTo(900, 1300);
         path.lineTo(1600, 1800);
+        path.lineTo(2300, 1300);
+        path.lineTo(1900, 500);
         path.lineTo(2500, 0);
+        path.lineTo(3100, 500);
+        path.lineTo(2700, 1300);
         path.lineTo(3200, 1800);
 
         pm = new PathMeasure(path, false);
