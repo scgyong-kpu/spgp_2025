@@ -139,7 +139,7 @@ function doCubicMouseMove(evt) {
       moveOtherPoint()
     }
     cubicDraw();
-    printJava()
+    printOutput()
 }
 
 function moveOtherPoint() {
@@ -206,7 +206,7 @@ function init() {
     }
     const width = document.getElementById('width');
     width.onblur = ()=>{
-      printJava()
+      printOutput()
     }
 };
 function showCount() {
@@ -223,7 +223,24 @@ function printPoints() {
   str += "\n]";
   document.getElementById("out").value = str;
 }
-function printJava() {
+class JavaPrinter {
+  constructor(pt) {
+    this.str = "Path path = new Path();\n";
+    this.str += `path.moveTo(${pt.x}f, ${pt.y}f);\n`;
+  }
+  cubicTo(pts, i) {
+    this.str += `path.cubicTo(${pts[i].x}f, ${pts[i].y}f, ${pts[i+1].x}f, ${pts[i+1].y}f, ${pts[i+2].x}f, ${pts[i+2].y}f);\n`;
+  }
+}
+class SvgPrinter {
+  constructor(pt) {
+    this.str = `M ${pt.x},${pt.y}\n`;
+  }
+  cubicTo(pts, i) {
+    this.str += `C ${pts[i].x},${pts[i].y}, ${pts[i+1].x},${pts[i+1].y}, ${pts[i+2].x},${pts[i+2].y}\n`;
+  }
+}
+function printOutput() {
   let scale = Number(document.getElementById('width').value)
   if (scale && mapImg && mapImg.width > 0) {
     scale = scale / mapImg.width
@@ -231,15 +248,17 @@ function printJava() {
     scale = scale / (cubicCanvas.width - 200)
   }
   function conv(v) {
-    return Math.round((v-100)*scale*10000)/10000 + 'f'
+    return Math.round((v-100)*scale*10000)/10000
   }
   const pts = cubicPoints.map((p)=>{ return { x:conv(p.x), y:conv(p.y)}; });
-  let str = "Path path = new Path();\n";
-  str += `path.moveTo(${pts[0].x}, ${pts[0].y});\n`;
+  const lang = img.outLanguage.value
+  const clazz = lang == 'java' ? JavaPrinter : SvgPrinter
+  const printer = new clazz(pts[0])
+
   for (let i = 1; i < cubicPoints.length; i += 3) {
-    str += `path.cubicTo(${pts[i].x}, ${pts[i].y}, ${pts[i+1].x}, ${pts[i+1].y}, ${pts[i+2].x}, ${pts[i+2].y});\n`;
+    printer.cubicTo(pts, i)
   }
-  document.getElementById("out").value = str;
+  document.getElementById("out").value = printer.str;
 }
 function onAddCurve() {
   const last = cubicPoints[cubicPoints.length-1]
@@ -251,7 +270,7 @@ function onAddCurve() {
   }
   cubicDraw()
   showCount()
-  printJava()
+  printOutput()
 }
 function onRemoveCurve() {
   if (cubicPoints.length < 7) return;
@@ -260,45 +279,66 @@ function onRemoveCurve() {
   cubicPoints.pop();
   cubicDraw();
   showCount()
-  printJava()
+  printOutput()
 }
-function parsePoints(line) {
+
+const regexJava = /(moveTo\(|cubicTo\()([-f,\.\d\s]+)\)/
+function parseJavaPoints(line, scale) {
+  const m = line.match(regexJava)
+  if (!m) return [];
+  let pts = []
+  let numbers = m[2].split(',').map(s=>Number(s.replace('f','')))
+  console.log(numbers)
+  while (numbers.length >= 2) {
+    let x = numbers.shift() * scale + 100
+    let y = numbers.shift() * scale + 100
+    pts.push(new Point2D(x, y))
+  }
+  return pts
+}
+const regexSvg = /\s*"?(M|C)\s/
+function parseSvgPoints(line, scale) {
+  const m = line.match(regexSvg)
+  if (!m) return [];
+  let pts = []
+  let parts = line.split(/\s+/)
+  for (const p of parts) {
+    const part = p.replace(/[^\d.,-]/g, '')
+    try {
+      const numbers = part.split(',')
+      if (numbers.length != 2) continue;
+      let x = Number(numbers[0]) * scale + 100
+      let y = Number(numbers[1]) * scale + 100
+      const pt = new Point2D(x, y)
+      pts.push(pt)
+    } catch (e) {
+    }
+  }
+  return pts
+}
+function loadFromText() {
   let scale = Number(document.getElementById('width').value)
   if (scale && mapImg && mapImg.width > 0) {
     scale = mapImg.width / scale
   } else {
     scale = (cubicCanvas.width - 200) / scale
   }
-
-  let pts = []
-  let numbers = line.split(',').map(s=>Number(s.replace('f','')))
-  while (numbers.length >= 2) {
-    let x = numbers.shift()
-    let y = numbers.shift()
-    if (scale > 0) {
-      x *= scale
-      y *= scale
+  const parsers = [ parseJavaPoints, parseSvgPoints ]
+  try {
+    const text = document.getElementById("out").value
+    let points = []
+    let pts;
+    for (const line of text.split('\n')) {
+      for (const parser of parsers) {
+        pts = parser(line, scale)
+        if (!pts || !pts.length) continue;
+        points = points.concat(pts)
+      }
     }
-    x += 100
-    y += 100
-    pts.push(new Point2D(x, y))
-  }
-  return pts
-}
-function loadFromText() {
-  try{
-  const regex = /(moveTo\(|cubicTo\()([-f,\.\d\s]+)\)/
-  const text = document.getElementById("out").value
-  let points = []
-  for (const line of text.split('\n')) {
-    const m = line.match(regex)
-    if (!m) continue;
-    points = points.concat(parsePoints(m[2]))
-  }
-  if (!points.length) return;
-  cubicPoints = points;
-  cubicDraw()
-  showCount()
+    if (!points.length) return;
+    cubicPoints = points;
+    cubicDraw()
+    showCount()
   } catch (e) { console.error(e)}
 }
 </script>
@@ -338,6 +378,10 @@ Please use a newer version or a different browser.</p>
     <div style="display:flex; flex-direction: row;">
       <textarea id="out" cols="80" rows="10"></textarea>
       <button onclick="loadFromText();return false;">Load from output</button>
+      <div>
+        <label><input type="radio" name="outLanguage" onchange="printOutput()" value="java" checked>Java</input></label>
+        <label><input type="radio" name="outLanguage" onchange="printOutput()" value="svg">SVG</input></label>
+      </div>
     </div>
 
   </form>
