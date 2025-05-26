@@ -30,8 +30,8 @@ public class Fly extends SheetSprite implements IRecyclable {
         setPosition(0, 0, 200, 200);
     }
     public static Fly get(Type type) {
-        return Scene.top().getRecyclable(Fly.class).init(type);
-        //return new Fly().init(type);
+        //return Scene.top().getRecyclable(Fly.class).init(type);
+        return new Fly().init(type);
     }
     public Fly init(Type type) {
         srcRects = rects_array[type.ordinal()];
