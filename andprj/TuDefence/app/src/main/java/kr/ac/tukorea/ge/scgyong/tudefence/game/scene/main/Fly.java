@@ -6,6 +6,8 @@ import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.SheetSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Fly extends SheetSprite implements IRecyclable {
     public enum Type {
@@ -35,9 +37,21 @@ public class Fly extends SheetSprite implements IRecyclable {
     public Fly init(Type type, float size) {
         srcRects = rects_array[type.ordinal()];
         setPosition(0, 0, size, size);
+        distance = 0;
         return this;
     }
     private static Rect[][] rects_array;
+    private float distance;
+
+    @Override
+    public void update() {
+        distance += 200 * GameView.frameTime;
+        if (distance > Metrics.width) {
+            Scene.top().remove(MainScene.Layer.enemy, this);
+            return;
+        }
+        setPosition(distance, y);
+    }
 
     @Override
     public void onRecycle() {}
