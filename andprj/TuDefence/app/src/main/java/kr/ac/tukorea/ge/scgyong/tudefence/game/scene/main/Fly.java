@@ -8,13 +8,21 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.SheetSprite;
 public class Fly extends SheetSprite {
     public Fly(int type) {
         super(R.mipmap.galaga_flies, 2.0f);
-        int size = bitmap.getHeight();
-        int left = type * 2 * size;
-        srcRects = new Rect[] {
-            new Rect(left, 0, left + size, size),
-            new Rect(left + size, 0, left + 2 * size, size),
-        };
-
+        if (rects_array == null) {
+            int w = bitmap.getWidth();
+            int h = bitmap.getHeight();
+            rects_array = new Rect[5][];
+            int x = 0;
+            for (int i = 0; i < 5; i++) {
+                rects_array[i] = new Rect[2];
+                for (int j = 0; j < 2; j++) {
+                    rects_array[i][j] = new Rect(x, 0, x+h, h);
+                    x += h;
+                }
+            }
+        }
         setPosition(0, 0, 200, 200);
+        srcRects = rects_array[type];
     }
+    private static Rect[][] rects_array;
 }
