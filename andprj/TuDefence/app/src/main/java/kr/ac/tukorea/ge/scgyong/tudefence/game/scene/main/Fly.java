@@ -7,6 +7,8 @@ import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Rect;
 
+import androidx.core.graphics.PathParser;
+
 import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.SheetSprite;
@@ -53,16 +55,16 @@ public class Fly extends SheetSprite implements IRecyclable {
     private static final Path path;
     private static final Paint paint;
     static {
-        path = new Path();
-        path.moveTo(-120f, 1828f);
-        path.cubicTo(288f, 1788f, 644f, 1724f, 808f, 1388f);
-        path.cubicTo(972f, 1052f, 88f, 1292f, 256f, 988f);
-        path.cubicTo(424f, 684f, 1064f, 68f, 1268f, 264f);
-        path.cubicTo(1472f, 460f, 1200f, 1664f, 1712f, 1476f);
-        path.cubicTo(2224f, 1288f, 1952f, 536f, 2208f, 356f);
-        path.cubicTo(2464f, 176f, 2824f, 132f, 3040f, 388f);
-        path.cubicTo(3256f, 644f, 2952f, 1592f, 3272f, 1932f);
-
+        path = PathParser.createPathFromPathData(
+            "M -120,1828\n" +
+            "C 288,1788 644,1724 808,1388\n" +
+            "C 972,1052 88,1292 256,988\n" +
+            "C 424,684 1064,68 1268,264\n" +
+            "C 1472,460 1200,1664 1712,1476\n" +
+            "C 2224,1288 1952,536 2208,356\n" +
+            "C 2464,176 2824,132 3040,388\n" +
+            "C 3256,644 2952,1592 3272,1932"
+        );
 
         pm = new PathMeasure(path, false);
         pathLength = pm.getLength();
