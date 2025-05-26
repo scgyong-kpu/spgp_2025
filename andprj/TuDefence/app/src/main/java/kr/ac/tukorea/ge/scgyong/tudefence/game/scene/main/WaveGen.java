@@ -40,6 +40,6 @@ public class WaveGen implements IGameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        Fly.drawPath(canvas);
+//        Fly.drawPath(canvas);
     }
 }

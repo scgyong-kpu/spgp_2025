@@ -57,7 +57,7 @@ public class Fly extends SheetSprite implements IRecyclable {
     private static final PathMeasure pm;
     private static final float pathLength;
     private static final Path path;
-    private static final Paint paint;
+//    private static final Paint paint;
     static {
         path = PathParser.createPathFromPathData(
             "M -128,1817.6\n" +
@@ -78,15 +78,15 @@ public class Fly extends SheetSprite implements IRecyclable {
         pm = new PathMeasure(path, false);
         pathLength = pm.getLength();
 
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(10f);
-        paint.setColor(Color.MAGENTA);
+//        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//        paint.setStyle(Paint.Style.STROKE);
+//        paint.setStrokeWidth(10f);
+//        paint.setColor(Color.MAGENTA);
     }
 
-    public static void drawPath(Canvas canvas) {
-        canvas.drawPath(path, paint);
-    }
+//    public static void drawPath(Canvas canvas) {
+//        canvas.drawPath(path, paint);
+//    }
 
     private static Rect[][] rects_array;
     private float distance, speed, angle;
