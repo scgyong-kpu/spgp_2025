@@ -1,5 +1,9 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 
 import kr.ac.tukorea.ge.scgyong.tudefence.R;
@@ -41,6 +45,27 @@ public class Fly extends SheetSprite implements IRecyclable {
         this.speed = speed;
         return this;
     }
+
+    private static Path path;
+    private static Paint paint;
+    static {
+        path = new Path();
+        path.moveTo(0, 1800);
+        path.lineTo(700, 0);
+        path.lineTo(1600, 1800);
+        path.lineTo(2500, 0);
+        path.lineTo(3200, 1800);
+
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(10f);
+        paint.setColor(Color.MAGENTA);
+    }
+
+    public static void drawPath(Canvas canvas) {
+        canvas.drawPath(path, paint);
+    }
+
     private static Rect[][] rects_array;
     private float distance, speed;
 
