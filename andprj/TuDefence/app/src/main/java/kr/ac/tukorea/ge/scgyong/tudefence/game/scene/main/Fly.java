@@ -29,11 +29,12 @@ public class Fly extends SheetSprite implements IRecyclable {
         }
         setPosition(0, 0, 200, 200);
     }
-    public static Fly get(Type type) {
-        return Scene.top().getRecyclable(Fly.class).init(type);
+    public static Fly get(Type type, float size) {
+        return Scene.top().getRecyclable(Fly.class).init(type, size);
     }
-    public Fly init(Type type) {
+    public Fly init(Type type, float size) {
         srcRects = rects_array[type.ordinal()];
+        setPosition(0, 0, size, size);
         return this;
     }
     private static Rect[][] rects_array;
