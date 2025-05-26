@@ -1,6 +1,9 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
+import java.util.Random;
+
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MainScene extends Scene {
     enum Layer {
@@ -9,8 +12,13 @@ public class MainScene extends Scene {
     public MainScene() {
         initLayers(Layer.values().length);
         add(Layer.bg, new TiledBackground("map/desert.tmj", 100, 100));
-        Fly fly = new Fly();
-        fly.setPosition(2000, 1000);
-        add(Layer.enemy, fly);
+        Random random = new Random();
+        for (int i = 0; i < 5; i++) {
+            Fly fly = new Fly();
+            float x = random.nextFloat() * Metrics.width;
+            float y = random.nextFloat() * Metrics.height;
+            fly.setPosition(x, y);
+            add(Layer.enemy, fly);
+        }
     }
 }
