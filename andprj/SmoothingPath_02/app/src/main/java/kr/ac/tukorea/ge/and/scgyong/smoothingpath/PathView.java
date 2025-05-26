@@ -1,5 +1,6 @@
 package kr.ac.tukorea.ge.and.scgyong.smoothingpath;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -21,11 +23,36 @@ import java.util.ArrayList;
 public class PathView extends View {
     private boolean closesPath;
     private Bitmap bitmap;
+    private PointF planePos = new PointF();
+    private float planeAngleInDegree;
 
     public void closePath(boolean closes) {
         this.closesPath = closes;
         buildPath();
         invalidate();
+    }
+
+    public void startPathAnimation() {
+        PathMeasure pm = new PathMeasure(path, closesPath);
+        float length = pm.getLength();
+        ValueAnimator animator = ValueAnimator.ofFloat(0, length);
+        animator.setDuration((long)length);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
+                float value = (Float) animation.getAnimatedValue();
+                float[] pos = new float[2];
+                float[] tan = new float[2];
+                pm.getPosTan(value, pos, tan);
+                planePos.set(pos[0], pos[1]);
+                planeAngleInDegree = (float) (Math.toDegrees(Math.atan2(tan[1], tan[0])) + 90);
+                invalidate();
+                Log.d(TAG, "Anim: " + value + " x=" + pos[0] + " y=" + pos[1]);
+            }
+        });
+//        animator.addUpdateListener(animation -> {
+//        });
+        animator.start();
     }
 
     public interface Callback {
@@ -64,9 +91,16 @@ public class PathView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        if (action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_MOVE) {
+            return false;
+        }
         float x = event.getX();
         float y = event.getY();
         points.add(new PointF(x, y));
+        if (points.size() == 1) {
+            planePos.set(x, y);
+        }
         //activity.updatePointsCount()
         if (callback != null) {
             callback.onPointsCountChange(points.size());
@@ -74,7 +108,7 @@ public class PathView extends View {
         buildPath();
         invalidate();
         Log.d(TAG, "TouchEvent: action=" + event.getAction() + " pos=" + x + "," + y + " now points count=" + points.size());
-        return super.onTouchEvent(event);
+        return true;
     }
 
     @Override
@@ -84,12 +118,15 @@ public class PathView extends View {
             return;
         }
 
-        PointF first = points.get(0);
-        float px = first.x - bitmap.getWidth() / 2.0f;
-        float py = first.y - bitmap.getHeight() / 2.0f;
+        float px = planePos.x - bitmap.getWidth() / 2.0f;
+        float py = planePos.y - bitmap.getHeight() / 2.0f;
+        canvas.save();
+        canvas.rotate(planeAngleInDegree, planePos.x, planePos.y);
         canvas.drawBitmap(bitmap, px, py, null);
+        canvas.restore();
 
         if (count == 1) {
+            PointF first = points.get(0);
             canvas.drawCircle(first.x, first.y, 5.0f, paint);
             return;
         }
