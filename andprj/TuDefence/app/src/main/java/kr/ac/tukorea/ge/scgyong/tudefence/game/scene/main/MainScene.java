@@ -12,6 +12,6 @@ public class MainScene extends Scene {
     public MainScene() {
         initLayers(Layer.values().length);
         add(Layer.bg, new TiledBackground("map/desert.tmj", 100, 100));
-        add(Layer.controller, new WaveGen(this, 1.0f));
+        add(Layer.controller, new WaveGen(this, 2.0f));
     }
 }

@@ -29,7 +29,7 @@ public class WaveGen implements IGameObject {
     }
 
     private void spawn() {
-        float size = rand.nextFloat() * 100 + 200;
+        float size = rand.nextFloat() * 100 + 150;
         float speed = rand.nextFloat() * 50 + 100;
         Fly.Type[] types = Fly.Type.values();
         Fly.Type type = types[rand.nextInt(types.length)];
