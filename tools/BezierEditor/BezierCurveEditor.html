@@ -237,7 +237,7 @@ class SvgPrinter {
     this.str = `M ${pt.x},${pt.y}\n`;
   }
   cubicTo(pts, i) {
-    this.str += `C ${pts[i].x},${pts[i].y}, ${pts[i+1].x},${pts[i+1].y}, ${pts[i+2].x},${pts[i+2].y}\n`;
+    this.str += `C ${pts[i].x},${pts[i].y} ${pts[i+1].x},${pts[i+1].y} ${pts[i+2].x},${pts[i+2].y}\n`;
   }
 }
 function printOutput() {
@@ -306,7 +306,7 @@ function parseSvgPoints(line, scale) {
     const part = p.replace(/[^\d.,-]/g, '')
     try {
       const numbers = part.split(',')
-      if (numbers.length != 2) continue;
+      if (numbers.length < 2) continue;
       let x = Number(numbers[0]) * scale + 100
       let y = Number(numbers[1]) * scale + 100
       const pt = new Point2D(x, y)
