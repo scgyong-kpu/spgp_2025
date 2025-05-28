@@ -43,6 +43,11 @@ public class Sprite implements IGameObject {
         RectUtil.setRect(dstRect, x, y, radius);
 
     }
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+        RectUtil.setRect(dstRect, x, y, width, height);
+    }
     public void setPosition(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
