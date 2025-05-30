@@ -56,6 +56,9 @@ public class MapSelector extends Sprite {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        if (cannon != null) {
+            cannon.drawRange(canvas);
+        }
         prepareMenuRect();
         for (int item: menuItems) {
             menuRect.offset(SELECTOR_SIZE, 0);
