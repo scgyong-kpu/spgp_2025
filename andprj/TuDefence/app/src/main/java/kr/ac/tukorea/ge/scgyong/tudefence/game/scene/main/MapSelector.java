@@ -16,6 +16,9 @@ public class MapSelector extends Sprite {
         this.scene = scene;
         setPosition(-100, -100, 200, 200); // 임시 위치
     }
+    private void hideSelector() {
+        setPosition(-100, -100);
+    }
 
     public boolean onTouch(int action, float x, float y) {
         Cannon cannon = findCannonAt(x, y);
@@ -30,15 +33,19 @@ public class MapSelector extends Sprite {
         }
         int mapX = (int)(x / 100);
         int mapY = (int)(y / 100);
-        boolean possible = scene.tiledBg.canInstallAt(mapX, mapY);
-        if (!possible) return false;
-
         float cx = (mapX + 1) * 100;
         float cy = (mapY + 1) * 100;
+
         if (intersectsIfInstalledAt(cx, cy)) {
             return false;
         }
-        if (action != MotionEvent.ACTION_UP) {
+        setPosition(cx, cy);
+
+        boolean possible = scene.tiledBg.canInstallAt(mapX, mapY);
+        if (!possible) {
+            hideSelector();
+        }
+        if (!possible || action != MotionEvent.ACTION_UP) {
             return true;
         }
         cannon = new Cannon(1, cx, cy);
