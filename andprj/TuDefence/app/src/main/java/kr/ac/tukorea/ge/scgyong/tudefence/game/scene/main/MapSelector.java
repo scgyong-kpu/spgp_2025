@@ -18,12 +18,15 @@ public class MapSelector extends Sprite {
     }
 
     public boolean onTouch(int action, float x, float y) {
-        if (action != MotionEvent.ACTION_DOWN) return false;
         Cannon cannon = findCannonAt(x, y);
         if (cannon != null) {
             Log.d(TAG, "Found: " + cannon);
-            cannon.upgrade();
-            return false;
+            if (action == MotionEvent.ACTION_UP) {
+                cannon.upgrade();
+            } else {
+                setPosition(cannon.getX(), cannon.getY());
+            }
+            return true;
         }
         int mapX = (int)(x / 100);
         int mapY = (int)(y / 100);
@@ -34,6 +37,9 @@ public class MapSelector extends Sprite {
         float cy = (mapY + 1) * 100;
         if (intersectsIfInstalledAt(cx, cy)) {
             return false;
+        }
+        if (action != MotionEvent.ACTION_UP) {
+            return true;
         }
         cannon = new Cannon(1, cx, cy);
         scene.add(MainScene.Layer.cannon, cannon);
