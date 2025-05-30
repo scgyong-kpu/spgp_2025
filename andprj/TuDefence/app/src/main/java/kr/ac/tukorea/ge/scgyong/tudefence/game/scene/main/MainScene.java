@@ -3,18 +3,21 @@ package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Layer;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
+    private final TiledBackground tiledBg;
 
     enum Layer {
         bg, enemy, cannon, shell, controller,
     }
     public MainScene() {
         initLayers(Layer.values().length);
-        add(Layer.bg, new TiledBackground("map/desert.tmj", 100, 100));
+        tiledBg = new TiledBackground("map/desert.tmj", 100, 100);
+        add(Layer.bg, tiledBg);
         add(Layer.controller, new WaveGen(this, 2.0f));
         add(Layer.cannon, new Cannon(1, 400, 600));
         add(Layer.cannon, new Cannon(2, 1500, 500));
@@ -35,7 +38,9 @@ public class MainScene extends Scene {
         float[] pts = Metrics.fromScreen(event.getX(), event.getY());
         int x = (int)(pts[0] / 100);
         int y = (int)(pts[1] / 100);
-        Log.d(TAG, "Snapped XY: (" + x + "," + y + ")");
+        kr.ac.tukorea.ge.scgyong.tudefence.game.map.Layer layer = tiledBg.getActiveLayer();
+        int tile = layer.tileAt(x, y);
+        Log.d(TAG, "Snapped XY: (" + x + "," + y + ") tile: " + tile);
         return true;
     }
 }
