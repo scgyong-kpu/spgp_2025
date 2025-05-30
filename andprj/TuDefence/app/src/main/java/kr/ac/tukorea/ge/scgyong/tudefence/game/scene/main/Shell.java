@@ -6,6 +6,7 @@ import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Shell extends Sprite implements IRecyclable {
 
@@ -37,6 +38,17 @@ public class Shell extends Sprite implements IRecyclable {
         setPosition(cannon.getX(), cannon.getY(), radius);
 
         return this;
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (x < -radius || x > Metrics.width + radius ||
+                y < -radius || y > Metrics.height + radius) {
+            //Log.d("CannonFire", "Remove(" + x + "," + y + ") " + this);
+            Scene.top().remove(MainScene.Layer.shell, this);
+            return;
+        }
     }
 
     @Override
