@@ -39,7 +39,9 @@ public class MainScene extends Scene {
         int x = (int)(pts[0] / 100);
         int y = (int)(pts[1] / 100);
         boolean possible = tiledBg.canInstallAt(x, y);
-        Log.v(TAG, "Possible: " + possible);
+        if (!possible) return false;
+        Cannon cannon = new Cannon(1, (x + 1) * 100, (y + 1) * 100);
+        add(Layer.cannon, cannon);
         return true;
     }
 }
