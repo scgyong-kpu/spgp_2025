@@ -13,6 +13,8 @@ public class MainScene extends Scene {
         initLayers(Layer.values().length);
         add(Layer.bg, new TiledBackground("map/desert.tmj", 100, 100));
         add(Layer.controller, new WaveGen(this, 2.0f));
-        add(Layer.cannon, new Cannon());
+        add(Layer.cannon, new Cannon(0, 400, 600));
+        add(Layer.cannon, new Cannon(2, 1500, 500));
+        add(Layer.cannon, new Cannon(5, 700, 1600));
     }
 }
