@@ -38,9 +38,8 @@ public class MainScene extends Scene {
         float[] pts = Metrics.fromScreen(event.getX(), event.getY());
         int x = (int)(pts[0] / 100);
         int y = (int)(pts[1] / 100);
-        MapLayer layer = tiledBg.getActiveLayer();
-        int tile = layer.tileAt(x, y);
-        Log.d(TAG, "Snapped XY: (" + x + "," + y + ") tile: " + tile);
+        boolean possible = tiledBg.canInstallAt(x, y);
+        Log.v(TAG, "Possible: " + possible);
         return true;
     }
 }
