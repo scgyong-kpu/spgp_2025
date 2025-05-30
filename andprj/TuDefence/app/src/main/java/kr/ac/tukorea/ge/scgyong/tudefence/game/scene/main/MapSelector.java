@@ -1,5 +1,8 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -13,10 +16,15 @@ public class MapSelector extends Sprite {
     private static final float TILE_SIZE = 100;
     private static final float SELECTOR_SIZE = 2 * TILE_SIZE;
     private final MainScene scene;
+    private int[] menuItems = {
+            R.mipmap.f_01_01, R.mipmap.f_02_01, R.mipmap.f_03_01,
+    };
+    private Bitmap menuBgBitmap;
 
     public MapSelector(MainScene scene) {
         super(R.mipmap.selection);
         this.scene = scene;
+        menuBgBitmap = BitmapPool.get(R.mipmap.menu_bg);
         setPosition(-SELECTOR_SIZE, -SELECTOR_SIZE, SELECTOR_SIZE, SELECTOR_SIZE);
     }
     private void hideSelector() {
@@ -25,6 +33,18 @@ public class MapSelector extends Sprite {
         // 보여줄 지 여부를 member 로 가지는 방법도 있지만
         // 그 경우 여부에 따라 보여주거나 안 보여주는 코드를 작성해야 하므로
         // 이 방법을 선택해 본다.
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        RectF menuRect = new RectF(dstRect);
+        for (int item: menuItems) {
+            menuRect.offset(SELECTOR_SIZE, 0);
+            canvas.drawBitmap(menuBgBitmap, null, menuRect, null);
+            Bitmap itemBitmap = BitmapPool.get(item);
+            canvas.drawBitmap(itemBitmap, null, menuRect, null);
+        }
     }
 
     public boolean onTouch(int action, float x, float y) {
