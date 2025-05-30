@@ -1,13 +1,10 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
-import java.util.Random;
-
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MainScene extends Scene {
     enum Layer {
-        bg, enemy, cannon, controller,
+        bg, enemy, cannon, shell, controller,
     }
     public MainScene() {
         initLayers(Layer.values().length);

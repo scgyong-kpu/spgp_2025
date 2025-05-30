@@ -13,13 +13,15 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class Cannon extends Sprite {
-    private final int level;
-    private final float range;
-    private final Bitmap barrelBitmap;
-    private final RectF barrelRect = new RectF();
-    private float angle = -90;
+    protected final int level;
+    protected final float range, interval;
+    protected final Bitmap barrelBitmap;
+    protected final RectF barrelRect = new RectF();
+    protected float angle = -90;
+    protected float time;
     private static final int[] BITMAP_IDS = {
             R.mipmap.f_01_01, R.mipmap.f_02_01,R.mipmap.f_03_01,R.mipmap.f_04_01,R.mipmap.f_05_01,
             R.mipmap.f_06_01,R.mipmap.f_07_01,R.mipmap.f_08_01,R.mipmap.f_09_01,R.mipmap.f_10_01,
@@ -28,6 +30,7 @@ public class Cannon extends Sprite {
         super(BITMAP_IDS[level - 1]);
         this.level = level;
         this.range = 200 + (level * 200);
+        this.interval = 5.5f - level / 2.0f;
         barrelBitmap = BitmapPool.get(R.mipmap.tank_barrel);
         setPosition(x, y, 200, 200);
         barrelRect.set(dstRect);
@@ -41,6 +44,12 @@ public class Cannon extends Sprite {
         Fly fly = findNearestFly();
         if (fly != null) {
             angle = (float) Math.toDegrees(Math.atan2(fly.getY() - y, fly.getX() - x));
+        }
+        time += GameView.frameTime;
+        if (time > interval && fly != null) {
+            Shell shell = Shell.get(this, fly);
+            Scene.top().add(MainScene.Layer.shell, shell);
+            time = 0;
         }
     }
 
