@@ -23,6 +23,7 @@ public class Shell extends Sprite implements IRecyclable {
         return Scene.top().getRecyclable(Shell.class).init(cannon, target);
     }
 
+    protected float power;
     private Shell init(Cannon cannon, Fly target) {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
@@ -37,7 +38,8 @@ public class Shell extends Sprite implements IRecyclable {
         double speed = (level + 10) * 100; // 1100 ~ 2000
         dx = (float) (speed * Math.cos(radian));
         dy = (float) (speed * Math.sin(radian));
-        //this.power = level;
+        this.power = (float) (10 * Math.pow(1.2, level - 1));
+        // 10.0, 12.0, 14.4, 17.28, 20.736, 24.8832, 29.85984, 35.83181, 42.99817, 51.5978
         radius = 20f + level * 2f;
         setPosition(cannon.getX(), cannon.getY(), radius);
 
@@ -61,7 +63,7 @@ public class Shell extends Sprite implements IRecyclable {
             boolean collides = CollisionHelper.collidesRadius(this, fly);
             if (collides) {
                 scene.remove(MainScene.Layer.shell, this);
-                boolean dead = fly.decreaseLife(10);
+                boolean dead = fly.decreaseLife(power);
                 if (dead) {
                     scene.remove(MainScene.Layer.enemy, fly);
                 }

@@ -22,7 +22,7 @@ public class Fly extends SheetSprite implements IRecyclable {
         float getMaxHealth() {
             return HEALTHS[ordinal()];
         }
-        static final float[] HEALTHS = { 100, 50, 40, 30, 10 };
+        static final float[] HEALTHS = { 150, 50, 30, 20, 10 };
     }
     public Fly() {
         super(R.mipmap.galaga_flies, 2.0f);
