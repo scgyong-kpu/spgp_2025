@@ -1,8 +1,14 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
+import android.util.Log;
+import android.view.MotionEvent;
+
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MainScene extends Scene {
+    private static final String TAG = MainScene.class.getSimpleName();
+
     enum Layer {
         bg, enemy, cannon, shell, controller,
     }
@@ -19,6 +25,17 @@ public class MainScene extends Scene {
     @Override
     public boolean onBackPressed() {
         new PauseScene().push();
+        return true;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        if (action != MotionEvent.ACTION_DOWN) return false;
+        float[] pts = Metrics.fromScreen(event.getX(), event.getY());
+        int x = (int)(pts[0] / 100);
+        int y = (int)(pts[1] / 100);
+        Log.d(TAG, "Snapped XY: (" + x + "," + y + ")");
         return true;
     }
 }
