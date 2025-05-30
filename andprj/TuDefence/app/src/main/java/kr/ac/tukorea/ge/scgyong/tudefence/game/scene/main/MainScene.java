@@ -40,6 +40,7 @@ public class MainScene extends Scene {
         Cannon cannon = findCannonAt(pts[0], pts[1]);
         if (cannon != null) {
             Log.d(TAG, "Found: " + cannon);
+            cannon.upgrade();
             return false;
         }
         int mapX = (int)(pts[0] / 100);

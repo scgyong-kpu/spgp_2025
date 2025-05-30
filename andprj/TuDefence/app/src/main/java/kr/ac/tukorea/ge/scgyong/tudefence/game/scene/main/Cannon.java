@@ -20,8 +20,9 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class Cannon extends Sprite {
-    protected final int level;
-    protected final float range, interval;
+    protected int level;
+    protected float range;
+    protected final float interval;
     protected final Bitmap barrelBitmap;
     protected final RectF barrelRect = new RectF();
     protected float angle = -90;
@@ -117,5 +118,13 @@ public class Cannon extends Sprite {
     public String toString() {
         return String.format(Locale.ENGLISH, "Cannon<%d>(%d,%d)@%d",
                 level, (int)x/100, (int)y/100, System.identityHashCode(this));
+    }
+
+    public void upgrade() {
+        if (level == BITMAP_IDS.length) return;
+
+        bitmap = BitmapPool.get(BITMAP_IDS[level]);
+        level += 1;
+        range += 200;
     }
 }
