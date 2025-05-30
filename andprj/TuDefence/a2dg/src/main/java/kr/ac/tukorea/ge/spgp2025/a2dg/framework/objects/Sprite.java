@@ -72,6 +72,9 @@ public class Sprite implements IGameObject {
     public float getHeight() {
         return height;
     }
+    public float getRadius() {
+        return radius;
+    }
     public float getPropotionalHeight(float width) {
         return width / bitmap.getWidth() * bitmap.getHeight();
     }
@@ -94,5 +97,4 @@ public class Sprite implements IGameObject {
     public String toString() {
         return getClass().getSimpleName() + "@" + System.identityHashCode(this) + "(" + (int)width + "x" + (int)height + ")";
     }
-
 }
