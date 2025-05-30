@@ -129,12 +129,13 @@ public class Cannon extends Sprite {
                 level, (int)x/100, (int)y/100, System.identityHashCode(this));
     }
 
-    public void upgrade() {
+    public boolean upgrade() {
         if (level == BITMAP_IDS.length) {
             uninstall();
-            return;
+            return false;
         }
         setLevel(level + 1);
+        return true;
     }
 
     private void uninstall() {
