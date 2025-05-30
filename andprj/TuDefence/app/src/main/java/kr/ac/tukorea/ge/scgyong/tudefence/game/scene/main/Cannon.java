@@ -25,7 +25,6 @@ public class Cannon extends Sprite {
     protected float interval;
     protected final Bitmap barrelBitmap;
     protected final RectF barrelRect = new RectF();
-    protected boolean drawsRange = false;
     protected float angle = -90;
     protected float time;
     private static final int[] BITMAP_IDS = {
@@ -111,9 +110,7 @@ public class Cannon extends Sprite {
         canvas.rotate(angle, x, y);
         canvas.drawBitmap(barrelBitmap, null, barrelRect, null);
         canvas.restore();
-        if (drawsRange) {
-            drawRange(canvas);
-        }
+        drawRange(canvas);
     }
 
     public boolean containsPoint(float x, float y) {
@@ -131,13 +128,7 @@ public class Cannon extends Sprite {
         return String.format(Locale.ENGLISH, "Cannon<%d>(%d,%d)@%d",
                 level, (int)x/100, (int)y/100, System.identityHashCode(this));
     }
-    public boolean doesDrawRange() {
-        return drawsRange;
-    }
 
-    public void setDrawsRange(boolean drawsRange) {
-        this.drawsRange = drawsRange;
-    }
     public boolean upgrade() {
         if (level == BITMAP_IDS.length) {
             uninstall();
