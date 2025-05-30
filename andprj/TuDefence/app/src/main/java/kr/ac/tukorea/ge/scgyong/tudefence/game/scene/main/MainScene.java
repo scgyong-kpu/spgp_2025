@@ -46,11 +46,16 @@ public class MainScene extends Scene {
         int mapY = (int)(pts[1] / 100);
         boolean possible = tiledBg.canInstallAt(mapX, mapY);
         if (!possible) return false;
-        cannon = new Cannon(1, (mapX + 1) * 100, (mapY + 1) * 100);
+
+        float cx = (mapX + 1) * 100;
+        float cy = (mapY + 1) * 100;
+        if (intersectsIfInstalledAt(cx, cy)) {
+            return false;
+        }
+        cannon = new Cannon(1, cx, cy);
         add(Layer.cannon, cannon);
         return true;
     }
-
     private Cannon findCannonAt(float x, float y) {
         for (IGameObject obj: objectsAt(Layer.cannon)) {
             Cannon cannon = (Cannon) obj;
@@ -60,4 +65,13 @@ public class MainScene extends Scene {
         }
         return null;
     }
+    private boolean intersectsIfInstalledAt(float x, float y) {
+        for (IGameObject obj: objectsAt(Layer.cannon)) {
+            Cannon cannon = (Cannon) obj;
+            if (cannon.intersectsIfInstalledAt(x, y)) {
+                Log.d(TAG, "Intersects with: " + cannon);
+                return true;
+            }
+        }
+        return false;    }
 }

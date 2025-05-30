@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -101,5 +102,10 @@ public class Cannon extends Sprite {
 
     public boolean containsPoint(float x, float y) {
         return dstRect.contains(x, y);
+    }
+
+    public boolean intersectsIfInstalledAt(float x, float y) {
+        float dx = Math.abs(x - this.x), dy = Math.abs(y - this.y);
+        return dx <= radius && dy <= radius;
     }
 }
