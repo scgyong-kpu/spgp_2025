@@ -65,6 +65,7 @@ public class MapSelector extends Sprite {
             } else {
                 bitmap = BitmapPool.get(R.mipmap.selection);
                 setPosition(cannon.getX(), cannon.getY());
+                setMenuItems(MENU_ITEMS_BLANK);
             }
             return true;
         }
@@ -78,7 +79,9 @@ public class MapSelector extends Sprite {
         boolean possible = !intersectsIfInstalledAt(cx, cy) && scene.tiledBg.canInstallAt(mapX, mapY);
         int resId = possible ? R.mipmap.selection : R.mipmap.sel_non_installable;
         bitmap = BitmapPool.get(resId);
+
         if (action != MotionEvent.ACTION_UP) {
+            setMenuItems(MENU_ITEMS_BLANK);
             return true;
         }
         if (!possible) {
