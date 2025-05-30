@@ -1,8 +1,10 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
+import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -31,6 +33,13 @@ public class MapSelector extends Sprite {
     };
     private int[] menuItems = MENU_ITEMS_BLANK;
     private final Bitmap menuBgBitmap;
+    private final Paint alphaPaint = new Paint() {
+        {
+            setAlpha(192);
+        }
+    };
+    private ValueAnimator alphaAnimator;
+    private static final int ALPHA_ANIM_DURATION_MSEC = 300;
 
     public MapSelector(MainScene scene) {
         super(R.mipmap.selection);
@@ -53,9 +62,9 @@ public class MapSelector extends Sprite {
         prepareMenuRect();
         for (int item: menuItems) {
             menuRect.offset(SELECTOR_SIZE, 0);
-            canvas.drawBitmap(menuBgBitmap, null, menuRect, null);
+            canvas.drawBitmap(menuBgBitmap, null, menuRect, alphaPaint);
             Bitmap itemBitmap = BitmapPool.get(item);
-            canvas.drawBitmap(itemBitmap, null, menuRect, null);
+            canvas.drawBitmap(itemBitmap, null, menuRect, alphaPaint);
         }
     }
 
@@ -135,6 +144,7 @@ public class MapSelector extends Sprite {
             }).toArray(String[]::new);
             Log.d(TAG, "Items = " + Arrays.toString(names));
         }
+
     }
     private Cannon findCannonAt(float x, float y) {
         for (IGameObject obj: scene.objectsAt(MainScene.Layer.cannon)) {
