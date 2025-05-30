@@ -2,6 +2,8 @@ package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.graphics.RectF;
 
 import java.util.ArrayList;
@@ -65,6 +67,18 @@ public class Cannon extends Sprite {
         return nearest;
     }
 
+    private static Paint rangePaint;
+    private void drawRange(Canvas canvas) {
+        if (rangePaint == null) {
+            rangePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            rangePaint.setStyle(Paint.Style.STROKE);
+            rangePaint.setStrokeWidth(10f);
+            rangePaint.setPathEffect(new DashPathEffect(new float[]{10f, 20f}, 0));
+            rangePaint.setColor(0x7F7F0000);
+        }
+        canvas.drawCircle(x, y, range, rangePaint);
+    }
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -73,5 +87,6 @@ public class Cannon extends Sprite {
         canvas.rotate(angle, x, y);
         canvas.drawBitmap(barrelBitmap, null, barrelRect, null);
         canvas.restore();
+        drawRange(canvas);
     }
 }
