@@ -98,4 +98,8 @@ public class Cannon extends Sprite {
         canvas.restore();
         drawRange(canvas);
     }
+
+    public boolean containsPoint(float x, float y) {
+        return dstRect.contains(x, y);
+    }
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.MapLayer;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
@@ -36,12 +37,27 @@ public class MainScene extends Scene {
         int action = event.getAction();
         if (action != MotionEvent.ACTION_DOWN) return false;
         float[] pts = Metrics.fromScreen(event.getX(), event.getY());
-        int x = (int)(pts[0] / 100);
-        int y = (int)(pts[1] / 100);
-        boolean possible = tiledBg.canInstallAt(x, y);
+        Cannon cannon = findCannonAt(pts[0], pts[1]);
+        if (cannon != null) {
+            Log.d(TAG, "Found: " + cannon);
+            return false;
+        }
+        int mapX = (int)(pts[0] / 100);
+        int mapY = (int)(pts[1] / 100);
+        boolean possible = tiledBg.canInstallAt(mapX, mapY);
         if (!possible) return false;
-        Cannon cannon = new Cannon(1, (x + 1) * 100, (y + 1) * 100);
+        cannon = new Cannon(1, (mapX + 1) * 100, (mapY + 1) * 100);
         add(Layer.cannon, cannon);
         return true;
+    }
+
+    private Cannon findCannonAt(float x, float y) {
+        for (IGameObject obj: objectsAt(Layer.cannon)) {
+            Cannon cannon = (Cannon) obj;
+            if (cannon.containsPoint(x, y)) {
+                return cannon;
+            }
+        }
+        return null;
     }
 }
