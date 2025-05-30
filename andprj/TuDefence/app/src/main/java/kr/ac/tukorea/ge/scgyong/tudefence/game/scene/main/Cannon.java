@@ -43,6 +43,18 @@ public class Cannon extends Sprite {
     public static int getInstallationCost(int level) {
         return COSTS[level - 1];
     }
+    public static int getUpgradeCost(int level) {
+        return Math.round((COSTS[level] - COSTS[level - 1]) * 1.1f);
+    }
+    public int getUpgradeCost() {
+        return getUpgradeCost(level);
+    }
+    public static int getSellPrice(int level) {
+        return COSTS[level - 1] / 2;
+    }
+    public int getSellPrice() {
+        return getSellPrice(level);
+    }
     private void setLevel(int level) {
         bitmap = BitmapPool.get(BITMAP_IDS[level - 1]);
         this.level = level;

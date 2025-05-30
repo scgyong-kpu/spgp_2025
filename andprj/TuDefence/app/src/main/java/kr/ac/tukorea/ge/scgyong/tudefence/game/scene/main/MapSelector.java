@@ -143,9 +143,9 @@ public class MapSelector extends Sprite {
         } else if (menuItem == R.mipmap.f_03_01) {
             installCannon(3);
         } else if (menuItem == R.mipmap.upgrade) {
-            cannon.upgrade();
+            upgradeCannon();
         } else if (menuItem == R.mipmap.uninstall) {
-            cannon.uninstall();
+            uninstallCannon();
         }
     }
 
@@ -156,6 +156,20 @@ public class MapSelector extends Sprite {
         scene.score.add(-cost);
         Cannon cannon = new Cannon(level, (int)x, (int)y);
         scene.add(MainScene.Layer.cannon, cannon);
+    }
+    private void upgradeCannon() {
+        int cost = cannon.getUpgradeCost();
+        int score = scene.score.getScore();
+        if (cost > score) return;
+        scene.score.add(-cost);
+        cannon.upgrade();
+    }
+
+    private void uninstallCannon() {
+        int price = cannon.getSellPrice();
+        scene.score.add(price);
+        cannon.uninstall();
+        cannon = null;
     }
 
     private void setMenuItems(int... items) {
