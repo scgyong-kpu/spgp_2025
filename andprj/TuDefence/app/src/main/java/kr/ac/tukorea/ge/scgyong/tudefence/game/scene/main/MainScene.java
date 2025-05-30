@@ -19,7 +19,7 @@ public class MainScene extends Scene {
         tiledBg = new DesertMapBg();
         add(Layer.bg, tiledBg);
         add(Layer.selection, mapSelector = new MapSelector(this));
-        add(Layer.controller, new WaveGen(this, 2.0f));
+        add(Layer.controller, new WaveGen(this));
 
 
         add(Layer.cannon, new Cannon(2, 1500, 500));

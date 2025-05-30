@@ -64,10 +64,13 @@ public class Fly extends SheetSprite implements IRecyclable {
         }
         setPosition(0, 0, 200, 200);
     }
-    public static Fly get() {
-        Fly.Type type = Fly.Type.random();
+    public static Fly get(boolean boss, float speedRatio) {
+        Fly.Type type = boss ? Type.boss : Fly.Type.random();
         float size = rand.nextFloat() * 100 + 150;
-        float speed = rand.nextFloat() * 50 + 100;
+        if (boss) {
+            size *= 1.5f;
+        }
+        float speed = speedRatio * (rand.nextFloat() * 50 + 75);
         return Scene.top().getRecyclable(Fly.class).init(type, size, speed);
     }
     public Fly init(Type type, float size, float speed) {
