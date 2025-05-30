@@ -49,7 +49,7 @@ public class Shell extends Sprite implements IRecyclable {
     @Override
     public void update() {
         super.update();
-        Scene scene = Scene.top(); // MainScene
+        MainScene scene = (MainScene) Scene.top();
         if (x < -radius || x > Metrics.width + radius ||
                 y < -radius || y > Metrics.height + radius) {
             //Log.d("CannonFire", "Remove(" + x + "," + y + ") " + this);
@@ -66,6 +66,7 @@ public class Shell extends Sprite implements IRecyclable {
                 boolean dead = fly.decreaseLife(power);
                 if (dead) {
                     scene.remove(MainScene.Layer.enemy, fly);
+                    scene.score.add(100);
                 }
                 break;
             }
