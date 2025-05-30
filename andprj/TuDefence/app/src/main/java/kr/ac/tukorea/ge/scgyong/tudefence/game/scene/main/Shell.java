@@ -2,10 +2,14 @@ package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
 import android.graphics.Rect;
 
+import java.util.ArrayList;
+
 import kr.ac.tukorea.ge.scgyong.tudefence.R;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Shell extends Sprite implements IRecyclable {
@@ -43,11 +47,23 @@ public class Shell extends Sprite implements IRecyclable {
     @Override
     public void update() {
         super.update();
+        Scene scene = Scene.top(); // MainScene
         if (x < -radius || x > Metrics.width + radius ||
                 y < -radius || y > Metrics.height + radius) {
             //Log.d("CannonFire", "Remove(" + x + "," + y + ") " + this);
-            Scene.top().remove(MainScene.Layer.shell, this);
+            scene.remove(MainScene.Layer.shell, this);
             return;
+        }
+
+        ArrayList<IGameObject> flies = scene.objectsAt(MainScene.Layer.enemy);
+        for (int index = flies.size() - 1; index >= 0; index--) {
+            Fly fly = (Fly) flies.get(index);
+            boolean collides = CollisionHelper.collidesRadius(this, fly);
+            if (collides) {
+                scene.remove(MainScene.Layer.enemy, fly);
+                scene.remove(MainScene.Layer.shell, this);
+                break;
+            }
         }
     }
 
