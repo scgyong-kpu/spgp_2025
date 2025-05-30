@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Rect;
-import android.util.Log;
 
 import androidx.core.graphics.PathParser;
 
@@ -40,7 +39,7 @@ public class Fly extends SheetSprite implements IRecyclable {
                 value -= Type.POSSIBILITIES[i];
                 if (value < 0) {
                     Type type = Type.values()[i];
-                    Log.d(TAG, "RandomValue=" + rv + " type=" + type + " i=" + i);
+                    // Log.d(TAG, "RandomValue=" + rv + " type=" + type + " i=" + i);
                     return type;
                 }
             }
