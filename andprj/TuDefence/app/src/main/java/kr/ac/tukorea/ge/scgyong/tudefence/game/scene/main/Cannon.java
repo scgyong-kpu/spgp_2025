@@ -16,6 +16,7 @@ public class Cannon extends Sprite {
         barrelBitmap = BitmapPool.get(R.mipmap.tank_barrel);
         setPosition(500, 700, 200, 200);
         barrelRect.set(dstRect);
+        barrelRect.inset(-150, -150);
     }
 
     @Override
