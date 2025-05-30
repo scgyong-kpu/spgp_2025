@@ -35,10 +35,11 @@ public class MapSelector extends Sprite {
         // 이 방법을 선택해 본다.
     }
 
+    private final RectF menuRect = new RectF();
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        RectF menuRect = new RectF(dstRect);
+        menuRect.set(dstRect);
         for (int item: menuItems) {
             menuRect.offset(SELECTOR_SIZE, 0);
             canvas.drawBitmap(menuBgBitmap, null, menuRect, null);
