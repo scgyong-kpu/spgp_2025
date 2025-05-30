@@ -15,4 +15,10 @@ public class MainScene extends Scene {
         add(Layer.cannon, new Cannon(5, 700, 1600));
         add(Layer.cannon, new Cannon(10, 2600, 800));
     }
+
+    @Override
+    public boolean onBackPressed() {
+        new Scene().push();
+        return true;
+    }
 }
