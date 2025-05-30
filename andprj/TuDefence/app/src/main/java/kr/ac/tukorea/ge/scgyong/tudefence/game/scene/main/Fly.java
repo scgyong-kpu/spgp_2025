@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Rect;
+import android.util.Log;
 
 import androidx.core.graphics.PathParser;
 
@@ -17,12 +18,34 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Gauge;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class Fly extends SheetSprite implements IRecyclable {
+    private static final String TAG = Fly.class.getSimpleName();
     public enum Type {
         boss, red, blue, cyan, dragon;
         float getMaxHealth() {
             return HEALTHS[ordinal()];
         }
         static final float[] HEALTHS = { 150, 50, 30, 20, 10 };
+        static final int[] POSSIBILITIES = { 0, 10, 20, 30, 40 };
+        static int POSSIBILITY_SUM;
+        static {
+            POSSIBILITY_SUM = 0;
+            for (int p : POSSIBILITIES) {
+                POSSIBILITY_SUM += p;
+            }
+        }
+        static Type random() {
+            int value = rand.nextInt(Type.POSSIBILITY_SUM);
+            int rv = value;
+            for (int i = 0; i < Type.POSSIBILITIES.length; i++) {
+                value -= Type.POSSIBILITIES[i];
+                if (value < 0) {
+                    Type type = Type.values()[i];
+                    Log.d(TAG, "RandomValue=" + rv + " type=" + type + " i=" + i);
+                    return type;
+                }
+            }
+            return dragon;
+        }
     }
     public Fly() {
         super(R.mipmap.galaga_flies, 2.0f);
