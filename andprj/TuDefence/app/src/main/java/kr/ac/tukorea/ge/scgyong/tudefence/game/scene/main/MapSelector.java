@@ -6,6 +6,9 @@ import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.util.Arrays;
+
+import kr.ac.tukorea.ge.scgyong.tudefence.BuildConfig;
 import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
@@ -16,10 +19,9 @@ public class MapSelector extends Sprite {
     private static final float TILE_SIZE = 100;
     private static final float SELECTOR_SIZE = 2 * TILE_SIZE;
     private final MainScene scene;
-    private int[] menuItems = {
-            R.mipmap.f_01_01, R.mipmap.f_02_01, R.mipmap.f_03_01,
-    };
-    private Bitmap menuBgBitmap;
+    private static final int[] MENU_ITEMS_BLANK = {};
+    private int[] menuItems = MENU_ITEMS_BLANK;
+    private final Bitmap menuBgBitmap;
 
     public MapSelector(MainScene scene) {
         super(R.mipmap.selection);
@@ -53,11 +55,7 @@ public class MapSelector extends Sprite {
         if (cannon != null) {
             Log.d(TAG, "Found: " + cannon);
             if (action == MotionEvent.ACTION_UP) {
-                boolean upgraded = cannon.upgrade();
-                if (!upgraded) {
-                    // uninstalled
-                    hideSelector();
-                }
+                setMenuItems(R.mipmap.upgrade, R.mipmap.uninstall);
             } else {
                 bitmap = BitmapPool.get(R.mipmap.selection);
                 setPosition(cannon.getX(), cannon.getY());
@@ -81,9 +79,15 @@ public class MapSelector extends Sprite {
             hideSelector();
             return true;
         }
-        cannon = new Cannon(1, cx, cy);
-        scene.add(MainScene.Layer.cannon, cannon);
+        setMenuItems(R.mipmap.f_01_01, R.mipmap.f_02_01, R.mipmap.f_03_01);
         return true;
+    }
+    private void setMenuItems(int... items) {
+        menuItems = items;
+        if (BuildConfig.DEBUG) {
+            // 문자열 생성 비용이 있는 로그들은 BuildConfig.DEBUG 로 감싸는 것이 유리하다
+            Log.d(TAG, "Items = " + Arrays.toString(items));
+        }
     }
     private Cannon findCannonAt(float x, float y) {
         for (IGameObject obj: scene.objectsAt(MainScene.Layer.cannon)) {
