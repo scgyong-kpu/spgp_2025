@@ -22,7 +22,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 public class Cannon extends Sprite {
     protected int level;
     protected float range;
-    protected final float interval;
+    protected float interval;
     protected final Bitmap barrelBitmap;
     protected final RectF barrelRect = new RectF();
     protected float angle = -90;
@@ -32,12 +32,17 @@ public class Cannon extends Sprite {
             R.mipmap.f_06_01,R.mipmap.f_07_01,R.mipmap.f_08_01,R.mipmap.f_09_01,R.mipmap.f_10_01,
     };
     public Cannon(int level, float x, float y) {
-        super(BITMAP_IDS[level - 1]);
+        super(0);
+        barrelBitmap = BitmapPool.get(R.mipmap.tank_barrel);
+        setPosition(x, y, 200, 200);
+        setLevel(level);
+    }
+
+    private void setLevel(int level) {
+        bitmap = BitmapPool.get(BITMAP_IDS[level - 1]);
         this.level = level;
         this.range = 200 + (level * 200);
         this.interval = 5.5f - level / 2.0f;
-        barrelBitmap = BitmapPool.get(R.mipmap.tank_barrel);
-        setPosition(x, y, 200, 200);
         barrelRect.set(dstRect);
         float barrelSize = 50f + level * 10f;
         barrelRect.inset(-barrelSize, -barrelSize);
@@ -122,9 +127,6 @@ public class Cannon extends Sprite {
 
     public void upgrade() {
         if (level == BITMAP_IDS.length) return;
-
-        bitmap = BitmapPool.get(BITMAP_IDS[level]);
-        level += 1;
-        range += 200;
+        setLevel(level + 1);
     }
 }
