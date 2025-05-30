@@ -33,11 +33,7 @@ public class MapSelector extends Sprite {
     };
     private int[] menuItems = MENU_ITEMS_BLANK;
     private final Bitmap menuBgBitmap;
-    private final Paint alphaPaint = new Paint() {
-        {
-            setAlpha(192);
-        }
-    };
+    private final Paint alphaPaint = new Paint();
     private ValueAnimator alphaAnimator;
     private static final int ALPHA_ANIM_DURATION_MSEC = 300;
 
@@ -145,6 +141,18 @@ public class MapSelector extends Sprite {
             Log.d(TAG, "Items = " + Arrays.toString(names));
         }
 
+        if (alphaAnimator == null) {
+            alphaAnimator = ValueAnimator
+                    .ofInt(0, 192)
+                    .setDuration(ALPHA_ANIM_DURATION_MSEC);
+            alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    alphaPaint.setAlpha((Integer)valueAnimator.getAnimatedValue());
+                }
+            });
+        }
+        alphaAnimator.start();
     }
     private Cannon findCannonAt(float x, float y) {
         for (IGameObject obj: scene.objectsAt(MainScene.Layer.cannon)) {
