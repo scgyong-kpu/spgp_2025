@@ -1,8 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Rect;
@@ -16,7 +14,6 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.SheetSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Fly extends SheetSprite implements IRecyclable {
     public enum Type {
@@ -114,6 +111,7 @@ public class Fly extends SheetSprite implements IRecyclable {
         pm.getPosTan(distance, pos, tan);
         angle = (float) Math.toDegrees(Math.atan2(tan[1], tan[0]));
     }
+
 
     @Override
     public void draw(Canvas canvas) {
