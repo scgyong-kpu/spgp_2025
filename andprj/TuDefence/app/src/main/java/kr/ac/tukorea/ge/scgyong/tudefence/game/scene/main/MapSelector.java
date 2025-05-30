@@ -14,7 +14,7 @@ public class MapSelector extends Sprite {
     public MapSelector(MainScene scene) {
         super(R.mipmap.selection);
         this.scene = scene;
-        setPosition(1600, 500, 200, 200); // 임시 위치
+        setPosition(-100, -100, 200, 200); // 임시 위치
     }
 
     public boolean onTouch(int action, float x, float y) {
