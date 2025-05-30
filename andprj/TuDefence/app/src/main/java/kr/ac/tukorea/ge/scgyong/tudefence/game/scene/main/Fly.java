@@ -96,7 +96,7 @@ public class Fly extends SheetSprite implements IRecyclable {
 
     @Override
     public void update() {
-        distance += speed * GameView.frameTime;
+        distance += speed * GameView.frameTime; // * 5; 파리만 빠르게 움직이게 하고 싶다면
         if (distance > pathLength) {
             Scene.top().remove(MainScene.Layer.enemy, this);
             return;

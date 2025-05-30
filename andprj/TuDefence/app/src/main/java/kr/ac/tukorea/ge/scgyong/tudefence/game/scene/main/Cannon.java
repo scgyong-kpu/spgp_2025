@@ -14,6 +14,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class Cannon extends Sprite {
     private final int level;
+    private final float range;
     private final Bitmap barrelBitmap;
     private final RectF barrelRect = new RectF();
     private float angle = -90;
@@ -24,6 +25,7 @@ public class Cannon extends Sprite {
     public Cannon(int level, float x, float y) {
         super(BITMAP_IDS[level - 1]);
         this.level = level;
+        this.range = 200 + (level * 200);
         barrelBitmap = BitmapPool.get(R.mipmap.tank_barrel);
         setPosition(x, y, 200, 200);
         barrelRect.set(dstRect);
@@ -41,7 +43,7 @@ public class Cannon extends Sprite {
     }
 
     public Fly findNearestFly() {
-        float dist = Float.MAX_VALUE;
+        float dist = range;
         Fly nearest = null;
         MainScene scene = (MainScene) Scene.top();
         ArrayList<IGameObject> flies = scene.objectsAt(MainScene.Layer.enemy);
