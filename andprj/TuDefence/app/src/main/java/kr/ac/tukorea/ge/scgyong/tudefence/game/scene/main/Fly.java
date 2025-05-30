@@ -106,13 +106,10 @@ public class Fly extends SheetSprite implements IRecyclable {
         if (dy < -maxDiff) dy = -maxDiff;
         else if (dy > maxDiff) dy = maxDiff;
 
-        setPosition(pos[0] + dx, pos[1] + dy);
-
         pm.getPosTan(distance, pos, tan);
+        setPosition(pos[0] + dx, pos[1] + dy);
         angle = (float) Math.toDegrees(Math.atan2(tan[1], tan[0]));
     }
-
-
     @Override
     public void draw(Canvas canvas) {
         canvas.save();
@@ -120,7 +117,6 @@ public class Fly extends SheetSprite implements IRecyclable {
         super.draw(canvas);
         canvas.restore();
     }
-
     @Override
     public void onRecycle() {}
 }
