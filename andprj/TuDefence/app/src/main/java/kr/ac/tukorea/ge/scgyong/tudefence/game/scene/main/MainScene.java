@@ -10,20 +10,19 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
-    private final DesertMapBg tiledBg;
+    protected final DesertMapBg tiledBg;
+    protected final MapSelector mapSelector;
+
 
     enum Layer {
-        bg, enemy, cannon, shell, controller,
+        bg, enemy, cannon, shell, selection, controller,
     }
     public MainScene() {
         initLayers(Layer.values().length);
         tiledBg = new DesertMapBg();
         add(Layer.bg, tiledBg);
+        add(Layer.selection, mapSelector = new MapSelector(this));
         add(Layer.controller, new WaveGen(this, 2.0f));
-        add(Layer.cannon, new Cannon(1, 400, 600));
-        add(Layer.cannon, new Cannon(2, 1500, 500));
-        add(Layer.cannon, new Cannon(5, 700, 1600));
-        add(Layer.cannon, new Cannon(10, 2600, 800));
     }
 
     @Override
