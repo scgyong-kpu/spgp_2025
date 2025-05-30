@@ -13,6 +13,7 @@ import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MapSelector extends Sprite {
     private static final String TAG = MapSelector.class.getSimpleName();
@@ -48,6 +49,10 @@ public class MapSelector extends Sprite {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         menuRect.set(dstRect);
+        float right = dstRect.right + SELECTOR_SIZE * menuItems.length;
+        if (right > Metrics.width) {
+            menuRect.offset(-SELECTOR_SIZE * (menuItems.length + 1), 0);
+        }
         for (int item: menuItems) {
             menuRect.offset(SELECTOR_SIZE, 0);
             canvas.drawBitmap(menuBgBitmap, null, menuRect, null);
