@@ -66,7 +66,7 @@ public class Shell extends Sprite implements IRecyclable {
                 boolean dead = fly.decreaseLife(power);
                 if (dead) {
                     scene.remove(MainScene.Layer.enemy, fly);
-                    scene.score.add(100);
+                    scene.score.add(fly.score());
                 }
                 break;
             }

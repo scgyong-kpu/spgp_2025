@@ -128,6 +128,9 @@ public class Fly extends SheetSprite implements IRecyclable {
         life -= power;
         return life <= 0;
     }
+    public int score() {
+        return Math.round(maxLife / 10) * 10;
+    }
     private float dx, dy;
     private final float[] pos = new float[2];
     private final float[] tan = new float[2];

@@ -150,6 +150,10 @@ public class MapSelector extends Sprite {
     }
 
     private void installCannon(int level) {
+        int cost = Cannon.getInstallationCost(level);
+        int score = scene.score.getScore();
+        if (cost > score) return;
+        scene.score.add(-cost);
         Cannon cannon = new Cannon(level, (int)x, (int)y);
         scene.add(MainScene.Layer.cannon, cannon);
     }
