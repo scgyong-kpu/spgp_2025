@@ -18,7 +18,13 @@ public class MainScene extends Scene {
 
     @Override
     public boolean onBackPressed() {
-        new Scene().push();
+        new Scene() {
+            // Overridables
+            @Override
+            public boolean isTransparent() {
+                return true;
+            }
+        }.push();
         return true;
     }
 }
