@@ -138,7 +138,7 @@ public class Cannon extends Sprite {
         return true;
     }
 
-    private void uninstall() {
+    protected void uninstall() {
         Scene.top().remove(MainScene.Layer.cannon, this);
     }
 }

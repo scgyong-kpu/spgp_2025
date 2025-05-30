@@ -1,10 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
-import android.util.Log;
 import android.view.MotionEvent;
 
-import kr.ac.tukorea.ge.scgyong.tudefence.game.map.MapLayer;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 

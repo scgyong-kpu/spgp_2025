@@ -24,6 +24,7 @@ public class MapSelector extends Sprite {
     private static final float TILE_SIZE = 100;
     private static final float SELECTOR_SIZE = 2 * TILE_SIZE;
     private final MainScene scene;
+    private Cannon cannon;
     private static final int[] MENU_ITEMS_BLANK = {};
     private static final int[] MENU_ITEMS_INSTALL = {
             R.mipmap.f_01_01, R.mipmap.f_02_01, R.mipmap.f_03_01,
@@ -77,7 +78,7 @@ public class MapSelector extends Sprite {
         if (processed) {
             return false;
         }
-        Cannon cannon = findCannonAt(x, y);
+        cannon = findCannonAt(x, y);
         if (cannon != null) {
             Log.d(TAG, "Found: " + cannon);
             if (action == MotionEvent.ACTION_UP) {
@@ -123,10 +124,42 @@ public class MapSelector extends Sprite {
                     String name = res.getResourceEntryName(item);
                     Log.d(TAG, "Menu selected: " + name + "(" + item + ")");
                 }
+                doItemAction(item);
+                hideSelector();
                 return true;
             }
         }
         return false;
+    }
+
+    private void doItemAction(int menuItem) {
+        int level = 0;
+        // Resource IDs will be non-final by default in Android Gradle Plugin version 8.0, \
+        //  avoid using them in switch case statements More... (Ctrl+F1)
+        // Inspection info:Avoid the usage of resource IDs where
+        //  constant expressions are required.
+        switch (menuItem) {
+            case R.mipmap.f_01_01:
+                level = 1;
+                break;
+            case R.mipmap.f_02_01:
+                level = 2;
+                break;
+            case R.mipmap.f_03_01:
+                level = 3;
+                break;
+            case R.mipmap.upgrade:
+                cannon.upgrade();
+                return;
+            case R.mipmap.uninstall:
+                cannon.uninstall();
+                return;
+        }
+
+        if (level > 0) {
+            Cannon cannon = new Cannon(level, (int)x, (int)y);
+            scene.add(MainScene.Layer.cannon, cannon);
+        }
     }
 
     private void setMenuItems(int... items) {
@@ -155,7 +188,7 @@ public class MapSelector extends Sprite {
         alphaAnimator.start();
     }
     private Cannon findCannonAt(float x, float y) {
-        for (IGameObject obj: scene.objectsAt(MainScene.Layer.cannon)) {
+        for (IGameObject obj: scene.objectsAt(cannon)) {
             Cannon cannon = (Cannon) obj;
             if (cannon.containsPoint(x, y)) {
                 return cannon;
@@ -164,7 +197,7 @@ public class MapSelector extends Sprite {
         return null;
     }
     private boolean intersectsIfInstalledAt(float x, float y) {
-        for (IGameObject obj: scene.objectsAt(MainScene.Layer.cannon)) {
+        for (IGameObject obj: scene.objectsAt(cannon)) {
             Cannon cannon = (Cannon) obj;
             if (cannon.intersectsIfInstalledAt(x, y)) {
                 Log.d(TAG, "Intersects with: " + cannon);
