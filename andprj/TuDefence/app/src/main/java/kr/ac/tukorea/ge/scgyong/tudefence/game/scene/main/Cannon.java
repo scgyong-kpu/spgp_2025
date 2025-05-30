@@ -7,7 +7,10 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
@@ -107,5 +110,12 @@ public class Cannon extends Sprite {
     public boolean intersectsIfInstalledAt(float x, float y) {
         float dx = Math.abs(x - this.x), dy = Math.abs(y - this.y);
         return dx <= radius && dy <= radius;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "Cannon<%d>(%d,%d)@%d",
+                level, (int)x/100, (int)y/100, System.identityHashCode(this));
     }
 }
