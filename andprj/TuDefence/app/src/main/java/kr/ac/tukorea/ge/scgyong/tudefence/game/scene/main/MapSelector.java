@@ -48,7 +48,7 @@ public class MapSelector extends Sprite {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        setFirstMenuRect();
+        prepareMenuRect();
         for (int item: menuItems) {
             menuRect.offset(SELECTOR_SIZE, 0);
             canvas.drawBitmap(menuBgBitmap, null, menuRect, null);
@@ -57,7 +57,7 @@ public class MapSelector extends Sprite {
         }
     }
 
-    private void setFirstMenuRect() {
+    private void prepareMenuRect() {
         menuRect.set(dstRect);
         float right = dstRect.right + SELECTOR_SIZE * menuItems.length;
         if (right > Metrics.width) {
@@ -66,6 +66,10 @@ public class MapSelector extends Sprite {
     }
 
     public boolean onTouch(int action, float x, float y) {
+        boolean processed = handleMenuItem(action, x, y);
+        if (processed) {
+            return false;
+        }
         Cannon cannon = findCannonAt(x, y);
         if (cannon != null) {
             Log.d(TAG, "Found: " + cannon);
@@ -100,6 +104,20 @@ public class MapSelector extends Sprite {
         setMenuItems(MENU_ITEMS_INSTALL);
         return true;
     }
+
+    private boolean handleMenuItem(int action, float x, float y) {
+        if (action != MotionEvent.ACTION_DOWN || menuItems.length == 0) return false;
+        prepareMenuRect();
+        for (int item : menuItems) {
+            menuRect.offset(SELECTOR_SIZE, 0);
+            if (menuRect.contains(x, y)) {
+                Log.d(TAG, "Menu selected: " + item);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void setMenuItems(int... items) {
         menuItems = items;
         if (BuildConfig.DEBUG) {
