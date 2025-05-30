@@ -48,16 +48,20 @@ public class MapSelector extends Sprite {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        menuRect.set(dstRect);
-        float right = dstRect.right + SELECTOR_SIZE * menuItems.length;
-        if (right > Metrics.width) {
-            menuRect.offset(-SELECTOR_SIZE * (menuItems.length + 1), 0);
-        }
+        setFirstMenuRect();
         for (int item: menuItems) {
             menuRect.offset(SELECTOR_SIZE, 0);
             canvas.drawBitmap(menuBgBitmap, null, menuRect, null);
             Bitmap itemBitmap = BitmapPool.get(item);
             canvas.drawBitmap(itemBitmap, null, menuRect, null);
+        }
+    }
+
+    private void setFirstMenuRect() {
+        menuRect.set(dstRect);
+        float right = dstRect.right + SELECTOR_SIZE * menuItems.length;
+        if (right > Metrics.width) {
+            menuRect.offset(-SELECTOR_SIZE * (menuItems.length + 1), 0);
         }
     }
 
