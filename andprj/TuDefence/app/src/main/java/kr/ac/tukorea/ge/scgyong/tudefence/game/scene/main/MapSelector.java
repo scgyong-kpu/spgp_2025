@@ -1,5 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
@@ -13,6 +14,7 @@ import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MapSelector extends Sprite {
@@ -111,7 +113,11 @@ public class MapSelector extends Sprite {
         for (int item : menuItems) {
             menuRect.offset(SELECTOR_SIZE, 0);
             if (menuRect.contains(x, y)) {
-                Log.d(TAG, "Menu selected: " + item);
+                if (BuildConfig.DEBUG) {
+                    Resources res = GameView.view.getResources();
+                    String name = res.getResourceEntryName(item);
+                    Log.d(TAG, "Menu selected: " + name + "(" + item + ")");
+                }
                 return true;
             }
         }
@@ -122,7 +128,12 @@ public class MapSelector extends Sprite {
         menuItems = items;
         if (BuildConfig.DEBUG) {
             // 문자열 생성 비용이 있는 로그들은 BuildConfig.DEBUG 로 감싸는 것이 유리하다
-            Log.d(TAG, "Items = " + Arrays.toString(items));
+            Resources res = GameView.view.getResources();
+            String[] names = Arrays.stream(items).mapToObj(resId->{
+                String name = res.getResourceEntryName(resId);
+                return name + "(" + resId + ")";
+            }).toArray(String[]::new);
+            Log.d(TAG, "Items = " + Arrays.toString(names));
         }
     }
     private Cannon findCannonAt(float x, float y) {
