@@ -3,7 +3,7 @@ package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Layer;
+import kr.ac.tukorea.ge.scgyong.tudefence.game.map.MapLayer;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
@@ -38,7 +38,7 @@ public class MainScene extends Scene {
         float[] pts = Metrics.fromScreen(event.getX(), event.getY());
         int x = (int)(pts[0] / 100);
         int y = (int)(pts[1] / 100);
-        kr.ac.tukorea.ge.scgyong.tudefence.game.map.Layer layer = tiledBg.getActiveLayer();
+        MapLayer layer = tiledBg.getActiveLayer();
         int tile = layer.tileAt(x, y);
         Log.d(TAG, "Snapped XY: (" + x + "," + y + ") tile: " + tile);
         return true;

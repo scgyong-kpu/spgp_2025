@@ -13,10 +13,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.AbstractList;
 
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Converter;
-import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Layer;
+import kr.ac.tukorea.ge.scgyong.tudefence.game.map.MapLayer;
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.TiledMap;
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Tileset;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
@@ -28,7 +27,7 @@ public class TiledBackground implements IGameObject {
     private final TiledMap map;
     private final String assetPath;
     private Tileset tileset;
-    private Layer layer;
+    private MapLayer layer;
     private Bitmap bitmap;
     private float tileWidth;
     private float tileHeight;
@@ -123,7 +122,7 @@ public class TiledBackground implements IGameObject {
     public Tileset getActiveTileset() {
         return tileset;
     }
-    public Layer getActiveLayer() {
+    public MapLayer getActiveLayer() {
         return layer;
     }
 

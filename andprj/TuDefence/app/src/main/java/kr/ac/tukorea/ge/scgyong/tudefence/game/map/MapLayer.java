@@ -2,7 +2,7 @@ package kr.ac.tukorea.ge.scgyong.tudefence.game.map;
 
 import com.fasterxml.jackson.annotation.*;
 
-public class Layer {
+public class MapLayer {
     private long[] data;
     private long height;
     private long id;
