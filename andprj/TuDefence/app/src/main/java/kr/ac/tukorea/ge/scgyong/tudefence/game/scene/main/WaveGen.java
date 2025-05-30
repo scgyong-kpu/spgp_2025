@@ -2,16 +2,12 @@ package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
 import android.graphics.Canvas;
 
-import java.util.Random;
-
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class WaveGen implements IGameObject {
     private final MainScene scene;
     private final float interval;
-    private static final Random rand = new Random();
     private float time;
 
     public WaveGen(MainScene scene, float interval) {
@@ -29,11 +25,7 @@ public class WaveGen implements IGameObject {
     }
 
     private void spawn() {
-        float size = rand.nextFloat() * 100 + 150;
-        float speed = rand.nextFloat() * 50 + 100;
-        Fly.Type type = Fly.Type.random();
-        Fly fly = Fly.get(type, size, speed);
-        scene.add(MainScene.Layer.enemy, fly);
+        scene.add(MainScene.Layer.enemy, Fly.get());
     }
 
 
