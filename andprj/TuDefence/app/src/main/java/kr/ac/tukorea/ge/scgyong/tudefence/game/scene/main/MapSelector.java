@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 
 public class MapSelector extends Sprite {
     private static final String TAG = MapSelector.class.getSimpleName();
@@ -14,10 +15,14 @@ public class MapSelector extends Sprite {
     public MapSelector(MainScene scene) {
         super(R.mipmap.selection);
         this.scene = scene;
-        setPosition(-100, -100, 200, 200); // 임시 위치
+        setPosition(-100, -100, 200, 200);
     }
     private void hideSelector() {
         setPosition(-100, -100);
+        // 시작 위치가 -100, -100 이면 보이지 않는다.
+        // 보여줄 지 여부를 member 로 가지는 방법도 있지만
+        // 그 경우 여부에 따라 보여주거나 안 보여주는 코드를 작성해야 하므로
+        // 이 방법을 선택해 본다.
     }
 
     public boolean onTouch(int action, float x, float y) {
@@ -27,6 +32,7 @@ public class MapSelector extends Sprite {
             if (action == MotionEvent.ACTION_UP) {
                 cannon.upgrade();
             } else {
+                bitmap = BitmapPool.get(R.mipmap.selection);
                 setPosition(cannon.getX(), cannon.getY());
             }
             return true;
@@ -36,16 +42,16 @@ public class MapSelector extends Sprite {
         float cx = (mapX + 1) * 100;
         float cy = (mapY + 1) * 100;
 
-        if (intersectsIfInstalledAt(cx, cy)) {
-            return false;
-        }
         setPosition(cx, cy);
 
-        boolean possible = scene.tiledBg.canInstallAt(mapX, mapY);
+        boolean possible = !intersectsIfInstalledAt(cx, cy) && scene.tiledBg.canInstallAt(mapX, mapY);
+        int resId = possible ? R.mipmap.selection : R.mipmap.sel_non_installable;
+        bitmap = BitmapPool.get(resId);
+        if (action != MotionEvent.ACTION_UP) {
+            return true;
+        }
         if (!possible) {
             hideSelector();
-        }
-        if (!possible || action != MotionEvent.ACTION_UP) {
             return true;
         }
         cannon = new Cannon(1, cx, cy);
