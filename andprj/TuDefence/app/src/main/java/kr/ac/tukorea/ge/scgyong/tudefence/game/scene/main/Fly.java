@@ -13,11 +13,16 @@ import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.SheetSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Gauge;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class Fly extends SheetSprite implements IRecyclable {
     public enum Type {
-        boss, red, blue, cyan, dragon,
+        boss, red, blue, cyan, dragon;
+        float getMaxHealth() {
+            return HEALTHS[ordinal()];
+        }
+        static final float[] HEALTHS = { 100, 50, 40, 30, 10 };
     }
     public Fly() {
         super(R.mipmap.galaga_flies, 2.0f);
@@ -46,6 +51,7 @@ public class Fly extends SheetSprite implements IRecyclable {
         distance = 0;
         dx = dy = 0;
         this.speed = speed;
+        life = maxLife = type.getMaxHealth() * (0.9f + rand.nextFloat() * 0.2f);
         update();
         return this;
     }
@@ -87,6 +93,13 @@ public class Fly extends SheetSprite implements IRecyclable {
 
     private static Rect[][] rects_array;
     private float distance, speed, angle;
+    private float life, maxLife;
+    private static Gauge gauge;
+
+    public boolean decreaseLife(float power) {
+        life -= power;
+        return life <= 0;
+    }
     private float dx, dy;
     private final float[] pos = new float[2];
     private final float[] tan = new float[2];
@@ -116,6 +129,11 @@ public class Fly extends SheetSprite implements IRecyclable {
         canvas.rotate(angle, x, y);
         super.draw(canvas);
         canvas.restore();
+        float barSize = width * 2 / 3;
+        if (gauge == null) {
+            gauge = new Gauge(0.2f, R.color.fly_health_fg, R.color.fly_health_bg);
+        }
+        gauge.draw(canvas, x - barSize / 2, y + barSize / 2, barSize, life / maxLife);
     }
     @Override
     public void onRecycle() {}

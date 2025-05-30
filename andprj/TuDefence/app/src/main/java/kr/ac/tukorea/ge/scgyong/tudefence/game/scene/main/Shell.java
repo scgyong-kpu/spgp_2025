@@ -60,8 +60,11 @@ public class Shell extends Sprite implements IRecyclable {
             Fly fly = (Fly) flies.get(index);
             boolean collides = CollisionHelper.collidesRadius(this, fly);
             if (collides) {
-                scene.remove(MainScene.Layer.enemy, fly);
                 scene.remove(MainScene.Layer.shell, this);
+                boolean dead = fly.decreaseLife(10);
+                if (dead) {
+                    scene.remove(MainScene.Layer.enemy, fly);
+                }
                 break;
             }
         }
