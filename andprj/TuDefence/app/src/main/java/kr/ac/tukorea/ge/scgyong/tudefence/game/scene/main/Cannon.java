@@ -9,18 +9,21 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 
 public class Cannon extends Sprite {
-    private Bitmap barrelBitmap;
+    private final int level;
+    private final Bitmap barrelBitmap;
     private final RectF barrelRect = new RectF();
     private static final int[] BITMAP_IDS = {
             R.mipmap.f_01_01, R.mipmap.f_02_01,R.mipmap.f_03_01,R.mipmap.f_04_01,R.mipmap.f_05_01,
             R.mipmap.f_06_01,R.mipmap.f_07_01,R.mipmap.f_08_01,R.mipmap.f_09_01,R.mipmap.f_10_01,
     };
     public Cannon(int level, float x, float y) {
-        super(BITMAP_IDS[level]);
+        super(BITMAP_IDS[level - 1]);
+        this.level = level;
         barrelBitmap = BitmapPool.get(R.mipmap.tank_barrel);
         setPosition(x, y, 200, 200);
         barrelRect.set(dstRect);
-        barrelRect.inset(-150, -150);
+        float barrelSize = 50f + level * 10f;
+        barrelRect.inset(-barrelSize, -barrelSize);
     }
 
     @Override
