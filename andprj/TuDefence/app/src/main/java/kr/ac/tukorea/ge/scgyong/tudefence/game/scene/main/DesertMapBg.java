@@ -11,7 +11,13 @@ public class DesertMapBg extends TiledBackground {
     }
     public boolean canInstallAt(int x, int y) {
         int tile = layer.tileAt(x, y); // layer = Current Active Layer
-        Log.d(TAG, "Tile @(" + x + "," + y + ") = " + tile);
-        return tile == TILE_INDEX_BRICK;
+        if (tile != TILE_INDEX_BRICK) return false;
+        tile = layer.tileAt(x + 1, y);
+        if (tile != TILE_INDEX_BRICK) return false;
+        tile = layer.tileAt(x, y + 1);
+        if (tile != TILE_INDEX_BRICK) return false;
+        tile = layer.tileAt(x + 1, y + 1);
+        if (tile != TILE_INDEX_BRICK) return false;
+        return true;
     }
 }
