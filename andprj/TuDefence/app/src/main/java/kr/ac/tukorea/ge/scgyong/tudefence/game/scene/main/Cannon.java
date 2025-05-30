@@ -64,7 +64,7 @@ public class Cannon extends Sprite {
     }
 
     public Fly findNearestFly() {
-        float dist = range;
+        float nearest_dist_sq = range * range;
         Fly nearest = null;
         MainScene scene = (MainScene) Scene.top();
         ArrayList<IGameObject> flies = scene.objectsAt(MainScene.Layer.enemy);
@@ -73,13 +73,17 @@ public class Cannon extends Sprite {
             Fly fly = (Fly) gameObject;
             float fx = fly.getX();
             float fy = fly.getY();
+
+            // 현재 탐색 중인 fly까지의 거리 제곱 계산
             float dx = x - fx;
-            if (dx > dist) continue;
+            float dx_sq = dx * dx;
+            if (dx_sq > nearest_dist_sq) continue; // x축 거리만으로 범위 초과
             float dy = y - fy;
-            if (dy > dist) continue;
-            float d = (float) Math.sqrt(dx * dx + dy * dy);
-            if (dist > d) {
-                dist = d;
+            float dy_sq = dy * dy;
+            if (dy_sq > nearest_dist_sq) continue; // y축 거리만으로 범위 초과
+            float dist_sq = dx_sq + dy_sq;
+            if (nearest_dist_sq > dist_sq) {
+                nearest_dist_sq = dist_sq;
                 nearest = fly;
             }
         }
