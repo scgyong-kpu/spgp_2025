@@ -1,15 +1,21 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
+import android.widget.Toast;
+
 import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Button;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class PauseScene extends Scene {
     enum PauseLayer {
         bg, ui, COUNT
     }
+
+    private long createdOn;
+    private final Toast toast;
 
     public PauseScene() {
         initLayers(PauseLayer.values().length);
@@ -30,9 +36,26 @@ public class PauseScene extends Scene {
             Scene.popAll();
             return true;
         }));
+
+        createdOn = System.currentTimeMillis();
+        toast = Toast.makeText(GameView.view.getContext(), R.string.back_press_msg, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     // Overridables
+
+
+    @Override
+    public boolean onBackPressed() {
+        long now = System.currentTimeMillis();
+        if (now - createdOn < 500) {
+            Scene.popAll();
+            toast.cancel();
+            return true;
+        }
+        return super.onBackPressed(); // pop this scene
+    }
+
     @Override
     public boolean isTransparent() {
         return true;
