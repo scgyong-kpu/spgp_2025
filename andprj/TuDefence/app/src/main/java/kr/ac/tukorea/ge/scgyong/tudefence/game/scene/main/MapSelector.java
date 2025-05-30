@@ -20,6 +20,12 @@ public class MapSelector extends Sprite {
     private static final float SELECTOR_SIZE = 2 * TILE_SIZE;
     private final MainScene scene;
     private static final int[] MENU_ITEMS_BLANK = {};
+    private static final int[] MENU_ITEMS_INSTALL = {
+            R.mipmap.f_01_01, R.mipmap.f_02_01, R.mipmap.f_03_01,
+    };
+    private static final int[] MENU_ITEMS_CANNON = {
+            R.mipmap.upgrade, R.mipmap.uninstall,
+    };
     private int[] menuItems = MENU_ITEMS_BLANK;
     private final Bitmap menuBgBitmap;
 
@@ -55,7 +61,7 @@ public class MapSelector extends Sprite {
         if (cannon != null) {
             Log.d(TAG, "Found: " + cannon);
             if (action == MotionEvent.ACTION_UP) {
-                setMenuItems(R.mipmap.upgrade, R.mipmap.uninstall);
+                setMenuItems(MENU_ITEMS_CANNON);
             } else {
                 bitmap = BitmapPool.get(R.mipmap.selection);
                 setPosition(cannon.getX(), cannon.getY());
@@ -79,7 +85,7 @@ public class MapSelector extends Sprite {
             hideSelector();
             return true;
         }
-        setMenuItems(R.mipmap.f_01_01, R.mipmap.f_02_01, R.mipmap.f_03_01);
+        setMenuItems(MENU_ITEMS_INSTALL);
         return true;
     }
     private void setMenuItems(int... items) {
