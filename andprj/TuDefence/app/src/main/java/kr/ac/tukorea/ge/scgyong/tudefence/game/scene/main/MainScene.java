@@ -9,14 +9,14 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
-    private final TiledBackground tiledBg;
+    private final DesertMapBg tiledBg;
 
     enum Layer {
         bg, enemy, cannon, shell, controller,
     }
     public MainScene() {
         initLayers(Layer.values().length);
-        tiledBg = new TiledBackground("map/desert.tmj", 100, 100);
+        tiledBg = new DesertMapBg();
         add(Layer.bg, tiledBg);
         add(Layer.controller, new WaveGen(this, 2.0f));
         add(Layer.cannon, new Cannon(1, 400, 600));
