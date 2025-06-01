@@ -21,7 +21,8 @@ public class MainScene extends Scene {
         //Metrics.setGameSize(900, 1600); default=900x1600
         initLayers(Layer.COUNT);
 
-        add(Layer.bg1, new VertScrollBackground(R.mipmap.bg_city, 20));
+        //add(Layer.bg1, new VertScrollBackground(R.mipmap.bg_city, 20));
+        add(Layer.bg1, new ForestTiledBg());
         add(Layer.bg2, new VertScrollBackground(R.mipmap.clouds, 40));
 
         this.fighter = new Fighter();
