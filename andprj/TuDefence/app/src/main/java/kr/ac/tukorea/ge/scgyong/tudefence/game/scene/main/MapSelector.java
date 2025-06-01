@@ -83,6 +83,7 @@ public class MapSelector extends Sprite {
             return !canInstall(3);
         }
         if (item == R.mipmap.upgrade) {
+            if (cannon == null) return true;
             int score = scene.score.getScore();
             int cost = cannon.getUpgradeCost();
             return cost > score;
