@@ -3,6 +3,7 @@ package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.tudefence.R;
+import kr.ac.tukorea.ge.scgyong.tudefence.game.scene.pause.PauseScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Score;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;

@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
+package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.pause;
 
 import android.widget.Toast;
 
