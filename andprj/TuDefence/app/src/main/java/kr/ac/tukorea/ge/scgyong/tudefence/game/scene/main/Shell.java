@@ -87,9 +87,11 @@ public class Shell extends Sprite implements IRecyclable {
     }
 
     private void explode(MainScene scene, Fly flyHit, ArrayList<IGameObject> flies) {
-        double explosion_radius = 100 + 2 * power;
-        double radius_sq = explosion_radius * explosion_radius;
         float fx = flyHit.getX(), fy = flyHit.getY();
+        float explosion_radius = 60 + 3 * power;
+        Explosion ex = Explosion.get(fx, fy, explosion_radius);
+        scene.add(MainScene.Layer.explosion, ex);
+        double radius_sq = explosion_radius * explosion_radius;
         Log.v(TAG, "[Explosion");
         for (int index = flies.size() - 1; index >= 0; index--) {
             Fly fly = (Fly) flies.get(index);

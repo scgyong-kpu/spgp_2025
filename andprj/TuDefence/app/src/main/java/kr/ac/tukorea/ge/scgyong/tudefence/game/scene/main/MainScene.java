@@ -15,7 +15,7 @@ public class MainScene extends Scene {
 
 
     enum Layer {
-        bg, enemy, cannon, shell, score, selection, controller,
+        bg, enemy, cannon, shell, explosion, score, selection, controller,
     }
     public MainScene() {
         initLayers(Layer.values().length);
