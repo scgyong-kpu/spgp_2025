@@ -6,7 +6,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class WaveGen implements IGameObject {
-    private static final float INTERVAL_INIT = 1.0f;
+    private static final float INTERVAL_INIT = 2.0f;
     private static final float INTERVAL_MIN = 0.1f;
     private static final float INTERVAL_WAVE = 30.0f;
     private final MainScene scene;

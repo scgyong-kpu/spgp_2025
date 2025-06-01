@@ -79,7 +79,7 @@ public class Fly extends SheetSprite implements IRecyclable {
         distance = 0;
         dx = dy = 0;
         this.speed = speed;
-        life = maxLife = type.getMaxHealth() * (0.9f + rand.nextFloat() * 0.2f);
+        life = maxLife = displayLife = type.getMaxHealth() * (0.9f + rand.nextFloat() * 0.2f);
         update();
         return this;
     }
@@ -121,7 +121,7 @@ public class Fly extends SheetSprite implements IRecyclable {
 
     private static Rect[][] rects_array;
     private float distance, speed, angle;
-    private float life, maxLife;
+    private float life, maxLife, displayLife;
     private static Gauge gauge;
 
     public boolean decreaseLife(float power) {
@@ -137,6 +137,17 @@ public class Fly extends SheetSprite implements IRecyclable {
 
     @Override
     public void update() {
+        if (life != displayLife) {
+            float step = maxLife / 50;
+            float diff = life - displayLife;
+            if (diff < -step) {
+                displayLife -= step;
+            } else if (diff > step) {
+                displayLife += step;
+            } else {
+                displayLife = life;
+            }
+        }
         distance += speed * GameView.frameTime; // * 5; 파리만 빠르게 움직이게 하고 싶다면
         if (distance > pathLength) {
             Scene.top().remove(MainScene.Layer.enemy, this);
@@ -164,7 +175,7 @@ public class Fly extends SheetSprite implements IRecyclable {
         if (gauge == null) {
             gauge = new Gauge(0.2f, R.color.fly_health_fg, R.color.fly_health_bg);
         }
-        gauge.draw(canvas, x - barSize / 2, y + barSize / 2, barSize, life / maxLife);
+        gauge.draw(canvas, x - barSize / 2, y + barSize / 2, barSize, displayLife / maxLife);
     }
     @Override
     public void onRecycle() {}
