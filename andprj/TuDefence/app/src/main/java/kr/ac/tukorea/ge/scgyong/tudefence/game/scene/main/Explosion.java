@@ -30,7 +30,7 @@ public class Explosion extends AnimSprite implements IRecyclable {
             Scene.top().remove(MainScene.Layer.explosion, this);
             return;
         }
-        int frameIndex = Math.round(time * fps) % frameCount;
+        int frameIndex = (int)(time * fps) % frameCount;
         srcRect.set(frameIndex * frameWidth, 0, (frameIndex + 1) * frameWidth, frameHeight);
     }
 
