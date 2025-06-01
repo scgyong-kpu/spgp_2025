@@ -25,7 +25,7 @@ public class MainScene extends Scene {
         add(Layer.controller, new WaveGen(this));
 
         score = new Score(R.mipmap.gold_number, Metrics.width - 50, 50, 100);
-        score.setScore(30);
+        score.setScore(3000);
         add(Layer.score, score);
     }
 
