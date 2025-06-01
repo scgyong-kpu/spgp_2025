@@ -33,7 +33,7 @@ public class MapSelector extends Sprite {
             R.mipmap.upgrade, R.mipmap.uninstall,
     };
     private int[] menuItems = MENU_ITEMS_BLANK;
-    private final Bitmap menuBgBitmap;
+    private final Bitmap menuBgBitmap, notAvailableBitmap;
     private final Paint alphaPaint = new Paint();
     private ValueAnimator alphaAnimator;
     private static final int ALPHA_ANIM_DURATION_MSEC = 300;
@@ -42,6 +42,7 @@ public class MapSelector extends Sprite {
         super(R.mipmap.selection);
         this.scene = scene;
         menuBgBitmap = BitmapPool.get(R.mipmap.menu_bg);
+        notAvailableBitmap = BitmapPool.get(R.mipmap.not_available);
         setPosition(-SELECTOR_SIZE, -SELECTOR_SIZE, SELECTOR_SIZE, SELECTOR_SIZE);
     }
     private void hideSelector() {
@@ -65,7 +66,34 @@ public class MapSelector extends Sprite {
             canvas.drawBitmap(menuBgBitmap, null, menuRect, alphaPaint);
             Bitmap itemBitmap = BitmapPool.get(item);
             canvas.drawBitmap(itemBitmap, null, menuRect, alphaPaint);
+            if (prohibits(item)) {
+                canvas.drawBitmap(notAvailableBitmap, null, menuRect, alphaPaint);
+            }
         }
+    }
+
+    private boolean prohibits(int item) {
+        if (item == R.mipmap.f_01_01) {
+            return !canInstall(1);
+        }
+        if (item == R.mipmap.f_02_01) {
+            return !canInstall(2);
+        }
+        if (item == R.mipmap.f_03_01) {
+            return !canInstall(3);
+        }
+        if (item == R.mipmap.upgrade) {
+            int score = scene.score.getScore();
+            int cost = cannon.getUpgradeCost();
+            return cost > score;
+        }
+        return false;
+    }
+
+    private boolean canInstall(int level) {
+        int cost = Cannon.getInstallationCost(level);
+        int score = scene.score.getScore();
+        return cost <= score;
     }
 
     private void prepareMenuRect() {
@@ -127,49 +155,55 @@ public class MapSelector extends Sprite {
                     String name = res.getResourceEntryName(item);
                     Log.d(TAG, "Menu selected: " + name + "(" + item + ")");
                 }
-                doItemAction(item);
-                hideSelector();
+                boolean done = doItemAction(item);
+                if (done) {
+                    hideSelector();
+                }
                 return true;
             }
         }
         return false;
     }
 
-    private void doItemAction(int menuItem) {
+    private boolean doItemAction(int menuItem) {
         if (menuItem == R.mipmap.f_01_01) {
-            installCannon(1);
+            return installCannon(1);
         } else if (menuItem == R.mipmap.f_02_01) {
-            installCannon(2);
+            return installCannon(2);
         } else if (menuItem == R.mipmap.f_03_01) {
-            installCannon(3);
+            return installCannon(3);
         } else if (menuItem == R.mipmap.upgrade) {
-            upgradeCannon();
+            return upgradeCannon();
         } else if (menuItem == R.mipmap.uninstall) {
-            uninstallCannon();
+            return uninstallCannon();
         }
+        return false;
     }
 
-    private void installCannon(int level) {
+    private boolean installCannon(int level) {
         int cost = Cannon.getInstallationCost(level);
         int score = scene.score.getScore();
-        if (cost > score) return;
+        if (cost > score) return false;
         scene.score.add(-cost);
         Cannon cannon = new Cannon(level, (int)x, (int)y);
         scene.add(MainScene.Layer.cannon, cannon);
+        return true;
     }
-    private void upgradeCannon() {
+    private boolean upgradeCannon() {
         int cost = cannon.getUpgradeCost();
         int score = scene.score.getScore();
-        if (cost > score) return;
+        if (cost > score) return false;
         scene.score.add(-cost);
         cannon.upgrade();
+        return true;
     }
 
-    private void uninstallCannon() {
+    private boolean uninstallCannon() {
         int price = cannon.getSellPrice();
         scene.score.add(price);
         cannon.uninstall();
         cannon = null;
+        return true;
     }
 
     private void setMenuItems(int... items) {
