@@ -12,7 +12,7 @@
 //
 //     Welcome data = Converter.fromJsonString(jsonString);
 
-package kr.ac.tukorea.ge.scgyong.tudefence.game.map;
+package kr.ac.tukorea.ge.spgp2025.a2dg.framework.map;
 
 import java.io.IOException;
 import com.fasterxml.jackson.databind.*;

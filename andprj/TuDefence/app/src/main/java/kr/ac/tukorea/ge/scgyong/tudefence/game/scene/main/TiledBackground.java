@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Converter;
-import kr.ac.tukorea.ge.scgyong.tudefence.game.map.MapLayer;
-import kr.ac.tukorea.ge.scgyong.tudefence.game.map.TiledMap;
-import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Tileset;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.map.Converter;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.map.MapLayer;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.map.TiledMap;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.map.Tileset;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;

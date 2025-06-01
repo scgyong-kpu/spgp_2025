@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.tudefence.game.map;
+package kr.ac.tukorea.ge.spgp2025.a2dg.framework.map;
 
 import android.graphics.Rect;
 
