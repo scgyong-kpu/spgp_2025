@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
+package kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects;
 
 import android.content.Context;
 import android.content.res.AssetManager;
