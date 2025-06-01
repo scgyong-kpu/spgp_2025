@@ -38,7 +38,7 @@ public class Cannon extends Sprite {
         setLevel(level);
     }
     private static final int[] COSTS = {
-            10, 30, 70, 150, 300, 700, 1500, 3000, 7000, 15000, 100000000
+            10, 100, 300, 700, 1500, 3000, 7000, 15000, 40000, 100000, 100000000
     };
     public static int getInstallationCost(int level) {
         return COSTS[level - 1];
