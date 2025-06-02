@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TuDefence</string>
+    <string name="back_press_msg">To end game activity, press back button twice quickly</string>
+</resources>
