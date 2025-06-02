@@ -1,8 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Rect;
@@ -15,12 +13,16 @@ import kr.ac.tukorea.ge.scgyong.tudefence.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.SheetSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Gauge;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Fly extends SheetSprite implements IRecyclable {
     public enum Type {
-        boss, red, blue, cyan, dragon,
+        boss, red, blue, cyan, dragon;
+        float getMaxHealth() {
+            return HEALTHS[ordinal()];
+        }
+        static final float[] HEALTHS = { 150, 50, 30, 20, 10 };
     }
     public Fly() {
         super(R.mipmap.galaga_flies, 2.0f);
@@ -49,6 +51,7 @@ public class Fly extends SheetSprite implements IRecyclable {
         distance = 0;
         dx = dy = 0;
         this.speed = speed;
+        life = maxLife = type.getMaxHealth() * (0.9f + rand.nextFloat() * 0.2f);
         update();
         return this;
     }
@@ -90,13 +93,20 @@ public class Fly extends SheetSprite implements IRecyclable {
 
     private static Rect[][] rects_array;
     private float distance, speed, angle;
+    private float life, maxLife;
+    private static Gauge gauge;
+
+    public boolean decreaseLife(float power) {
+        life -= power;
+        return life <= 0;
+    }
     private float dx, dy;
     private final float[] pos = new float[2];
     private final float[] tan = new float[2];
 
     @Override
     public void update() {
-        distance += speed * GameView.frameTime;
+        distance += speed * GameView.frameTime; // * 5; 파리만 빠르게 움직이게 하고 싶다면
         if (distance > pathLength) {
             Scene.top().remove(MainScene.Layer.enemy, this);
             return;
@@ -109,20 +119,22 @@ public class Fly extends SheetSprite implements IRecyclable {
         if (dy < -maxDiff) dy = -maxDiff;
         else if (dy > maxDiff) dy = maxDiff;
 
-        setPosition(pos[0] + dx, pos[1] + dy);
-
         pm.getPosTan(distance, pos, tan);
+        setPosition(pos[0] + dx, pos[1] + dy);
         angle = (float) Math.toDegrees(Math.atan2(tan[1], tan[0]));
     }
-
     @Override
     public void draw(Canvas canvas) {
         canvas.save();
         canvas.rotate(angle, x, y);
         super.draw(canvas);
         canvas.restore();
+        float barSize = width * 2 / 3;
+        if (gauge == null) {
+            gauge = new Gauge(0.2f, R.color.fly_health_fg, R.color.fly_health_bg);
+        }
+        gauge.draw(canvas, x - barSize / 2, y + barSize / 2, barSize, life / maxLife);
     }
-
     @Override
     public void onRecycle() {}
 }
