@@ -13,10 +13,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.AbstractList;
 
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Converter;
-import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Layer;
+import kr.ac.tukorea.ge.scgyong.tudefence.game.map.MapLayer;
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.TiledMap;
 import kr.ac.tukorea.ge.scgyong.tudefence.game.map.Tileset;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
@@ -25,17 +24,17 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class TiledBackground implements IGameObject {
     private static final String TAG = TiledBackground.class.getSimpleName();
-    private final TiledMap map;
-    private final String assetPath;
-    private Tileset tileset;
-    private Layer layer;
-    private Bitmap bitmap;
-    private float tileWidth;
-    private float tileHeight;
+    protected final TiledMap map;
+    protected final String assetPath;
+    protected Tileset tileset;
+    protected MapLayer layer;
+    protected Bitmap bitmap;
+    protected float tileWidth;
+    protected float tileHeight;
 
-    private final Rect srcRect = new Rect();
-    private final RectF dstRect = new RectF();
-    private float scrollX, scrollY;
+    protected final Rect srcRect = new Rect();
+    protected final RectF dstRect = new RectF();
+    protected float scrollX, scrollY;
 
     public void scrollTo(float x, float y) {
         scrollX = x;
@@ -49,7 +48,7 @@ public class TiledBackground implements IGameObject {
         this.wraps = wraps;
     }
 
-    private boolean wraps;
+    protected boolean wraps;
 
     public TiledBackground(String mapAssetFile, float tileWidth, float tileHeight) {
         map = loadMap(mapAssetFile);
@@ -63,7 +62,7 @@ public class TiledBackground implements IGameObject {
         //setWraps(true);
     }
 
-    private TiledMap loadMap(String fileName) {
+    protected TiledMap loadMap(String fileName) {
         try {
             String json = loadAssetAsString(fileName);
             return Converter.fromJsonString(json);
@@ -72,7 +71,7 @@ public class TiledBackground implements IGameObject {
             return null;
         }
     }
-    private String loadAssetAsString(String fileName) throws IOException {
+    protected String loadAssetAsString(String fileName) throws IOException {
         Context context = GameView.view.getContext();
         AssetManager assets = context.getAssets();
         InputStream inputStream = assets.open(fileName);
@@ -87,7 +86,7 @@ public class TiledBackground implements IGameObject {
         inputStream.close();
         return builder.toString();
     }
-    private Bitmap loadBitmapAsset(String fileName) {
+    protected Bitmap loadBitmapAsset(String fileName) {
         Context context = GameView.view.getContext();
         AssetManager assets = context.getAssets();
         try {
@@ -97,7 +96,7 @@ public class TiledBackground implements IGameObject {
             throw new RuntimeException(e);
         }
     }
-    private static String getDirectory(String assetFilename) {
+    protected static String getDirectory(String assetFilename) {
         int slash = assetFilename.lastIndexOf('/');
         if (slash < 0) {
             return "./";
@@ -123,7 +122,7 @@ public class TiledBackground implements IGameObject {
     public Tileset getActiveTileset() {
         return tileset;
     }
-    public Layer getActiveLayer() {
+    public MapLayer getActiveLayer() {
         return layer;
     }
 

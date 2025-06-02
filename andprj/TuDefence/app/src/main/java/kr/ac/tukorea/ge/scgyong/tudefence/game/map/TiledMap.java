@@ -6,7 +6,7 @@ public class TiledMap {
     private long compressionlevel;
     private long height;
     private boolean infinite;
-    private Layer[] layers;
+    private MapLayer[] layers;
     private long nextlayerid;
     private long nextobjectid;
     private String orientation;
@@ -35,9 +35,9 @@ public class TiledMap {
     public void setInfinite(boolean value) { this.infinite = value; }
 
     @JsonProperty("layers")
-    public Layer[] getLayers() { return layers; }
+    public MapLayer[] getLayers() { return layers; }
     @JsonProperty("layers")
-    public void setLayers(Layer[] value) { this.layers = value; }
+    public void setLayers(MapLayer[] value) { this.layers = value; }
 
     @JsonProperty("nextlayerid")
     public long getNextlayerid() { return nextlayerid; }

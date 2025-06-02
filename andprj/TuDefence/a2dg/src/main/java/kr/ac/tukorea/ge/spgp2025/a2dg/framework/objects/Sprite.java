@@ -56,12 +56,24 @@ public class Sprite implements IGameObject {
         radius = Math.min(width, height) / 2;
         RectUtil.setRect(dstRect, x, y, width, height);
     }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
     public float getWidth() {
         return width;
     }
 
     public float getHeight() {
         return height;
+    }
+    public float getRadius() {
+        return radius;
     }
     public float getPropotionalHeight(float width) {
         return width / bitmap.getWidth() * bitmap.getHeight();
@@ -85,5 +97,4 @@ public class Sprite implements IGameObject {
     public String toString() {
         return getClass().getSimpleName() + "@" + System.identityHashCode(this) + "(" + (int)width + "x" + (int)height + ")";
     }
-
 }

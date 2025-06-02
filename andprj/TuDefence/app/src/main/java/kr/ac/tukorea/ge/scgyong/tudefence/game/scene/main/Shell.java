@@ -1,0 +1,77 @@
+package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
+
+import android.graphics.Rect;
+
+import java.util.ArrayList;
+
+import kr.ac.tukorea.ge.scgyong.tudefence.R;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
+
+public class Shell extends Sprite implements IRecyclable {
+
+    public Shell() {
+        super(R.mipmap.shells, 0, 0, 50f, 50f);
+        srcRect = new Rect();
+    }
+
+    public static Shell get(Cannon cannon, Fly target) {
+        return Scene.top().getRecyclable(Shell.class).init(cannon, target);
+    }
+
+    protected float power;
+    private Shell init(Cannon cannon, Fly target) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        int maxLevel = w / h;
+        int level = cannon.level;
+        if (level < 1) level = 1;
+        if (level > maxLevel) level = maxLevel;
+        srcRect.set(h * (level - 1), 0, h * level, h);
+        //Log.d("CannonFire", "shell rect: " + srcRect);
+        //this.target = target;
+        double radian = Math.toRadians(cannon.angle);
+        double speed = (level + 10) * 100; // 1100 ~ 2000
+        dx = (float) (speed * Math.cos(radian));
+        dy = (float) (speed * Math.sin(radian));
+        this.power = (float) (10 * Math.pow(1.2, level - 1));
+        // 10.0, 12.0, 14.4, 17.28, 20.736, 24.8832, 29.85984, 35.83181, 42.99817, 51.5978
+        radius = 20f + level * 2f;
+        setPosition(cannon.getX(), cannon.getY(), radius);
+
+        return this;
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        Scene scene = Scene.top(); // MainScene
+        if (x < -radius || x > Metrics.width + radius ||
+                y < -radius || y > Metrics.height + radius) {
+            //Log.d("CannonFire", "Remove(" + x + "," + y + ") " + this);
+            scene.remove(MainScene.Layer.shell, this);
+            return;
+        }
+
+        ArrayList<IGameObject> flies = scene.objectsAt(MainScene.Layer.enemy);
+        for (int index = flies.size() - 1; index >= 0; index--) {
+            Fly fly = (Fly) flies.get(index);
+            boolean collides = CollisionHelper.collidesRadius(this, fly);
+            if (collides) {
+                scene.remove(MainScene.Layer.shell, this);
+                boolean dead = fly.decreaseLife(power);
+                if (dead) {
+                    scene.remove(MainScene.Layer.enemy, fly);
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onRecycle() {}
+}
