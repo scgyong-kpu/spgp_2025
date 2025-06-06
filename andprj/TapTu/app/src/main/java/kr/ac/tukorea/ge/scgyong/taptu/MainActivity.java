@@ -1,7 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.taptu;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -34,15 +33,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
         songs = new SongLoader(this).loadSongs();
-
-        TextView tv = new TextView(this);
-        tv.setText(songs.get(0).title);
-        ui.songsListView.addView(tv);
-
-        //Caused by: java.lang.UnsupportedOperationException: addView(View) is not supported in AdapterView
-        //at android.widget.AdapterView.addView(AdapterView.java:489)
-        //at kr.ac.tukorea.ge.scgyong.taptu.MainActivity.onCreate(MainActivity.java:40)
-        //at android.app.Activity.performCreate(Activity.java:8051)
-        //at ...
     }
 }
