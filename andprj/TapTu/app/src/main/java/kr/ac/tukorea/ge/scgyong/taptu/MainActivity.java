@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Song;
 import kr.ac.tukorea.ge.scgyong.taptu.data.SongLoader;
 import kr.ac.tukorea.ge.scgyong.taptu.databinding.ActivityMainBinding;
+import kr.ac.tukorea.ge.scgyong.taptu.databinding.SongItemBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            TextView tv = new TextView(MainActivity.this);
-            tv.setText(songs.get(i).toString());
-            return tv;
+            SongItemBinding item = SongItemBinding.inflate(getLayoutInflater());
+            Song song = songs.get(i);
+            item.title.setText(song.title);
+            return item.getRoot();
         }
     };
 }
