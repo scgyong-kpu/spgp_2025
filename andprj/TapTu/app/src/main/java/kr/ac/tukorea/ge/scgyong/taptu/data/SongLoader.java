@@ -48,11 +48,7 @@ public class SongLoader {
         jr.beginObject();
         while (jr.hasNext()) {
             String name = jr.nextName();
-            if (name.equals("rank")) {
-                song.rank = jr.nextInt();
-            } else if (name.equals("title")) {
-                song.title = jr.nextString();
-            } else {
+            if (!JsonHelper.readProperty(song, name, jr)) {
                 jr.skipValue();
             }
         }
