@@ -3,6 +3,7 @@ package kr.ac.tukorea.ge.scgyong.taptu;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -26,6 +27,7 @@ import kr.ac.tukorea.ge.scgyong.taptu.databinding.SongItemBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private @NonNull ActivityMainBinding ui;
     private ArrayList<Song> songs;
 
@@ -64,7 +66,18 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            SongItemBinding item = SongItemBinding.inflate(getLayoutInflater());
+            SongItemBinding item;
+
+            if (view == null) {
+                item = SongItemBinding.inflate(getLayoutInflater(), viewGroup, false);
+                view = item.getRoot();
+                view.setTag(item);  // 바인딩 객체를 Tag 로 저장
+                Log.d(TAG, "New for " + i);
+            } else {
+                item = (SongItemBinding) view.getTag();  // Tag 에서 그대로 꺼내서 사용
+                Log.d(TAG, "Recycle for " + i + ". This was used for: " + item.title.getText() + " [[[Now-->]]] " + songs.get(i).title);
+            }
+
             Song song = songs.get(i);
             item.title.setText(song.title);
             item.artist.setText(song.artist);
