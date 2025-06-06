@@ -1,16 +1,17 @@
 // run this in https://vibe.naver.com/chart
-const top100Section = document.querySelector('.end_section');
-const rows = top100Section.querySelectorAll('.list_track_row')
+const top100Section = document.querySelector('.track_section');
+const trs = top100Section.querySelectorAll('tr')
 const songs = []
-for (const row of rows) {
-  const rankText = row.querySelector('.rank .num')?.textContent.trim();
+for (const tr of trs) {
+  const rankText = tr.querySelector('.rank span.text')?.textContent.trim();
   const rank = parseInt(rankText, 10);
   if (isNaN(rank) || rank > 20) continue;
-  const thumbnail = row.querySelector('img')?.src || '';
-  const title = row.querySelector('.song .title')?.textContent.trim() || '';
-  const artist = row.querySelector('.artist .link_artist .text')?.textContent.trim() || '';
+  const thumbnail = tr.querySelector('.thumb .inner img')?.src || '';
+  const title = tr.querySelector('.inner_cell a.link_text span')?.textContent.trim() || '';
+  const artist = tr.querySelector('.artist .link_artist .text')?.textContent.trim() || '';
+  const album = tr.querySelector('.album .link')?.textContent.trim() || '';
   const song = {
-    rank, title, artist, thumbnail,
+    rank, title, artist, album, thumbnail,
   }
   songs.push(song)
 }
