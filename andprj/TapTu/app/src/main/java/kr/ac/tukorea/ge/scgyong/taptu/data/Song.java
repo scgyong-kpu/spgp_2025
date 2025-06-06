@@ -6,7 +6,7 @@ public class Song {
     public int rank;
     public String title;
     public String artist;
-    public String thumbnail;
+    //public String thumbnail;
 
     @NonNull
     @Override
