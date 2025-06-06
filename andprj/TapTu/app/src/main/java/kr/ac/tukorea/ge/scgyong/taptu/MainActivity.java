@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,51 +47,51 @@ public class MainActivity extends AppCompatActivity {
 
         songs = new SongLoader(this).loadSongs();
 
-        ui.songsListView.setAdapter(adapter);
+        ui.songsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ui.songsRecyclerView.setAdapter(new SongAdapter());
     }
 
-    private final BaseAdapter adapter = new BaseAdapter() {
+    private class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
+
+        class SongViewHolder extends RecyclerView.ViewHolder {
+            SongItemBinding binding;
+
+            SongViewHolder(SongItemBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
+            }
+
+            void bind(Song song) {
+                binding.title.setText(song.title);
+                binding.artist.setText(song.artist);
+                binding.album.setText(song.album);
+                try {
+                    String filename = String.format(Locale.ENGLISH, "thumbnails/cover_%03d.jpg", song.rank);
+                    Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(filename));
+                    binding.thumbnail.setImageBitmap(bitmap);
+                } catch (Exception e) {
+                    binding.thumbnail.setImageResource(R.mipmap.default_thumbnail);
+                }
+            }
+        }
+
+        @NonNull
         @Override
-        public int getCount() {
+        public SongViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            Log.d(TAG, "onCreateViewHolder");
+            SongItemBinding binding = SongItemBinding.inflate(getLayoutInflater(), parent, false);
+            return new SongViewHolder(binding);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull SongViewHolder holder, int position) {
+            Log.v(TAG, "onBindViewHolder(" + position + ")");
+            holder.bind(songs.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
             return songs.size();
         }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            SongItemBinding item;
-
-            if (view == null) {
-                item = SongItemBinding.inflate(getLayoutInflater(), viewGroup, false);
-                view = item.getRoot();
-                view.setTag(item);  // 바인딩 객체를 Tag 로 저장
-                Log.d(TAG, "New for " + i);
-            } else {
-                item = (SongItemBinding) view.getTag();  // Tag 에서 그대로 꺼내서 사용
-                Log.d(TAG, "Recycle for " + i + ". This was used for: " + item.title.getText() + " [[[Now-->]]] " + songs.get(i).title);
-            }
-
-            Song song = songs.get(i);
-            item.title.setText(song.title);
-            item.artist.setText(song.artist);
-            item.album.setText(song.album);
-            try {
-                String filename = String.format(Locale.ENGLISH, "thumbnails/cover_%03d.jpg", song.rank);
-                Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(filename));
-                item.thumbnail.setImageBitmap(bitmap);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            return item.getRoot();
-        }
-    };
+    }
 }
