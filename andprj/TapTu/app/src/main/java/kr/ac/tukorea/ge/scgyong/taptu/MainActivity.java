@@ -1,5 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.taptu;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import kr.ac.tukorea.ge.scgyong.taptu.data.Song;
 import kr.ac.tukorea.ge.scgyong.taptu.data.SongLoader;
@@ -64,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
             Song song = songs.get(i);
             item.title.setText(song.title);
             item.artist.setText(song.artist);
+            item.album.setText(song.album);
+            try {
+                String filename = String.format(Locale.ENGLISH, "thumbnails/cover_%03d.jpg", song.rank);
+                Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(filename));
+                item.thumbnail.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             return item.getRoot();
         }
     };
