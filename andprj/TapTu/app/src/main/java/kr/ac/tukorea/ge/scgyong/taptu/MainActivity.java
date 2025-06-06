@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             SongItemBinding item = SongItemBinding.inflate(getLayoutInflater());
             Song song = songs.get(i);
             item.title.setText(song.title);
+            item.artist.setText(song.artist);
             return item.getRoot();
         }
     };
