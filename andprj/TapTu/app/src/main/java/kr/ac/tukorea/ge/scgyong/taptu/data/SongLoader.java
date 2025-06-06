@@ -50,6 +50,8 @@ public class SongLoader {
             String name = jr.nextName();
             if (name.equals("rank")) {
                 song.rank = jr.nextInt();
+            } else if (name.equals("title")) {
+                song.title = jr.nextString();
             } else {
                 jr.skipValue();
             }
