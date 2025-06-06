@@ -9,12 +9,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
+import kr.ac.tukorea.ge.scgyong.taptu.data.Song;
 import kr.ac.tukorea.ge.scgyong.taptu.data.SongLoader;
 import kr.ac.tukorea.ge.scgyong.taptu.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private @NonNull ActivityMainBinding ui;
+    private ArrayList<Song> songs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        new SongLoader(this).loadSongs();
+        songs = new SongLoader(this).loadSongs();
     }
 }
