@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
                 Context context = binding.thumbnail.getContext();
                 Bitmap bitmap = song.getThumbnailBitmap(context);
                 binding.thumbnail.setImageBitmap(bitmap);
+
+                boolean selected = getAdapterPosition() == selectedPosition;
+                binding.getRoot().setSelected(selected);
             }
         }
 

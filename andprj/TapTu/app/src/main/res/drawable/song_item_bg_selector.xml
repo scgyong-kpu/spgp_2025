@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 선택된 상태 -->
+    <item android:state_selected="true" android:drawable="@drawable/song_item_selected_bg" />
+
+    <!-- 눌렀을 때 -->
+    <item android:state_pressed="true" android:drawable="@drawable/song_item_pressed_bg" />
+
+    <!-- 기본 배경 -->
+    <item android:drawable="@drawable/song_item_gradient_bg" />
+
+</selector>

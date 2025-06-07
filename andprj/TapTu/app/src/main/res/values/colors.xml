@@ -7,4 +7,5 @@
     <color name="song_album_text_color">#720E06</color>
     <color name="item_selected_color">#FCD46F</color>
     <color name="transparent">#00000000</color>
+    <color name="item_pressed_bg">#001177</color>
 </resources>
