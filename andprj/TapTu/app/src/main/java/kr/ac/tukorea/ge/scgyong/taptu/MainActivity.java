@@ -125,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
         if (selectedPosition != RecyclerView.NO_POSITION) {
             adapter.notifyItemChanged(selectedPosition);
         }
+        ui.startButton.setEnabled(selectedPosition != RecyclerView.NO_POSITION);
+
         if (selectedPosition != RecyclerView.NO_POSITION) {
             Log.d(TAG, "Song selected: " + pos + " = " + song);
         } else {
