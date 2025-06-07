@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private @NonNull ActivityMainBinding ui;
     private ArrayList<Song> songs;
+    private final SongAdapter adapter = new SongAdapter();
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         songs = new SongLoader(this).loadSongs();
 
         ui.songsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ui.songsRecyclerView.setAdapter(new SongAdapter());
+        ui.songsRecyclerView.setAdapter(adapter);
 
         // 구분선 추가
         DividerItemDecoration dividerItemDecoration =
@@ -107,6 +109,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onItemClick(Song song, int pos) {
-        Log.d(TAG, "Song selected: " + pos + " = " + song);
+        int prevPosition = selectedPosition;
+        if (prevPosition != pos) {
+            selectedPosition = pos;
+        } else {
+            selectedPosition = RecyclerView.NO_POSITION;
+        }
+
+        if (prevPosition != RecyclerView.NO_POSITION) {
+            adapter.notifyItemChanged(prevPosition);
+        }
+        if (selectedPosition != RecyclerView.NO_POSITION) {
+            adapter.notifyItemChanged(selectedPosition);
+        }
+        if (selectedPosition != RecyclerView.NO_POSITION) {
+            Log.d(TAG, "Song selected: " + pos + " = " + song);
+        } else {
+            Log.i(TAG, "No Song selected");
+        }
     }
 }
