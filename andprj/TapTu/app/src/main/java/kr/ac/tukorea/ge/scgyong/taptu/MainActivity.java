@@ -66,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
             SongViewHolder(SongItemBinding binding) {
                 super(binding.getRoot());
                 this.binding = binding;
+
+                binding.getRoot().setOnClickListener(v -> {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        onItemClick(songs.get(pos), pos);
+                    }
+                });
             }
 
             void bind(Song song) {
@@ -97,5 +104,9 @@ public class MainActivity extends AppCompatActivity {
         public int getItemCount() {
             return songs.size();
         }
+    }
+
+    private void onItemClick(Song song, int pos) {
+        Log.d(TAG, "Song selected: " + pos + " = " + song);
     }
 }
