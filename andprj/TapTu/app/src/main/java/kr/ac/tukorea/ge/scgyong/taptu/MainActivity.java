@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         ui.songsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         ui.songsRecyclerView.setAdapter(new SongAdapter());
+
+        // 구분선 추가
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        ui.songsRecyclerView.addItemDecoration(dividerItemDecoration);
     }
 
     private class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
