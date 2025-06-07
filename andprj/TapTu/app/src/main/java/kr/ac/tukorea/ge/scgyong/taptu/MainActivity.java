@@ -1,5 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.taptu;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -71,13 +72,10 @@ public class MainActivity extends AppCompatActivity {
                 binding.title.setText(song.title);
                 binding.artist.setText(song.artist);
                 binding.album.setText(song.album);
-                try {
-                    String filename = String.format(Locale.ENGLISH, "thumbnails/cover_%03d.jpg", song.rank);
-                    Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(filename));
-                    binding.thumbnail.setImageBitmap(bitmap);
-                } catch (Exception e) {
-                    binding.thumbnail.setImageResource(R.mipmap.default_thumbnail);
-                }
+                //Context context = MainActivity.this;
+                Context context = binding.thumbnail.getContext();
+                Bitmap bitmap = song.getThumbnailBitmap(context);
+                binding.thumbnail.setImageBitmap(bitmap);
             }
         }
 
