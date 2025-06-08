@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ public class Song {
     public int demoStart, demoEnd;
     private MediaPlayer mediaPlayer;
     //public String thumbnail;
+
+    protected static Handler handler = new Handler();
 
     @NonNull
     @Override
@@ -55,6 +58,16 @@ public class Song {
             mediaPlayer.setDataSource(afd);
             //mp.setDataSource(fd, afd.getStartOffset(), afd.getLength());
             mediaPlayer.prepare();
+            if (demoStart > 0) {
+                MediaPlayer mp = mediaPlayer;
+                mp.seekTo(demoStart);
+                handler.postDelayed(()->{
+                    mp.stop();
+                    if (mp == mediaPlayer) {
+                        mediaPlayer = null;
+                    }
+                }, demoEnd - demoStart);
+            }
             mediaPlayer.start();
         } catch (IOException e) {
             e.printStackTrace();
