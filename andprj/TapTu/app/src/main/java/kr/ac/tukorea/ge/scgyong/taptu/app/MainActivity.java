@@ -1,14 +1,10 @@
-package kr.ac.tukorea.ge.scgyong.taptu;
+package kr.ac.tukorea.ge.scgyong.taptu.app;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -20,10 +16,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
+import kr.ac.tukorea.ge.scgyong.taptu.R;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Song;
 import kr.ac.tukorea.ge.scgyong.taptu.data.SongLoader;
 import kr.ac.tukorea.ge.scgyong.taptu.databinding.ActivityMainBinding;
