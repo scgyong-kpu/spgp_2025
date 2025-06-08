@@ -3,6 +3,7 @@ package kr.ac.tukorea.ge.scgyong.taptu.game;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import kr.ac.tukorea.ge.scgyong.taptu.R;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Song;
 import kr.ac.tukorea.ge.scgyong.taptu.res.BitmapBlur;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
@@ -25,5 +26,6 @@ public class MainScene extends Scene {
         float x = Metrics.width / 2, y = Metrics.height / 2;
         album.setPosition(x, y, Metrics.height, Metrics.height);
         add(Layer.bg, album);
+        add(Layer.bg, new Sprite(R.mipmap.bg, x, y, Metrics.width, Metrics.height));
     }
 }
