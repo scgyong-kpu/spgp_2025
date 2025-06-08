@@ -23,6 +23,7 @@ public class Song {
     public String title;
     public String artist;
     public String album;
+    public int demoStart, demoEnd;
     private MediaPlayer mediaPlayer;
     //public String thumbnail;
 
