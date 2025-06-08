@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onBtnStartGame(View view) {
         Intent intent = new Intent(this, MainGameActivity.class);
+        intent.putExtra(MainGameActivity.KEY_SONG_INDEX, selectedPosition);
         startActivity(intent);
     }
 }
