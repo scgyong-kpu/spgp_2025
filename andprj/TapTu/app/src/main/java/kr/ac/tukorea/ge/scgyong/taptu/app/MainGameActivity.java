@@ -19,6 +19,6 @@ public class MainGameActivity extends GameActivity {
         int songIndex = Song.selectedIndex;
         Song song = Song.songs.get(songIndex);
         Log.d(TAG, "Index=" + songIndex + " song=" + song);
-        new MainScene().push();
+        new MainScene(song).push();
     }
 }
