@@ -133,6 +133,24 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "No Song selected");
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (selectedPosition != RecyclerView.NO_POSITION) {
+            Song prevSong = songs.get(selectedPosition);
+            prevSong.stop();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        if (selectedPosition != RecyclerView.NO_POSITION) {
+            onItemClick(null, selectedPosition);
+        }
+        super.onResume();
+    }
+
     public void onBtnStartGame(View view) {
         Intent intent = new Intent(this, MainGameActivity.class);
         startActivity(intent);
