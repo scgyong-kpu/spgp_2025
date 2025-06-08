@@ -23,7 +23,7 @@ public class MainScene extends Scene {
         Bitmap blurredCover = BitmapBlur.blurBitmap(context, bitmap);
         album.setBitmap(blurredCover);
         float x = Metrics.width / 2, y = Metrics.height / 2;
-        album.setPosition(x, y, Metrics.width, Metrics.width);
+        album.setPosition(x, y, Metrics.height, Metrics.height);
         add(Layer.bg, album);
     }
 }
