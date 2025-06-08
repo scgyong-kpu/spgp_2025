@@ -15,6 +15,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 
 public class Sprite implements IGameObject {
     private static final String TAG = Sprite.class.getSimpleName();
+
     protected Bitmap bitmap;
     protected Rect srcRect = null;
     protected final RectF dstRect = new RectF();
@@ -34,6 +35,9 @@ public class Sprite implements IGameObject {
 
     public void setImageResourceId(int mipmapId) {
         bitmap = BitmapPool.get(mipmapId);
+    }
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
     public void setPosition(float x, float y, float radius) {
         this.x = x;
