@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:text="Start Game"
             android:enabled="false"
+            android:onClick="onBtnStartGame"
             />
     </LinearLayout>
 
