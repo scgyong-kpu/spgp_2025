@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import kr.ac.tukorea.ge.scgyong.taptu.R;
@@ -29,6 +30,9 @@ public class Song {
     //public String thumbnail;
 
     protected static Handler handler = new Handler();
+    public static ArrayList<Song> songs;
+    public static int selectedIndex;
+
 
     @NonNull
     @Override

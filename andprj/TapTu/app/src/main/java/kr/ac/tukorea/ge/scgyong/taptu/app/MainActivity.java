@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private @NonNull ActivityMainBinding ui;
-    private ArrayList<Song> songs;
+//    private ArrayList<Song> songs;
     private final SongAdapter adapter = new SongAdapter();
     private int selectedPosition = RecyclerView.NO_POSITION;
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        songs = new SongLoader(this).loadSongs();
+        Song.songs = new SongLoader(this).loadSongs();
 
         ui.songsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         ui.songsRecyclerView.setAdapter(adapter);
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 binding.getRoot().setOnClickListener(v -> {
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        onItemClick(songs.get(pos), pos);
+                        onItemClick(Song.songs.get(pos), pos);
                     }
                 });
             }
@@ -99,12 +99,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull SongViewHolder holder, int position) {
             Log.v(TAG, "onBindViewHolder(" + position + ")");
-            holder.bind(songs.get(position));
+            holder.bind(Song.songs.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return songs.size();
+            return Song.songs.size();
         }
     }
 
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (prevPosition != RecyclerView.NO_POSITION) {
             adapter.notifyItemChanged(prevPosition);
-            Song prevSong = songs.get(prevPosition);
+            Song prevSong = Song.songs.get(prevPosition);
             prevSong.stop();
         }
         if (selectedPosition != RecyclerView.NO_POSITION) {
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (selectedPosition != RecyclerView.NO_POSITION) {
-            Song prevSong = songs.get(selectedPosition);
+            Song prevSong = Song.songs.get(selectedPosition);
             prevSong.stop();
         }
     }
@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnStartGame(View view) {
+        Song.selectedIndex = selectedPosition;
         Intent intent = new Intent(this, MainGameActivity.class);
         startActivity(intent);
     }
