@@ -42,6 +42,8 @@ public class NoteSprite extends AnimSprite implements IRecyclable {
             return;
         }
         setPosition(x, y);
+        int millis = (int) (MainScene.scene.getMusicTime() * 1000);
+        createdOn = System.currentTimeMillis() - millis;
     }
     public static float screenfulTime() {
         return Metrics.height / SPEED;
