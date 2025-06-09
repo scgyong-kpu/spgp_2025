@@ -8,6 +8,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class NoteSprite extends Sprite implements IRecyclable {
     private static final float X_SPACE = 130f;
@@ -39,6 +40,10 @@ public class NoteSprite extends Sprite implements IRecyclable {
         float musicTime = MainScene.scene.getMusicTime();
         float timeDiff = note.time - musicTime;
         float y = GOAL_Y - timeDiff * SPEED;
+        if (y > Metrics.height + HEIGHT) {
+            MainScene.scene.remove(MainScene.Layer.note, this);
+            return;
+        }
         setPosition(x, y);
     }
 
