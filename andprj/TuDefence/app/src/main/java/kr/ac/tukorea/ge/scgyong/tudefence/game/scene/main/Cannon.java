@@ -37,7 +37,24 @@ public class Cannon extends Sprite {
         setPosition(x, y, 200, 200);
         setLevel(level);
     }
-
+    private static final int[] COSTS = {
+            10, 100, 300, 700, 1500, 3000, 7000, 15000, 40000, 100000, 100000000
+    };
+    public static int getInstallationCost(int level) {
+        return COSTS[level - 1];
+    }
+    public static int getUpgradeCost(int level) {
+        return Math.round((COSTS[level] - COSTS[level - 1]) * 1.1f);
+    }
+    public int getUpgradeCost() {
+        return getUpgradeCost(level);
+    }
+    public static int getSellPrice(int level) {
+        return COSTS[level - 1] / 2;
+    }
+    public int getSellPrice() {
+        return getSellPrice(level);
+    }
     private void setLevel(int level) {
         bitmap = BitmapPool.get(BITMAP_IDS[level - 1]);
         this.level = level;
@@ -91,7 +108,7 @@ public class Cannon extends Sprite {
     }
 
     private static Paint rangePaint;
-    private void drawRange(Canvas canvas) {
+    public void drawRange(Canvas canvas) {
         if (rangePaint == null) {
             rangePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             rangePaint.setStyle(Paint.Style.STROKE);
@@ -110,7 +127,6 @@ public class Cannon extends Sprite {
         canvas.rotate(angle, x, y);
         canvas.drawBitmap(barrelBitmap, null, barrelRect, null);
         canvas.restore();
-        drawRange(canvas);
     }
 
     public boolean containsPoint(float x, float y) {

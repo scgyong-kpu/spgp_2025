@@ -1,6 +1,6 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main;
 
-import android.util.Log;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.TiledBackground;
 
 public class DesertMapBg extends TiledBackground {
     public static final int TILE_INDEX_BRICK = 10;
