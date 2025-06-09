@@ -23,7 +23,7 @@ public class NoteSprite extends Sprite implements IRecyclable {
     private NoteSprite init(Note note) {
         this.note = note;
         float x = LEFT + note.pret * X_SPACE;
-        float y = note.msec;
+        float y = note.msec / 10.0f;
         setPosition(x, y);
         return this;
     }
