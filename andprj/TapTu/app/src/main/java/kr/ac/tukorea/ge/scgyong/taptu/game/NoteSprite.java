@@ -12,7 +12,7 @@ public class NoteSprite extends AnimSprite implements IRecyclable {
     private static final float LEFT = 450f - 2 * X_SPACE;
     private static final float WIDTH = 120f;
     private static final float HEIGHT = 55f;
-    public static final float SPEED = 200f;
+    public static float SPEED = 200f;
     public static final float GOAL_Y = 1400f;
     protected Note note;
     public NoteSprite() {
@@ -30,6 +30,15 @@ public class NoteSprite extends AnimSprite implements IRecyclable {
         float y = -1000 * note.time;
         setPosition(x, y);
         return this;
+    }
+
+    public static float toggleSpeed() {
+        if (SPEED == 200f) {
+            SPEED = 400f;
+        } else {
+            SPEED = 200f;
+        }
+        return SPEED;
     }
 
     @Override

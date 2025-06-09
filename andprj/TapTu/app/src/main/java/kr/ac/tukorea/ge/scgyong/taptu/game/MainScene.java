@@ -7,18 +7,21 @@ import kr.ac.tukorea.ge.scgyong.taptu.R;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Note;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Song;
 import kr.ac.tukorea.ge.scgyong.taptu.res.BitmapBlur;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Button;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MainScene extends Scene {
     public enum Layer {
-        bg, note,
+        bg, note, ui,
     }
     public static MainScene scene;
     private final Song song;
     private float musicTime;
+    private final Button speedBtn;
     public MainScene(Song song) {
         initLayers(Layer.values().length);
 
@@ -33,7 +36,30 @@ public class MainScene extends Scene {
         add(Layer.bg, album);
         add(Layer.bg, new Sprite(R.mipmap.bg, x, y, Metrics.width, Metrics.height));
 
+        Button backBtn = new Button(R.mipmap.go_back, 50f, 50f, 100, 100, (pressed) -> {
+            pop();
+            return false;
+        });
+        add(Layer.ui, backBtn);
+
+        speedBtn = new Button(R.mipmap.speed_1x, Metrics.width - 50, 50f, 100, 100, pressed-> {
+            toggleSpeed();
+            return false;
+        });
+        add(Layer.ui, speedBtn);
+
         song.loadNotes(context);
+    }
+
+    private void toggleSpeed() {
+        float speed = NoteSprite.toggleSpeed();
+        int mipmapId = speed == 200f ? R.mipmap.speed_1x : R.mipmap.speed_2x;
+        speedBtn.setBitmap(BitmapPool.get(mipmapId));
+    }
+
+    @Override
+    protected int getTouchLayerIndex() {
+        return Layer.ui.ordinal();
     }
 
     public float getMusicTime() {
