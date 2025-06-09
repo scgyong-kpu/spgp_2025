@@ -13,7 +13,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
-import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,6 +28,7 @@ public class Song {
     public String artist;
     public String album;
     public int demoStart, demoEnd;
+    public int bpm;
     private MediaPlayer mediaPlayer;
     //public String thumbnail;
     public ArrayList<Note> notes;

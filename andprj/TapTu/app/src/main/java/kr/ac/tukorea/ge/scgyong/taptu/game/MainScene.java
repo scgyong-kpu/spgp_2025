@@ -50,7 +50,12 @@ public class MainScene extends Scene {
         while (true) {
             Note note = song.popNoteBefore(musicTime + timeOffset);
             if (note == null) break;
-            add(Layer.note, NoteSprite.get(note));
+            NoteSprite sprite = NoteSprite.get(note);
+            if (song.bpm > 0) {
+                float fps = 8.0f * song.bpm / 60.0f;
+                sprite.setFps(fps);
+            }
+            add(Layer.note, sprite);
         }
     }
 
