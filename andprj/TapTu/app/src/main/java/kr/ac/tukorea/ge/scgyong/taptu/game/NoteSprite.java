@@ -1,5 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.taptu.game;
 
+import android.animation.ValueAnimator;
+
 import kr.ac.tukorea.ge.scgyong.taptu.R;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Note;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
@@ -33,12 +35,15 @@ public class NoteSprite extends AnimSprite implements IRecyclable {
     }
 
     public static float toggleSpeed() {
-        if (speed == 200f) {
-            speed = 400f;
-        } else {
-            speed = 200f;
-        }
-        return speed;
+        float from = speed;
+        float to = from == 200 ? 400 : 200;
+        ValueAnimator anim = ValueAnimator.ofFloat(from, to);
+        anim.setDuration(500);
+        anim.addUpdateListener(animator->{
+            speed = (Float)anim.getAnimatedValue();
+        });
+        anim.start();
+        return to;
     }
 
     @Override
