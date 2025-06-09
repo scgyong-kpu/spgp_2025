@@ -51,6 +51,22 @@ public class Song {
         }
     }
 
+    public void play(Context context) {
+        stop();
+        try {
+            AssetManager assetManager = context.getAssets();
+            String filename = String.format(Locale.ENGLISH, "mp3/s%03d.mp3", rank);
+            AssetFileDescriptor afd = assetManager.openFd(filename);
+            FileDescriptor fd = afd.getFileDescriptor();
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setDataSource(fd, afd.getStartOffset(), afd.getLength());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+            Log.d(TAG, "Play: " + this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void playDemo(Context context) {
         try {
             AssetManager assetManager = context.getAssets();
