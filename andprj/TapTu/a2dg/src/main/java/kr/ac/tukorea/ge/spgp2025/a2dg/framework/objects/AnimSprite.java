@@ -44,6 +44,9 @@ public class AnimSprite extends Sprite {
         setFrameInfo(frameCount);
     }
 
+    public void setFps(float fps) {
+        this.fps = fps;
+    }
     @Override
     public void draw(Canvas canvas) {
         // AnimSprite 는 단순반복하는 이미지이므로 time 을 update 에서 꼼꼼히 누적하지 않아도 된다.
