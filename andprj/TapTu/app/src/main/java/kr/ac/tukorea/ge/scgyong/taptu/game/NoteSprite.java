@@ -12,7 +12,7 @@ public class NoteSprite extends AnimSprite implements IRecyclable {
     private static final float LEFT = 450f - 2 * X_SPACE;
     private static final float WIDTH = 120f;
     private static final float HEIGHT = 55f;
-    public static float SPEED = 200f;
+    public static float speed = 200f;
     public static final float GOAL_Y = 1400f;
     protected Note note;
     public NoteSprite() {
@@ -33,19 +33,19 @@ public class NoteSprite extends AnimSprite implements IRecyclable {
     }
 
     public static float toggleSpeed() {
-        if (SPEED == 200f) {
-            SPEED = 400f;
+        if (speed == 200f) {
+            speed = 400f;
         } else {
-            SPEED = 200f;
+            speed = 200f;
         }
-        return SPEED;
+        return speed;
     }
 
     @Override
     public void update() {
         float musicTime = MainScene.scene.getMusicTime();
         float timeDiff = note.time - musicTime;
-        float y = GOAL_Y - timeDiff * SPEED;
+        float y = GOAL_Y - timeDiff * speed;
         if (y > Metrics.height + HEIGHT) {
             MainScene.scene.remove(MainScene.Layer.note, this);
             return;
@@ -55,7 +55,7 @@ public class NoteSprite extends AnimSprite implements IRecyclable {
         createdOn = System.currentTimeMillis() - millis;
     }
     public static float screenfulTime() {
-        return Metrics.height / SPEED;
+        return Metrics.height / speed;
     }
     @Override
     public void onRecycle() {}
