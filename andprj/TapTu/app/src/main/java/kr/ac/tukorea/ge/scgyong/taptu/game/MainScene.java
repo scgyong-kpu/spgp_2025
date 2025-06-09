@@ -60,9 +60,6 @@ public class MainScene extends Scene {
         for (Note note: song.notes) {
             add(Layer.note, NoteSprite.get(note));
         }
-
-        NoteSprite first = (NoteSprite) objectsAt(Layer.note).get(0);
-        first.logs = true;
     }
 
     @Override
