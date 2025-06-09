@@ -1,16 +1,13 @@
 package kr.ac.tukorea.ge.scgyong.taptu.game;
 
-import android.util.Log;
-
 import kr.ac.tukorea.ge.scgyong.taptu.R;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Note;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.AnimSprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
-public class NoteSprite extends Sprite implements IRecyclable {
+public class NoteSprite extends AnimSprite implements IRecyclable {
     private static final float X_SPACE = 130f;
     private static final float LEFT = 450f - 2 * X_SPACE;
     private static final float WIDTH = 120f;
@@ -19,7 +16,7 @@ public class NoteSprite extends Sprite implements IRecyclable {
     public static final float GOAL_Y = 1400f;
     protected Note note;
     public NoteSprite() {
-        super(R.mipmap.note_1);
+        super(R.mipmap.note, 10, 8);
         setPosition(0, 0, WIDTH, HEIGHT);
     }
 
