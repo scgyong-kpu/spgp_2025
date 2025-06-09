@@ -51,16 +51,18 @@ public class Song {
         }
     }
 
+    private void prepareMediaPlayer(Context context) throws IOException {
+        AssetManager assetManager = context.getAssets();
+        String filename = String.format(Locale.ENGLISH, "mp3/s%03d.mp3", rank);
+        AssetFileDescriptor afd = assetManager.openFd(filename);
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setDataSource(afd);
+        mediaPlayer.prepare();
+    }
     public void play(Context context) {
         stop();
         try {
-            AssetManager assetManager = context.getAssets();
-            String filename = String.format(Locale.ENGLISH, "mp3/s%03d.mp3", rank);
-            AssetFileDescriptor afd = assetManager.openFd(filename);
-            FileDescriptor fd = afd.getFileDescriptor();
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(fd, afd.getStartOffset(), afd.getLength());
-            mediaPlayer.prepare();
+            prepareMediaPlayer(context);
             mediaPlayer.start();
             Log.d(TAG, "Play: " + this);
         } catch (IOException e) {
@@ -69,15 +71,7 @@ public class Song {
     }
     public void playDemo(Context context) {
         try {
-            AssetManager assetManager = context.getAssets();
-            String filename = String.format(Locale.ENGLISH, "mp3/s%03d.mp3", rank);
-            AssetFileDescriptor afd = assetManager.openFd(filename);
-            FileDescriptor fd = afd.getFileDescriptor();
-            Log.d(TAG, "music=" + filename + " afd=" + afd + " fd=" + fd);
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(afd);
-            //mp.setDataSource(fd, afd.getStartOffset(), afd.getLength());
-            mediaPlayer.prepare();
+            prepareMediaPlayer(context);
             if (demoStart > 0) {
                 MediaPlayer mp = mediaPlayer;
                 mp.seekTo(demoStart);
