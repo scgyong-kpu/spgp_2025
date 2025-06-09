@@ -1,5 +1,7 @@
 package kr.ac.tukorea.ge.scgyong.taptu.game;
 
+import android.util.Log;
+
 import kr.ac.tukorea.ge.scgyong.taptu.R;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Note;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable;
@@ -13,6 +15,7 @@ public class NoteSprite extends Sprite implements IRecyclable {
     private static final float WIDTH = 120f;
     private static final float HEIGHT = 55f;
     public static final float SPEED = 200f;
+    public static final float GOAL_Y = 1400f;
     protected Note note;
     public NoteSprite() {
         super(R.mipmap.note_1);
@@ -28,13 +31,20 @@ public class NoteSprite extends Sprite implements IRecyclable {
         float x = LEFT + note.pret * X_SPACE;
         float y = -note.msec;
         setPosition(x, y);
+        //Log.d("NoteSprite", "init(), msec=" + note.msec + " x=" + x + " y=" + y);
         return this;
     }
 
+    public boolean logs;
+
     @Override
     public void update() {
-        y += SPEED * GameView.frameTime;
+        float musicTime = MainScene.scene.getMusicTime();
+        float timeDiff = note.msec / 1000.0f - musicTime;
+        float y = GOAL_Y - timeDiff * SPEED;
         setPosition(x, y);
+        if (logs)
+        Log.d("NoteSprite", "x=" + x + " y=" + y + " t=" + musicTime + " scene=" + MainScene.scene);
     }
 
     @Override

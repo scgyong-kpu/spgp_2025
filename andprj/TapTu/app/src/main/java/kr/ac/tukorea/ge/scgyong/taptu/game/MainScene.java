@@ -13,11 +13,12 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MainScene extends Scene {
-    private final Song song;
-
     public enum Layer {
         bg, note,
     }
+    public static MainScene scene;
+    private final Song song;
+    private float musicTime;
     public MainScene(Song song) {
         initLayers(Layer.values().length);
 
@@ -35,9 +36,22 @@ public class MainScene extends Scene {
         song.loadNotes(context);
     }
 
+    public float getMusicTime() {
+        return musicTime;
+    }
+
+    // Game Loop Functions
+    @Override
+    public void update() {
+        musicTime += GameView.frameTime;
+        super.update();
+    }
+
     @Override
     public void onEnter() {
         super.onEnter();
+        scene = this;
+
         Context context = GameView.view.getContext();
         song.play(context);
 
@@ -46,11 +60,16 @@ public class MainScene extends Scene {
         for (Note note: song.notes) {
             add(Layer.note, NoteSprite.get(note));
         }
+
+        NoteSprite first = (NoteSprite) objectsAt(Layer.note).get(0);
+        first.logs = true;
     }
 
     @Override
     public void onExit() {
         song.stop();
+
+        scene = null;
         super.onExit();
     }
 
