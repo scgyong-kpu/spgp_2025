@@ -29,7 +29,7 @@ public class NoteSprite extends Sprite implements IRecyclable {
     private NoteSprite init(Note note) {
         this.note = note;
         float x = LEFT + note.pret * X_SPACE;
-        float y = -note.msec;
+        float y = -1000 * note.time;
         setPosition(x, y);
         return this;
     }
@@ -37,7 +37,7 @@ public class NoteSprite extends Sprite implements IRecyclable {
     @Override
     public void update() {
         float musicTime = MainScene.scene.getMusicTime();
-        float timeDiff = note.msec / 1000.0f - musicTime;
+        float timeDiff = note.time - musicTime;
         float y = GOAL_Y - timeDiff * SPEED;
         setPosition(x, y);
     }

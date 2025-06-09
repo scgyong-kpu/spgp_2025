@@ -117,7 +117,7 @@ public class Song {
 
         String filename = String.format(Locale.ENGLISH, "notes/note_%03d.txt", this.rank);
 
-        int lengthInMsec = 0;
+        float length = 0;
         try {
             AssetManager assetManager = context.getAssets();
             InputStream is = assetManager.open(filename);
@@ -129,12 +129,12 @@ public class Song {
                 Note note = Note.parse(line);
                 if (note == null) continue;
                 notes.add(note);
-                if (lengthInMsec < note.msec) {
-                    lengthInMsec = note.msec;
+                if (length < note.time) {
+                    length = note.time;
                 }
             }
             is.close();
-            this.noteLength = lengthInMsec / 1000.0f;
+            this.noteLength = length;
             Log.d(TAG, "Song loaded: " + notes.size() + " notes, " + noteLength + " seconds.");
         } catch (Exception e) {
             e.printStackTrace();
