@@ -44,4 +44,16 @@ public class MainScene extends Scene {
         song.stop();
         super.onExit();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        song.pause();
+    }
+
+    @Override
+    public void onResume() {
+        song.resume();
+        super.onResume();
+    }
 }

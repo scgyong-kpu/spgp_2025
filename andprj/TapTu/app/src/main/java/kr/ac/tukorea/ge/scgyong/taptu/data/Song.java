@@ -101,4 +101,14 @@ public class Song {
             mediaPlayer = null;
         }
     }
+
+    public void pause() {
+        if (mediaPlayer == null) return;
+        mediaPlayer.pause();
+    }
+
+    public void resume() {
+        if (mediaPlayer == null) return;
+        mediaPlayer.start();
+    }
 }
