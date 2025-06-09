@@ -35,6 +35,7 @@ public class Song {
     private float noteLength;
     protected static Handler handler = new Handler();
     public static ArrayList<Song> songs;
+    protected int noteIndex; // 어느 노트까지 만들었는지 기억
     public static int selectedIndex;
 
 
@@ -114,6 +115,7 @@ public class Song {
         if (notes != null && !notes.isEmpty()) return;
 
         notes = new ArrayList<>();
+        noteIndex = 0;
 
         String filename = String.format(Locale.ENGLISH, "notes/note_%03d.txt", this.rank);
 
@@ -141,5 +143,12 @@ public class Song {
             return;
         }
     }
-
+    public Note popNoteBefore(float musicTime) {
+        if (noteIndex >= notes.size()) return null;
+        Note note = notes.get(noteIndex);
+        if (note.time > musicTime) return null;
+        Log.d(TAG, "Popping nodeIndex=" + noteIndex);
+        noteIndex++;
+        return note;
+    }
 }

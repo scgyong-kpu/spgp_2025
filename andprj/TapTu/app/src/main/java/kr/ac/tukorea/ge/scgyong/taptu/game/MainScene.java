@@ -45,6 +45,12 @@ public class MainScene extends Scene {
     public void update() {
         musicTime += GameView.frameTime;
         super.update();
+
+        while (true) {
+            Note note = song.popNoteBefore(musicTime);
+            if (note == null) break;
+            add(Layer.note, NoteSprite.get(note));
+        }
     }
 
     @Override
@@ -54,12 +60,6 @@ public class MainScene extends Scene {
 
         Context context = GameView.view.getContext();
         song.play(context);
-
-        // MainScene 생성자에서 하면 재활용을 할 수 없으니 onEnter 에서 하도록 한다.
-
-        for (Note note: song.notes) {
-            add(Layer.note, NoteSprite.get(note));
-        }
     }
 
     @Override
