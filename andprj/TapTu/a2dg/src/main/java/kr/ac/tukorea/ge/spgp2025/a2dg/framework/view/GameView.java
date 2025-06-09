@@ -47,6 +47,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     private void init() {
         GameView.view = this;
+        GameView.previousNanos = 0;
         // 실질적 생성자 역할
         scheduleUpdate();
     }

@@ -12,8 +12,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.io.FileDescriptor;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -26,11 +28,14 @@ public class Song {
     public String artist;
     public String album;
     public int demoStart, demoEnd;
+    public int bpm;
     private MediaPlayer mediaPlayer;
     //public String thumbnail;
-
+    public ArrayList<Note> notes;
+    private float noteLength;
     protected static Handler handler = new Handler();
     public static ArrayList<Song> songs;
+    protected int noteIndex; // 어느 노트까지 만들었는지 기억
     public static int selectedIndex;
 
 
@@ -51,17 +56,27 @@ public class Song {
         }
     }
 
+    private void prepareMediaPlayer(Context context) throws IOException {
+        AssetManager assetManager = context.getAssets();
+        String filename = String.format(Locale.ENGLISH, "mp3/s%03d.mp3", rank);
+        AssetFileDescriptor afd = assetManager.openFd(filename);
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setDataSource(afd);
+        mediaPlayer.prepare();
+    }
+    public void play(Context context) {
+        stop();
+        try {
+            prepareMediaPlayer(context);
+            mediaPlayer.start();
+            Log.d(TAG, "Play: " + this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void playDemo(Context context) {
         try {
-            AssetManager assetManager = context.getAssets();
-            String filename = String.format(Locale.ENGLISH, "mp3/s%03d.mp3", rank);
-            AssetFileDescriptor afd = assetManager.openFd(filename);
-            FileDescriptor fd = afd.getFileDescriptor();
-            Log.d(TAG, "music=" + filename + " afd=" + afd + " fd=" + fd);
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(afd);
-            //mp.setDataSource(fd, afd.getStartOffset(), afd.getLength());
-            mediaPlayer.prepare();
+            prepareMediaPlayer(context);
             if (demoStart > 0) {
                 MediaPlayer mp = mediaPlayer;
                 mp.seekTo(demoStart);
@@ -84,5 +99,56 @@ public class Song {
             mediaPlayer.stop();
             mediaPlayer = null;
         }
+    }
+
+    public void pause() {
+        if (mediaPlayer == null) return;
+        mediaPlayer.pause();
+    }
+
+    public void resume() {
+        if (mediaPlayer == null) return;
+        mediaPlayer.start();
+    }
+
+    public void loadNotes(Context context) {
+        if (notes != null && !notes.isEmpty()) return;
+
+        notes = new ArrayList<>();
+        noteIndex = 0;
+
+        String filename = String.format(Locale.ENGLISH, "notes/note_%03d.txt", this.rank);
+
+        float length = 0;
+        try {
+            AssetManager assetManager = context.getAssets();
+            InputStream is = assetManager.open(filename);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader reader = new BufferedReader(isr);
+            while (true) {
+                String line = reader.readLine();
+                if (line == null) break;
+                Note note = Note.parse(line);
+                if (note == null) continue;
+                notes.add(note);
+                if (length < note.time) {
+                    length = note.time;
+                }
+            }
+            is.close();
+            this.noteLength = length;
+            Log.d(TAG, "Song loaded: " + notes.size() + " notes, " + noteLength + " seconds.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+    }
+    public Note popNoteBefore(float musicTime) {
+        if (noteIndex >= notes.size()) return null;
+        Note note = notes.get(noteIndex);
+        if (note.time > musicTime) return null;
+        Log.d(TAG, "Popping nodeIndex=" + noteIndex);
+        noteIndex++;
+        return note;
     }
 }

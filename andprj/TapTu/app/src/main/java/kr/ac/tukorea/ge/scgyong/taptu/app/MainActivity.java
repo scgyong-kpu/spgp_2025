@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,8 +16,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.scgyong.taptu.R;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Song;
@@ -91,14 +88,14 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public SongViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            Log.d(TAG, "onCreateViewHolder");
+            //Log.d(TAG, "onCreateViewHolder");
             SongItemBinding binding = SongItemBinding.inflate(getLayoutInflater(), parent, false);
             return new SongViewHolder(binding);
         }
 
         @Override
         public void onBindViewHolder(@NonNull SongViewHolder holder, int position) {
-            Log.v(TAG, "onBindViewHolder(" + position + ")");
+            //Log.v(TAG, "onBindViewHolder(" + position + ")");
             holder.bind(Song.songs.get(position));
         }
 
@@ -127,11 +124,11 @@ public class MainActivity extends AppCompatActivity {
         }
         ui.startButton.setEnabled(selectedPosition != RecyclerView.NO_POSITION);
 
-        if (selectedPosition != RecyclerView.NO_POSITION) {
-            Log.d(TAG, "Song selected: " + pos + " = " + song);
-        } else {
-            Log.i(TAG, "No Song selected");
-        }
+//        if (selectedPosition != RecyclerView.NO_POSITION) {
+//            Log.d(TAG, "Song selected: " + pos + " = " + song);
+//        } else {
+//            Log.i(TAG, "No Song selected");
+//        }
     }
 
     @Override
