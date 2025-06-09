@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import kr.ac.tukorea.ge.scgyong.taptu.R;
+import kr.ac.tukorea.ge.scgyong.taptu.data.Note;
 import kr.ac.tukorea.ge.scgyong.taptu.data.Song;
 import kr.ac.tukorea.ge.scgyong.taptu.res.BitmapBlur;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
@@ -15,7 +16,7 @@ public class MainScene extends Scene {
     private final Song song;
 
     public enum Layer {
-        bg,
+        bg, note,
     }
     public MainScene(Song song) {
         initLayers(Layer.values().length);
@@ -39,6 +40,17 @@ public class MainScene extends Scene {
         super.onEnter();
         Context context = GameView.view.getContext();
         song.play(context);
+
+        // 임시로 Note 2개를 생성하여 배치해본다.
+        // MainScene 생성자에서 하면 재활용을 할 수 없으니 onEnter 에서 하도록 한다.
+
+        NoteSprite note1 = NoteSprite.get(Note.parse("N 2 23000"));
+        note1.setPosition(450f, 300, 120f, 55f);
+        add(Layer.note, note1);
+
+        NoteSprite note2 = NoteSprite.get(Note.parse("N 2 13000"));
+        note2.setPosition(580f, 400, 120f, 55f);
+        add(Layer.note, note2);
     }
 
     @Override
