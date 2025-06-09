@@ -5,6 +5,7 @@
     "artist": "WOODZ",
     "album": "OO-LI",
     "demoStart": 60000, "demoEnd": 78000,
+    "bpm": 111,
     "thumbnail": "https://musicmeta-phinf.pstatic.net/album/009/113/9113175.jpg?type=r120Fll&v=20250318143210"
   },
   {
@@ -13,6 +14,7 @@
     "artist": "10CM",
     "album": "너에게 닿기를",
     "demoStart": 35000, "demoEnd": 50000,
+    "bpm": 126,
     "thumbnail": "https://musicmeta-phinf.pstatic.net/album/033/121/33121948.jpg?type=r120Fll&v=20250305192204"
   },
   {
@@ -21,6 +23,7 @@
     "artist": "조째즈",
     "album": "모르시나요",
     "demoStart": 83000, "demoEnd": 113000,
+    "bpm": 128,
     "thumbnail": "https://musicmeta-phinf.pstatic.net/album/032/514/32514782.jpg?type=r120Fll&v=20250107142015"
   },
   {
@@ -29,6 +32,7 @@
     "artist": "제니 (JENNIE)",
     "album": "Ruby",
     "demoStart": 26000, "demoEnd": 41000,
+    "bpm": 130,
     "thumbnail": "https://musicmeta-phinf.pstatic.net/album/033/142/33142484.jpg?type=r120Fll&v=20250314161303"
   },
   {
