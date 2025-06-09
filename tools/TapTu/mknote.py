@@ -1,7 +1,7 @@
 import random
 
-bpm = 126
-start = 11110
+bpm = 128
+start = 11500
 end = 70000
 
 mspb = 60000 / bpm * 2
