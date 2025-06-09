@@ -46,7 +46,9 @@ public class NoteSprite extends Sprite implements IRecyclable {
         }
         setPosition(x, y);
     }
-
+    public static float screenfulTime() {
+        return Metrics.height / SPEED;
+    }
     @Override
     public void onRecycle() {}
 }

@@ -46,8 +46,9 @@ public class MainScene extends Scene {
         musicTime += GameView.frameTime;
         super.update();
 
+        float timeOffset = NoteSprite.screenfulTime();
         while (true) {
-            Note note = song.popNoteBefore(musicTime + 5);
+            Note note = song.popNoteBefore(musicTime + timeOffset);
             if (note == null) break;
             add(Layer.note, NoteSprite.get(note));
         }
