@@ -47,7 +47,7 @@ public class MainScene extends Scene {
         super.update();
 
         while (true) {
-            Note note = song.popNoteBefore(musicTime);
+            Note note = song.popNoteBefore(musicTime + 5);
             if (note == null) break;
             add(Layer.note, NoteSprite.get(note));
         }
