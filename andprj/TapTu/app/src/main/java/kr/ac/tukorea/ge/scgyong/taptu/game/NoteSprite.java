@@ -7,8 +7,13 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class NoteSprite extends Sprite implements IRecyclable {
+    private static final float X_SPACE = 130f;
+    private static final float LEFT = 450f - 2 * X_SPACE;
+    private static final float WIDTH = 120f;
+    private static final float HEIGHT = 55f;
     public NoteSprite() {
         super(R.mipmap.note_1);
+        setPosition(0, 0, WIDTH, HEIGHT);
     }
 
     public static NoteSprite get(Note note) {
@@ -17,6 +22,9 @@ public class NoteSprite extends Sprite implements IRecyclable {
 
     private NoteSprite init(Note note) {
         this.note = note;
+        float x = LEFT + note.pret * X_SPACE;
+        float y = note.msec;
+        setPosition(x, y);
         return this;
     }
 

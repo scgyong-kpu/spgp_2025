@@ -41,16 +41,11 @@ public class MainScene extends Scene {
         Context context = GameView.view.getContext();
         song.play(context);
 
-        // 임시로 Note 2개를 생성하여 배치해본다.
         // MainScene 생성자에서 하면 재활용을 할 수 없으니 onEnter 에서 하도록 한다.
 
-        NoteSprite note1 = NoteSprite.get(Note.parse("N 2 23000"));
-        note1.setPosition(450f, 300, 120f, 55f);
-        add(Layer.note, note1);
-
-        NoteSprite note2 = NoteSprite.get(Note.parse("N 2 13000"));
-        note2.setPosition(580f, 400, 120f, 55f);
-        add(Layer.note, note2);
+        for (Note note: song.notes) {
+            add(Layer.note, NoteSprite.get(note));
+        }
     }
 
     @Override

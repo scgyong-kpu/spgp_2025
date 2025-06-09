@@ -31,7 +31,7 @@ public class Song {
     public int demoStart, demoEnd;
     private MediaPlayer mediaPlayer;
     //public String thumbnail;
-    private ArrayList<Note> notes;
+    public ArrayList<Note> notes;
     private float noteLength;
     protected static Handler handler = new Handler();
     public static ArrayList<Song> songs;
