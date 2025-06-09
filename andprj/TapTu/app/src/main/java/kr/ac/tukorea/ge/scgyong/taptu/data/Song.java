@@ -12,8 +12,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.io.BufferedReader;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -28,7 +31,8 @@ public class Song {
     public int demoStart, demoEnd;
     private MediaPlayer mediaPlayer;
     //public String thumbnail;
-
+    private ArrayList<Note> notes;
+    private float noteLength;
     protected static Handler handler = new Handler();
     public static ArrayList<Song> songs;
     public static int selectedIndex;
@@ -105,4 +109,37 @@ public class Song {
         if (mediaPlayer == null) return;
         mediaPlayer.start();
     }
+
+    public void loadNotes(Context context) {
+        if (notes != null && !notes.isEmpty()) return;
+
+        notes = new ArrayList<>();
+
+        String filename = String.format(Locale.ENGLISH, "notes/note_%03d.txt", this.rank);
+
+        int lengthInMsec = 0;
+        try {
+            AssetManager assetManager = context.getAssets();
+            InputStream is = assetManager.open(filename);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader reader = new BufferedReader(isr);
+            while (true) {
+                String line = reader.readLine();
+                if (line == null) break;
+                Note note = Note.parse(line);
+                if (note == null) continue;
+                notes.add(note);
+                if (lengthInMsec < note.msec) {
+                    lengthInMsec = note.msec;
+                }
+            }
+            is.close();
+            this.noteLength = lengthInMsec / 1000.0f;
+            Log.d(TAG, "Song loaded: " + notes.size() + " notes, " + noteLength + " seconds.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+    }
+
 }

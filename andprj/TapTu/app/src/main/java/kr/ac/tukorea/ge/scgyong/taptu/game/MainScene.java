@@ -30,6 +30,8 @@ public class MainScene extends Scene {
         album.setPosition(x, y, Metrics.height, Metrics.height);
         add(Layer.bg, album);
         add(Layer.bg, new Sprite(R.mipmap.bg, x, y, Metrics.width, Metrics.height));
+
+        song.loadNotes(context);
     }
 
     @Override
