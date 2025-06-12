@@ -1,0 +1,116 @@
+package kr.ac.tukorea.ge.scgyong.taptu.game;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+
+import kr.ac.tukorea.ge.scgyong.taptu.R;
+import kr.ac.tukorea.ge.scgyong.taptu.data.Note;
+import kr.ac.tukorea.ge.scgyong.taptu.data.Song;
+import kr.ac.tukorea.ge.scgyong.taptu.res.BitmapBlur;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Button;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
+
+public class MainScene extends Scene {
+    public enum Layer {
+        bg, note, ui,
+    }
+    public static MainScene scene;
+    private final Song song;
+    private float musicTime;
+    private final Button speedBtn;
+    public MainScene(Song song) {
+        initLayers(Layer.values().length);
+
+        this.song = song;
+        Sprite album = new Sprite(0);
+        Context context = GameView.view.getContext();
+        Bitmap bitmap = song.getThumbnailBitmap(context);
+        Bitmap blurredCover = BitmapBlur.blurBitmap(context, bitmap);
+        album.setBitmap(blurredCover);
+        float x = Metrics.width / 2, y = Metrics.height / 2;
+        album.setPosition(x, y, Metrics.height, Metrics.height);
+        add(Layer.bg, album);
+        add(Layer.bg, new Sprite(R.mipmap.bg, x, y, Metrics.width, Metrics.height));
+
+        Button backBtn = new Button(R.mipmap.go_back, 50f, 50f, 100, 100, (pressed) -> {
+            pop();
+            return false;
+        });
+        add(Layer.ui, backBtn);
+
+        speedBtn = new Button(R.mipmap.speed_1x, Metrics.width - 50, 50f, 100, 100, pressed-> {
+            toggleSpeed();
+            return false;
+        });
+        add(Layer.ui, speedBtn);
+
+        song.loadNotes(context);
+    }
+
+    private void toggleSpeed() {
+        float speed = NoteSprite.toggleSpeed();
+        int mipmapId = speed == 200f ? R.mipmap.speed_1x : R.mipmap.speed_2x;
+        speedBtn.setBitmap(BitmapPool.get(mipmapId));
+    }
+
+    @Override
+    protected int getTouchLayerIndex() {
+        return Layer.ui.ordinal();
+    }
+
+    public float getMusicTime() {
+        return musicTime;
+    }
+
+    // Game Loop Functions
+    @Override
+    public void update() {
+        musicTime += GameView.frameTime;
+        super.update();
+
+        float timeOffset = NoteSprite.screenfulTime();
+        while (true) {
+            Note note = song.popNoteBefore(musicTime + timeOffset);
+            if (note == null) break;
+            NoteSprite sprite = NoteSprite.get(note);
+            if (song.bpm > 0) {
+                float fps = 8.0f * song.bpm / 60.0f;
+                sprite.setFps(fps);
+            }
+            add(Layer.note, sprite);
+        }
+    }
+
+    @Override
+    public void onEnter() {
+        super.onEnter();
+        scene = this;
+
+        Context context = GameView.view.getContext();
+        song.play(context);
+    }
+
+    @Override
+    public void onExit() {
+        song.stop();
+
+        scene = null;
+        super.onExit();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        song.pause();
+    }
+
+    @Override
+    public void onResume() {
+        song.resume();
+        super.onResume();
+    }
+}
