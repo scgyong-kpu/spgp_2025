@@ -7,8 +7,12 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 
 public class Obstacle extends MapObject {
 
+    // 원본 이미지보다 25% 확대해서 실제 표시 크기를 설정함
     protected static final float IMAGE_SIZE_RATIO = 1.25f;
     protected float[] collisionInsets = { 0.2f, 0.2f, 0.2f, 0.0f };
+    // 충돌 사각형을 원본보다 살짝 작게 만들기 위한 여백 설정
+    //→ {left, top, right, bottom} 방향으로 각각 20%씩 줄임
+
     public Obstacle() {
         super(MainScene.Layer.obstacle);
         setImageResourceId(R.mipmap.epn01_tm01_jp1a);

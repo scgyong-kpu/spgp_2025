@@ -18,18 +18,37 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
+// 2D 게임 프레임워크에서의 '화면 한 장면(Scene)'을 표현
+//
+// 🎮 게임 오브젝트 레이어 관리
+//
+//🔄 객체 재사용(재활용) 관리
+//
+//⏱️ 업데이트 및 그리기 (Game Loop)
+//
+//🧱 씬 스택 관리 (push/pop/change)
+//
+//📲 터치 이벤트 분배
+//
+//🚪 씬 전환 이벤트 훅 (onEnter/onExit 등)
+
 public class Scene {
     private static final String TAG = Scene.class.getSimpleName();
     protected ArrayList<ArrayList<IGameObject>> layers = new ArrayList<>();
     //////////////////////////////////////////////////
     // Game Object Management
 
+    // 레이어 수만큼 2차원 배열 초기화
     protected void initLayers(int layerCount) {
         layers.clear();
         for (int i = 0; i < layerCount; i++) {
             layers.add(new ArrayList<>());
         }
     }
+
+    // enum을 레이어 인덱스로 사용
+    //
+    //ILayerProvider를 통해 객체가 자신의 레이어를 알려줄 수도 있음
     public <E extends Enum<E>> void add(E layer, IGameObject gameObject) {
         int layerIndex = layer.ordinal();
         ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
@@ -43,6 +62,7 @@ public class Scene {
         gameObjects.add(gameObject);
     }
 
+    // 삭제시 IRecyclable이면 재활용 처리까지 수행
     public <E extends Enum<E>> void remove(E layer, IGameObject gobj) {
         int layerIndex = layer.ordinal();
         remove(layerIndex, gobj);
@@ -165,6 +185,8 @@ public class Scene {
 
     //////////////////////////////////////////////////
     // Scene Stack Functions
+    // ➡️ 복잡한 UI나 여러 게임 상태를 다룰 때 유용
+    //(예: 일시정지 화면을 push했다가 다시 pop으로 복귀)
 
     public void change() {
         GameView.view.changeScene(this);
@@ -217,6 +239,8 @@ public class Scene {
         return false;
     }
 
+    // 씬 생명 주기 관리 (오버라이드 가능)
+    // 예: 리소스 로딩, 음악 재생, 일시정지 처리 등
     public void onEnter() {
         Log.v(TAG, "onEnter: " + getClass().getSimpleName());
     }

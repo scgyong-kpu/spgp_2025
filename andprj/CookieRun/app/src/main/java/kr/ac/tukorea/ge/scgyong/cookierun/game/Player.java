@@ -23,21 +23,42 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
+
+
+// SheetSprite를 상속받아 스프라이트 시트 애니메이션 처리 가능
+// IBoxCollidable 인터페이스 구현으로 충돌 검사용 사각형(RectF) 제공
 public class Player extends SheetSprite implements IBoxCollidable {
     private static final String TAG = Player.class.getSimpleName();
 
     public enum State {
         running, jump, doubleJump, falling, slide, hurt
+        // running 달리기 상태
+        // jump 점프 상태
+        // doubleJump 이중 점프 상태
+        // falling 떨어지는 상태
+        // slide 슬라이드 상태
+        // hurt 피격 상태
     }
+
     protected State state = State.running;
+    // 현재 상태 (기본은 running)
+
     private float jumpSpeed;
+    // 점프 및 낙하 속도 (y축 속도)
+
     private final RectF collisionRect = new RectF();
     private Obstacle obstacle;
+    // 플레이어가 맞은 장애물 참조용
+
     //private static final float JUMP_POWER = 900f;
     private static final float GRAVITY = 1700f;
     private static final float NORMAL_COOKIE_DST_SIZE = 386;
+    // 플레이어 기본 크기
 
     private int imageSize = 0;
+    // 각 스프라이트 이미지 크기 (가로/세로)
+
+    // 쿠키별 고유 정보 (점프력, 이름, 점수 비율 등)
     public static class CookieInfo {
         public int id;
         public String name;
@@ -45,13 +66,19 @@ public class Player extends SheetSprite implements IBoxCollidable {
     }
     public static int[] COOKIE_IDS;
     public static HashMap<Integer, CookieInfo> cookieInfoMap;
+    // 쿠키의 고유 속성을 저장하는 내부 클래스
+    //cookieInfoMap에 쿠키 ID별 정보를 저장하고 관리
 
     private final CookieInfo cookieInfo;
 
+    // 상태별로 사용할 이미지 소스 영역 배열
     protected Rect[][] srcRectsArray;
+
+    // 상태별 애니메이션 프레임 인덱스를 배열로 정의
+    // 각 상태에 따라 다양한 프레임 사용 가능
     private void makeSourceRects() {
         srcRectsArray = new Rect[][] {
-                makeRects(100, 101, 102, 103), // State.running
+                makeRects(100, 101, 102, 103), // State.running // running 애니메이션 프레임 인덱스
                 makeRects(7, 8),               // State.jump
                 makeRects(1, 2, 3, 4),         // State.doubleJump
                 makeRects(0),                  // State.falling
@@ -59,6 +86,9 @@ public class Player extends SheetSprite implements IBoxCollidable {
                 makeRects(503, 504),           // State.hurt
         };
     }
+
+    // 각 상태별로 충돌 박스의 좌우, 상하 여백 비율을 정의
+    // collisionRect를 dstRect보다 작게 만들어 충돌 검사 정확도를 높임
     protected static float[][] edgeInsetRatios = {
             { 0.3f, 0.5f, 0.3f, 0.0f }, // State.running
             { 0.3f, 0.6f, 0.3f, 0.0f }, // State.jump
@@ -67,6 +97,10 @@ public class Player extends SheetSprite implements IBoxCollidable {
             { 0.2f, 0.75f, 0.2f, 0.0f }, // State.slide
             { 0.3f, 0.50f, 0.4f, 0.0f }, // State.hurt
     };
+
+    // 쿠키 정보 로드 (JSON)
+    // cookies.json에서 쿠키 데이터(아이디, 이름, 점프력, 점수 배율)를 파싱해서 저장
+    // 게임 내 여러 쿠키 정보를 불러오고 관리
     public static void load(Context context) {
         if (cookieInfoMap != null) return;
 
@@ -113,6 +147,9 @@ public class Player extends SheetSprite implements IBoxCollidable {
             throw new RuntimeException(e);
         }
     }
+
+    // 스프라이트 시트에서 각 프레임 이미지의 좌표(Rect)를 계산
+    // 인덱스별로 위치가 정해짐 (가로, 세로 기준)
     protected Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
         for (int i = 0; i < indices.length; i++) {
@@ -123,6 +160,11 @@ public class Player extends SheetSprite implements IBoxCollidable {
         }
         return rects;
     }
+
+    // 특정 쿠키 ID로 플레이어 객체 생성
+    // 해당 쿠키 스프라이트 시트 로드
+    // 초기 위치, 크기 설정
+    // 상태 running으로 초기화
     public Player(int cookieId) {
         super(0, 8);
         loadSheetFromAsset(cookieId);
@@ -130,6 +172,10 @@ public class Player extends SheetSprite implements IBoxCollidable {
         setPosition(200f, 200f, NORMAL_COOKIE_DST_SIZE, NORMAL_COOKIE_DST_SIZE);
         setState(State.running);
     }
+
+    // 쿠키 ID에 맞는 스프라이트 시트 파일을 불러옴
+    //가로 11 프레임으로 가정해 각 프레임 크기를 계산
+    //상태별 소스 Rect 배열 생성
     private void loadSheetFromAsset(int cookieId) {
         AssetManager assets = GameView.view.getContext().getAssets();
         String filename = "cookies/" + cookieId + "_sheet.png";
@@ -146,6 +192,12 @@ public class Player extends SheetSprite implements IBoxCollidable {
         }
     }
 
+    // 플레이어 상태별로 움직임과 물리 처리를 다르게 함
+    // 점프/더블점프/낙하 상태: 중력 적용하여 y 위치 변경
+    // 착지하면 상태 running으로 변경
+    // 달리기/슬라이드 중 바닥이 없으면 낙하 상태로 전환
+    // 피격 상태면 장애물과 더 이상 충돌하지 않을 때 상태 복귀
+    // magSpeed가 있으면 확대/축소 애니메이션 처리
     @Override
     public void update() {
         float foot = collisionRect.bottom;
@@ -196,12 +248,16 @@ public class Player extends SheetSprite implements IBoxCollidable {
             setCookiePosition(foot);
         }
     }
+
+    // 플레이어 발(foot) 위치 기준 아래쪽에서 가장 가까운 바닥을 찾음
+    // 바닥 리스트를 순회하면서 조건에 맞는 바닥 중 가장 위쪽(높이 낮은) 바닥 반환
     private float findNearestFloorTop(float foot) {
         // 플레이어 발의 y 좌표에서 아래쪽으로 가장 가까운 floor 의 좌표를 찾는다.
         Floor platform = findNearestFloor(foot);
         if (platform == null) return Metrics.height;
         return platform.getCollisionRect().top;
     }
+
     private Floor findNearestFloor(float foot) {
         // 플레이어 발의 y 좌표에서 아래쪽으로 가장 가까운 floor 를 찾는다.
         Floor nearest = null;
@@ -230,11 +286,16 @@ public class Player extends SheetSprite implements IBoxCollidable {
         }
         return nearest;
     }
+
+
+    // 플레이어 위치는 foot 좌표(발 위치)로부터 계산
+    // 충돌 사각형은 현재 상태에 따른 비율만큼 축소
     private void setCookiePosition(float foot) {
         float hw = width / 2;
         dstRect.set(x - hw, foot - height, x + hw, foot);
         updateCollisionRect();
     }
+
     private void updateCollisionRect() {
         float[] insets = edgeInsetRatios[state.ordinal()];
         collisionRect.set(
@@ -244,12 +305,18 @@ public class Player extends SheetSprite implements IBoxCollidable {
                 dstRect.bottom - height * insets[3]);
     }
 
+    // 상태가 바뀌면 애니메이션 프레임 초기화, 충돌 영역 업데이트
+    // 달리기 상태면 점프 속도 초기화
     private void setState(State state) {
         this.state = state;
         srcRects = srcRectsArray[state.ordinal()];
         updateCollisionRect();
     }
 
+
+    // 달리기 상태에서 점프하면 jumpSpeed를 음수로 세팅(위로 속도)
+    // 점프 중에 다시 점프하면 더 약한 힘으로 이중 점프
+    // 이외 상태에서는 무시
     public void jump() {
         if (state == State.running) {
             //jumpSpeed = -JUMP_POWER;
@@ -264,6 +331,8 @@ public class Player extends SheetSprite implements IBoxCollidable {
             setState(State.doubleJump);
         }
     }
+
+    // 달리기 상태에서 슬라이드 상태로 변경
     public void slide(boolean startsSlide) {
         if (state == State.running && startsSlide) {
             setState(State.slide);
@@ -299,6 +368,8 @@ public class Player extends SheetSprite implements IBoxCollidable {
     public RectF getCollisionRect() {
         return collisionRect;
     }
+
+    // 장애물과 충돌 시 상태를 피격으로 변경하고 해당 장애물 참조 저장
     public void hurt(Obstacle obstacle) {
         if (state == State.hurt) return;
         Sound.playEffect(R.raw.hurt);
